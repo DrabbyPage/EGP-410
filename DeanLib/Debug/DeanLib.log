@@ -1,0 +1,10 @@
+﻿  CircularQueue.cpp
+  MemoryPool.cpp
+  MemoryTracker.cpp
+  PerformanceTracker.cpp
+  Timer.cpp
+  Trackable.cpp
+  Vector2D.cpp
+  Generating Code...
+CircularQueue.obj : warning LNK4221: This object file does not define any previously undefined public symbols, so it will not be used by any link operation that consumes this library
+  DeanLib.vcxproj -> C:\Users\Admin\Documents\GitHub\EGP-410\DeanLib\lib\DeanLibDebug.lib
