@@ -18,7 +18,11 @@ public:
 		INVALID_TYPE = -1,
 		SEEK,
 		FLEE,
-		ARRIVE
+		ARRIVE,
+		FACE,
+		WANDER,
+		WANDER_AND_CHASE,
+		ARRIVE_AND_FACE
 	};
 
 	//constructors and destructors

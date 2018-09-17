@@ -16,6 +16,8 @@ class Timer;
 class ComponentManager;
 class UnitManager;
 
+class InputSystem;
+
 const IDType BACKGROUND_SPRITE_ID = 0;
 const IDType PLAYER_ICON_SPRITE_ID = 1;
 const IDType AI_ICON_SPRITE_ID = 2;
@@ -57,6 +59,8 @@ private:
 	Timer* mpLoopTimer;
 	Timer* mpMasterTimer;
 	bool mShouldExit;
+
+	InputSystem* mpInputSystem;
 
 	//should be somewhere else
 	GraphicsBufferID mBackgroundBufferID = "woods";

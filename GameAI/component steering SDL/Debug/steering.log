@@ -1,26 +1,13 @@
-﻿  UnitManager.cpp
-  Unit.cpp
-  SteeringComponent.cpp
-  Steering.cpp
-  SpriteManager.cpp
-  Sprite.cpp
-  SeekSteering.cpp
-  Renderer.cpp
-  PositionComponent.cpp
-  PlayerMoveToMessage.cpp
-  PhysicsComponent.cpp
-  main.cpp
-  GraphicsSystem.cpp
-  GraphicsBufferManager.cpp
-  GraphicsBuffer.cpp
-  GameMessageManager.cpp
-  GameMessage.cpp
+﻿  SeekSteering.cpp
+  InputSystem.cpp
   Game.cpp
-  Font.cpp
-  ComponentManager.cpp
   Generating Code...
   Compiling...
-  Component.cpp
-  Color.cpp
+  UnitManager.cpp
+  Unit.cpp
+  PositionComponent.cpp
+  PlayerMoveToMessage.cpp
+  main.cpp
+  GameMessageManager.cpp
   Generating Code...
   steering.vcxproj -> C:\Users\Admin\Documents\GitHub\EGP-410\GameAI\component steering SDL\Debug\steering.exe
