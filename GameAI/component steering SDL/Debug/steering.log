@@ -1,13 +1,2 @@
-﻿  SeekSteering.cpp
-  InputSystem.cpp
-  Game.cpp
-  Generating Code...
-  Compiling...
-  UnitManager.cpp
-  Unit.cpp
-  PositionComponent.cpp
-  PlayerMoveToMessage.cpp
-  main.cpp
-  GameMessageManager.cpp
-  Generating Code...
-  steering.vcxproj -> C:\Users\Admin\Documents\GitHub\EGP-410\GameAI\component steering SDL\Debug\steering.exe
+﻿  ArriveSteering.cpp
+  steering.vcxproj -> D:\GitHub\EGP-410\GameAI\component steering SDL\Debug\steering.exe

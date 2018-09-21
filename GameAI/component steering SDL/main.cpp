@@ -40,7 +40,7 @@ int main(int argc, char **argv)
 	}
 
 	gpPerformanceTracker->stopTracking("init");
-	cout << "initialization took:" << gpPerformanceTracker->getElapsedTime("init") << "ms\n";
+	//cout << "initialization took:" << gpPerformanceTracker->getElapsedTime("init") << "ms\n";
 
 	bool shouldExit = false;
 
@@ -62,8 +62,8 @@ int main(int argc, char **argv)
 		shouldExit = gpGame->endLoop();
 
 		gpPerformanceTracker->stopTracking("loop");
-		cout << "loop took:" << gpPerformanceTracker->getElapsedTime("loop") << "ms";
-		cout << "draw took:" << gpPerformanceTracker->getElapsedTime("draw") << "ms\n";
+		//cout << "loop took:" << gpPerformanceTracker->getElapsedTime("loop") << "ms";
+		//cout << "draw took:" << gpPerformanceTracker->getElapsedTime("draw") << "ms\n";
 
 	}
 
