@@ -11,8 +11,9 @@
 #include "Unit.h"
 
 
-ArriveSteering::ArriveSteering(const UnitID& ownerID, const Vector2D& targetLoc, const UnitID& targetID, bool shouldFlee /*= false*/)
-	: Steering() {
+ArriveSteering::ArriveSteering(const UnitID& ownerID, const Vector2D& targetLoc, const UnitID& targetID,
+	bool shouldFlee /*= false*/) : Steering()
+{
 	if (shouldFlee)
 	{
 		mType = Steering::FLEE;

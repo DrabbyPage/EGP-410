@@ -22,7 +22,6 @@ void InputSystem::getInput(int x, int y)
 		GameMessage* pMessage = new PlayerMoveToMessage(pos);
 		MESSAGE_MANAGER->addMessage(pMessage, 0);
 	}
-
 }
 
 bool InputSystem::checkExit()
@@ -35,4 +34,19 @@ bool InputSystem::checkExit()
 		return true;
 	else
 		return false;
+}
+
+bool InputSystem::spawnNewUnit()
+{
+	SDL_Event newEvent;
+	SDL_PollEvent(&newEvent);
+	if (newEvent.type == SDL_KEYDOWN)
+	{
+		if (newEvent.key.keysym.sym == SDLK_RETURN)
+		{
+			std::cout << "enter was pressed" << std::endl;
+			return true;
+		}
+	}
+	return false;
 }
