@@ -54,14 +54,6 @@ Steering* SeekSteering::getSteering()
 	rotation = rotation + (90 * (3.14f / 180));
 	pOwner->getPositionComponent()->setFacing(rotation);
 
-	// to find the speed aka magnitude of velocity
-	/*
-	float curVelX = pOwner->getPhysicsComponent()->getVelocity().getX();
-	float curVelY = pOwner->getPhysicsComponent()->getVelocity().getY();
-
-	float velMag = sqrt((curVelX * curVelX) + (curVelY * curVelY));
-	*/
-
 	PhysicsData data = pOwner->getPhysicsComponent()->getData();
 	data.acc = diff;
 	

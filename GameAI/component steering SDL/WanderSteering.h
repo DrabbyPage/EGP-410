@@ -14,7 +14,6 @@ public:
 
 	Vector2D float2Vector2D(float convert);
 
-protected:
 	virtual Steering* getSteering();
 
 private:
