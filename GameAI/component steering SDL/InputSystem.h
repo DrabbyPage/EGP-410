@@ -26,6 +26,7 @@ public:
 	void getInput(int x, int y);
 	bool checkExit();
 	bool spawnNewUnit();
+	bool deleteUnit();
 
 private:
 	Game pGame;

@@ -50,3 +50,17 @@ bool InputSystem::spawnNewUnit()
 	}
 	return false;
 }
+
+bool InputSystem::deleteUnit()
+{
+	const Uint8 *state = SDL_GetKeyboardState(NULL);
+
+	//if escape key was down then exit the loop
+	if (state[SDL_SCANCODE_D])
+	{
+		std::cout << "'D' was pressed" << std::endl;
+		return true;
+	}
+	else
+		return false;
+}

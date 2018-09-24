@@ -108,25 +108,9 @@ bool Game::init()
 	// create player
 	Unit* pUnit = mpUnitManager->createPlayerUnit(*pArrowSprite);
 	pUnit->setShowTarget(true);
-	// pUnit->setSteering(Steering::SEEK, ZERO_VECTOR2D);
 
-	// pUnit->setSteering(Steering::ARRIVE, ZERO_VECTOR2D);
-	// pUnit->setSteering(Steering::FACE, ZERO_VECTOR2D);
-	// pUnit->setSteering(Steering::WANDER, ZERO_VECTOR2D);
-	// pUnit->setSteering(Steering::WANDER_AND_CHASE, ZERO_VECTOR2D);
 	pUnit->setSteering(Steering::ARRIVE_AND_FACE, ZERO_VECTOR2D);
 
-	
-	//create 2 enemies
-	/*
-	pUnit = mpUnitManager->createUnit(*pEnemyArrow, true, PositionData(Vector2D((float)gpGame->getGraphicsSystem()->getWidth()-1, 0.0f), 0.0f));
-	pUnit->setShowTarget(true);
-	pUnit->setSteering(Steering::WANDER, ZERO_VECTOR2D, PLAYER_UNIT_ID);
-	
-	pUnit = mpUnitManager->createUnit(*pEnemyArrow, true, PositionData(Vector2D(0.0f, (float)gpGame->getGraphicsSystem()->getHeight()-1), 0.0f));
-	pUnit->setShowTarget(false);
-	pUnit->setSteering(Steering::FLEE, ZERO_VECTOR2D, PLAYER_UNIT_ID);
-	*/
 	mpInputSystem = new InputSystem();
 
 	return true;
@@ -157,6 +141,9 @@ void Game::cleanup()
 	mpUnitManager = NULL;
 	delete mpComponentManager;
 	mpComponentManager = NULL;
+
+	delete mpInputSystem;
+	mpInputSystem = NULL;
 }
 
 void Game::beginLoop()
@@ -213,6 +200,13 @@ void Game::processLoop()
 		{
 			mpUnitManager->deleteRandomUnit();
 		}
+	}
+
+	bool deleteChar = mpInputSystem->deleteUnit();
+
+	if (deleteChar)
+	{
+		mpUnitManager->deleteRandomUnit();
 	}
 
 }

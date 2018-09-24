@@ -15,14 +15,11 @@ public:
 
 	virtual Steering* getSteering();
 
-protected:
+private:
+	const float wanderRadius = 200.0f;
 	WanderSteering wanderSteer;
 	FaceSteering faceSteer;
 	SeekSteering seekSteer;
-
-private:
-	const float wanderRadius = 200.0f;
-
 };
 
 #endif

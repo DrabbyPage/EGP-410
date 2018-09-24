@@ -37,9 +37,10 @@ Steering* WanderAndChase::getSteering()
 	PhysicsData data = pOwner->getPhysicsComponent()->getData();
 	Vector2D characterLoc = gpGame->getUnitManager()->getPlayerUnit()->getPositionComponent()->getPosition();
 	Vector2D diff = characterLoc - pOwner->getPositionComponent()->getPosition();
+
 	Steering* tempSteer = NULL;
 
-	if (diff.getLengthSquared() > wanderRadius * wanderRadius)
+	if ((diff.getLength()*diff.getLength()) > (wanderRadius * wanderRadius))
 	{
 		tempSteer = wanderSteer.getSteering();
 		data.rotAcc = tempSteer->getData().rotAcc;

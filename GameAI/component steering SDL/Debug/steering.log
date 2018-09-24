@@ -1,10 +1,2 @@
-﻿  SteeringComponent.cpp
-d:\github\egp-410\gameai\component steering sdl\seeksteering.h(4): error C2011: 'SeekSteering': 'class' type redefinition
-  d:\github\egp-410\gameai\component steering sdl\seeksteering.h(4): note: see declaration of 'SeekSteering'
-d:\github\egp-410\gameai\component steering sdl\wanderandchasesteering.h(21): error C2079: 'WanderAndChase::seekSteer' uses undefined class 'SeekSteering'
-d:\github\egp-410\gameai\component steering sdl\steeringcomponent.cpp(46): error C2027: use of undefined type 'SeekSteering'
-  d:\github\egp-410\gameai\component steering sdl\seeksteering.h(4): note: see declaration of 'SeekSteering'
-d:\github\egp-410\gameai\component steering sdl\steeringcomponent.cpp(52): error C2027: use of undefined type 'SeekSteering'
-  d:\github\egp-410\gameai\component steering sdl\seeksteering.h(4): note: see declaration of 'SeekSteering'
-  Game.cpp
-  Generating Code...
+﻿  InputSystem.cpp
+  steering.vcxproj -> D:\GitHub\EGP-410\GameAI\component steering SDL\Debug\steering.exe
