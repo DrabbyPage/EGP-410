@@ -111,10 +111,10 @@ bool Game::init()
 	// pUnit->setSteering(Steering::SEEK, ZERO_VECTOR2D);
 
 	// pUnit->setSteering(Steering::ARRIVE, ZERO_VECTOR2D);
-	pUnit->setSteering(Steering::FACE, ZERO_VECTOR2D);
+	// pUnit->setSteering(Steering::FACE, ZERO_VECTOR2D);
 	// pUnit->setSteering(Steering::WANDER, ZERO_VECTOR2D);
 	// pUnit->setSteering(Steering::WANDER_AND_CHASE, ZERO_VECTOR2D);
-	// pUnit->setSteering(Steering::WANDER_AND_FACE, ZERO_VECTOR2D);
+	pUnit->setSteering(Steering::ARRIVE_AND_FACE, ZERO_VECTOR2D);
 
 	
 	//create 2 enemies
