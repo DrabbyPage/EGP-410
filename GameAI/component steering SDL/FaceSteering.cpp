@@ -68,22 +68,25 @@ Steering* FaceSteering::getSteering()
 	// check if we are there, return no steering
 	if (rotationSize < targetRotation)
 	{
+		data.rotAcc = 0;
+		data.rotVel = 0;
+		this->mData = data;
 		return nullptr;
 	}
 
 	// if we are outside the slow radius then use maximum rotation
 	// otherwise calculate a scaled rotation
 	if (rotationSize > slowRadius)
-		targetRotation = data.maxRotVel;
+		targetRotation = pOwner->getMaxRotAcc();
 	else
-		targetRotation = data.maxRotVel * rotationSize / slowRadius;
+		targetRotation = pOwner->getMaxRotAcc() * rotationSize / slowRadius;
 
 	// the final target rotation combines
 	// speed (already in the variable) and direction
-	targetRotation *= rotTarget / rotationSize;
+	targetRotation *= rotation / rotationSize;
 
 	// acceleration tries to get the target rotation
-	data.rotAcc = rotation - data.rotVel;
+	data.rotAcc = targetRotation - data.rotVel;
 	data.rotAcc /= timeToLook;
 
 	// check if the acceleration is too great 

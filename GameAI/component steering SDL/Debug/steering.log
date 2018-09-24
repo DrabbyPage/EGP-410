@@ -1,2 +1,4 @@
-﻿  FaceSteering.cpp
+﻿  WanderSteering.cpp
+d:\github\egp-410\gameai\component steering sdl\wandersteering.cpp(43): warning C4305: '=': truncation from 'double' to 'float'
+d:\github\egp-410\gameai\component steering sdl\wandersteering.cpp(51): warning C4244: '=': conversion from 'double' to 'float', possible loss of data
   steering.vcxproj -> D:\GitHub\EGP-410\GameAI\component steering SDL\Debug\steering.exe

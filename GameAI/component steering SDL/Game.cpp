@@ -116,12 +116,12 @@ bool Game::init()
 	// pUnit->setSteering(Steering::WANDER_AND_CHASE, ZERO_VECTOR2D);
 	// pUnit->setSteering(Steering::WANDER_AND_FACE, ZERO_VECTOR2D);
 
-	/*
+	
 	//create 2 enemies
-	pUnit = mpUnitManager->createUnit(*pEnemyArrow, true, PositionData(Vector2D((float)gpGame->getGraphicsSystem()->getWidth()-1, 0.0f), 0.0f));
+	/*pUnit = mpUnitManager->createUnit(*pEnemyArrow, true, PositionData(Vector2D((float)gpGame->getGraphicsSystem()->getWidth()-1, 0.0f), 0.0f));
 	pUnit->setShowTarget(true);
-	pUnit->setSteering(Steering::SEEK, ZERO_VECTOR2D, PLAYER_UNIT_ID);
-
+	pUnit->setSteering(Steering::WANDER, ZERO_VECTOR2D, PLAYER_UNIT_ID);
+	
 	pUnit = mpUnitManager->createUnit(*pEnemyArrow, true, PositionData(Vector2D(0.0f, (float)gpGame->getGraphicsSystem()->getHeight()-1), 0.0f));
 	pUnit->setShowTarget(false);
 	pUnit->setSteering(Steering::FLEE, ZERO_VECTOR2D, PLAYER_UNIT_ID);
@@ -206,6 +206,7 @@ void Game::processLoop()
 	if (shouldSpawn)
 	{
 		Unit* pUnit = mpUnitManager->createRandomUnit(*mpSpriteManager->getSprite(AI_ICON_SPRITE_ID));
+		pUnit->setShowTarget(true);
 		if (pUnit == NULL)
 		{
 			mpUnitManager->deleteRandomUnit();
