@@ -10,3 +10,18 @@ Template projects for base code for EGP 410 assignments.
    * steering
 
 Building instructions are left up to the student. 
+
+1. A link to your commit on GitHub 
+     Editor's Commit link: https://github.com/DrabbyPage/EGP-410
+
+2. How to compile/link your project 
+     To compile the code, clone the repository. After cloning go into the GameAI folder. Inside
+the folder is the component steering SDL folder. Lastly open the .sln file called steering.sln
+I recommend running the program in Visual Studios 2017. Make sure that all libraries are running
+your platform's proper SDK.
+
+3. The keyboard inputs 
+     - Left Mouse Click: moves the player to the point
+     - Enter: Spawns a random unit
+     - D: Deletes a random unit
+     - Esc: Exits the program 
