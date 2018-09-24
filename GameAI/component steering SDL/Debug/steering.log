@@ -1,2 +1,4 @@
-﻿  InputSystem.cpp
+﻿  UnitManager.cpp
+  SteeringComponent.cpp
+  Generating Code...
   steering.vcxproj -> D:\GitHub\EGP-410\GameAI\component steering SDL\Debug\steering.exe

@@ -40,7 +40,7 @@ Steering* WanderAndChase::getSteering()
 
 	Steering* tempSteer = NULL;
 
-	if ((diff.getLength()*diff.getLength()) > (wanderRadius * wanderRadius))
+	if ( (diff.getLength()  *diff.getLength() ) > (wanderRadius * wanderRadius) )
 	{
 		tempSteer = wanderSteer.getSteering();
 		data.rotAcc = tempSteer->getData().rotAcc;

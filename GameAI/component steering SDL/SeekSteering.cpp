@@ -16,7 +16,6 @@ SeekSteering::SeekSteering(const UnitID& ownerID, const Vector2D& targetLoc, con
 	}
 	else
 	{
-		std::cout << "Seek Steering" << std::endl;
 		mType = Steering::SEEK;
 	}
 	setOwnerID(ownerID);
