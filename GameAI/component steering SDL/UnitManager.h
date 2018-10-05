@@ -35,6 +35,8 @@ public:
 
 	Unit* getPlayerUnit() const { return getUnit(PLAYER_UNIT_ID); };
 
+	int size();
+
 private:
 	static UnitID msNextUnitID;
 	MemoryPool mPool;

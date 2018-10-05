@@ -85,6 +85,15 @@
     <ClCompile Include="WanderAndChaseSteering.cpp">
       <Filter>Source Files\Steering</Filter>
     </ClCompile>
+    <ClCompile Include="Cohesion.cpp">
+      <Filter>Source Files\Steering</Filter>
+    </ClCompile>
+    <ClCompile Include="Separation.cpp">
+      <Filter>Source Files\Steering</Filter>
+    </ClCompile>
+    <ClCompile Include="Alignment.cpp">
+      <Filter>Source Files\Steering</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="GraphicsBuffer.h">
@@ -169,6 +178,15 @@
       <Filter>Header Files\Steering</Filter>
     </ClInclude>
     <ClInclude Include="WanderAndChaseSteering.h">
+      <Filter>Header Files\Steering</Filter>
+    </ClInclude>
+    <ClInclude Include="Cohesion.h">
+      <Filter>Header Files\Steering</Filter>
+    </ClInclude>
+    <ClInclude Include="Separation.h">
+      <Filter>Header Files\Steering</Filter>
+    </ClInclude>
+    <ClInclude Include="Alignment.h">
       <Filter>Header Files\Steering</Filter>
     </ClInclude>
   </ItemGroup>

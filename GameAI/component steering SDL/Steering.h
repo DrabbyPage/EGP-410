@@ -22,7 +22,11 @@ public:
 		FACE,
 		WANDER,
 		WANDER_AND_CHASE,
-		ARRIVE_AND_FACE
+		ARRIVE_AND_FACE,
+		COHESION,
+		SEPARATION,
+		ALLIGNMENT,
+		FLOCKING
 	};
 
 	//constructors and destructors
