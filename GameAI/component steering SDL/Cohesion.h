@@ -21,7 +21,6 @@ private:
 
 	float threshold;
 	int neighborCount;
-
 };
 
 #endif

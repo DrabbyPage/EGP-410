@@ -18,8 +18,6 @@ public:
 private:
 	FaceSteering alignFaceSteer;
 
-	float faceVal;
-
 	float threshold;
 	int neighborCount;
 };

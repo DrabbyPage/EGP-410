@@ -42,9 +42,9 @@ bool InputSystem::spawnNewUnit()
 	SDL_PollEvent(&newEvent);
 	if (newEvent.type == SDL_KEYDOWN)
 	{
-		if (newEvent.key.keysym.sym == SDLK_RETURN)
+		if (newEvent.key.keysym.sym == SDLK_a)
 		{
-			std::cout << "enter was pressed" << std::endl;
+			std::cout << "A was pressed" << std::endl;
 			return true;
 		}
 	}
@@ -53,14 +53,38 @@ bool InputSystem::spawnNewUnit()
 
 bool InputSystem::deleteUnit()
 {
-	const Uint8 *state = SDL_GetKeyboardState(NULL);
-
-	//if escape key was down then exit the loop
-	if (state[SDL_SCANCODE_D])
+	SDL_Event newEvent;
+	SDL_PollEvent(&newEvent);
+	if (newEvent.type == SDL_KEYDOWN)
 	{
-		std::cout << "'D' was pressed" << std::endl;
-		return true;
+		if (newEvent.key.keysym.sym == SDLK_d)
+		{
+			std::cout << "D was pressed" << std::endl;
+			return true;
+		}
 	}
-	else
-		return false;
+	return false;
+}
+
+char InputSystem::returnInput()
+{
+	SDL_Event newEvent;
+	SDL_PollEvent(&newEvent);
+	if (newEvent.type == SDL_KEYDOWN)
+	{
+		if (newEvent.key.keysym.sym == SDLK_a)
+		{
+			std::cout << "A was pressed" << std::endl;
+			return 'A';
+		}
+	}
+	if (newEvent.type == SDL_KEYDOWN)
+	{
+		if (newEvent.key.keysym.sym == SDLK_d)
+		{
+			std::cout << "D was pressed" << std::endl;
+			return 'D';
+		}
+	}
+	return false;
 }

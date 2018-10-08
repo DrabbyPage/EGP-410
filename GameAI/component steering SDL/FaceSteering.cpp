@@ -36,14 +36,6 @@ Steering* FaceSteering::getSteering()
 	float targetRotation = 0.1f;
 	float rotationSize;
 
-	// making sure the target exists before trying to access its components
-	/*if (mTargetID != INVALID_UNIT_ID)
-	{
-		//std::cout << "there is a target" << std::endl;
-		assert(pTarget != NULL);
-		mTargetLoc = pTarget->getPositionComponent()->getPosition();
-	}*/
-
 	// the angle to the target
 	diff = mTargetLoc - pOwner->getPositionComponent()->getPosition();
 

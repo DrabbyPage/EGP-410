@@ -185,29 +185,28 @@ void Game::processLoop()
 
 	// this is where you got getInput()
 	mpInputSystem->getInput(x,y);
-	
-	// this is where you got checkExit()
-	mShouldExit = mpInputSystem->checkExit();
 
-	bool shouldSpawn = mpInputSystem->spawnNewUnit();
+	char newInput = mpInputSystem->returnInput();
 
-	if (shouldSpawn)
+	if (newInput == 'A' || newInput == 'a')
 	{
-		Unit* pUnit = mpUnitManager->createRandomUnit(*mpSpriteManager->getSprite(AI_ICON_SPRITE_ID));
-		pUnit->setShowTarget(true);
-
-		if (pUnit == NULL)
+		for (int i = 0; i < 10; i++)
 		{
-			mpUnitManager->deleteRandomUnit();
+			Unit* pUnit = mpUnitManager->createRandomUnit(*mpSpriteManager->getSprite(AI_ICON_SPRITE_ID));
+			pUnit->setShowTarget(true);
+
+			if (pUnit == NULL)
+			{
+				mpUnitManager->deleteRandomUnit();
+			}
 		}
 	}
-
-	bool deleteChar = mpInputSystem->deleteUnit();
-
-	if (deleteChar)
+	else if (newInput == 'D' || newInput == 'd')
 	{
 		mpUnitManager->deleteRandomUnit();
 	}
+
+	mShouldExit = mpInputSystem->checkExit();
 
 }
 

@@ -27,6 +27,7 @@ public:
 	bool checkExit();
 	bool spawnNewUnit();
 	bool deleteUnit();
+	char returnInput();
 
 private:
 	Game pGame;

@@ -25,7 +25,8 @@ public:
 		ARRIVE_AND_FACE,
 		COHESION,
 		SEPARATION,
-		ALLIGNMENT,
+		ALIGNMENT,
+		BLENDED,
 		FLOCKING
 	};
 
@@ -42,6 +43,8 @@ public:
 	//void setData(const PhysicsData& data) { mData = data; };
 	const PhysicsData& getData() const { return mData; };
 	void update();
+	virtual Steering* getSteering() { return this; };//overridden by sub-classes
+
 protected:
 	SteeringType mType;
 	Vector2D mTargetLoc;
@@ -49,6 +52,5 @@ protected:
 	UnitID mOwnerID;
 	PhysicsData mData;
 
-	virtual Steering* getSteering() { return this; };//overridden by sub-classes
 
 };

@@ -14,8 +14,8 @@ public:
 	virtual Steering* getSteering();
 
 private:
-	float decayCoeff = 200.0f;
-	float threshold = 30.0f;
+	float decayCoeff;// = 200.0f;
+	float threshold;// = 30.0f;
 	int neighborCount;
 };
 

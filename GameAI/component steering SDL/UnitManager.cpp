@@ -52,6 +52,8 @@ Unit* UnitManager::createUnit(const Sprite& sprite, bool shouldWrap, const Posit
 		pUnit->mMaxRotAcc = MAX_ROT_ACC;
 		pUnit->mMaxRotVel = MAX_ROT_VEL;
 
+		//pUnit->getPositionComponent()->setFacing(rand() % 360);
+
 	}
 
 	return pUnit;
@@ -75,8 +77,8 @@ Unit* UnitManager::createRandomUnit(const Sprite& sprite)
 	if (pUnit != NULL)
 	{
 		//pUnit->setSteering(Steering::WANDER, Vector2D(gpGame->getGraphicsSystem()->getWidth() / 2, gpGame->getGraphicsSystem()->getHeight() / 2));
-		pUnit->setSteering(Steering::WANDER_AND_CHASE, Vector2D(gpGame->getGraphicsSystem()->getWidth() / 2, gpGame->getGraphicsSystem()->getHeight() / 2));
-		//pUnit->setSteering(Steering::FLOCKING, Vector2D(gpGame->getGraphicsSystem()->getWidth() / 2, gpGame->getGraphicsSystem()->getHeight() / 2));
+		//pUnit->setSteering(Steering::WANDER_AND_CHASE, Vector2D(gpGame->getGraphicsSystem()->getWidth() / 2, gpGame->getGraphicsSystem()->getHeight() / 2));
+		pUnit->setSteering(Steering::FLOCKING, Vector2D(gpGame->getGraphicsSystem()->getWidth() / 2, gpGame->getGraphicsSystem()->getHeight() / 2));
 
 	}
 	return pUnit;

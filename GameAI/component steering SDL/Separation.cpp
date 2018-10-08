@@ -5,7 +5,7 @@
 
 #include <cassert>
 
-//#include "Steering.h"
+#include "Steering.h"
 #include "Game.h"
 #include "UnitManager.h"
 #include "Unit.h"
@@ -17,6 +17,10 @@ SeparationSteering::SeparationSteering(const UnitID& ownerID, const Vector2D& ta
 	setOwnerID(ownerID);
 	setTargetID(targetID);
 	setTargetLoc(targetLoc);
+	
+	threshold = 95.0f;
+	decayCoeff = 1000.0f;
+
 }
 
 Steering* SeparationSteering::getSteering()
@@ -34,34 +38,38 @@ Steering* SeparationSteering::getSteering()
 	float maxAccel = data.maxAccMagnitude;
 
 	neighborCount = 0;
+	data.acc = 0;
 
 	// loop through each target
 	for (int i = 0; i < gpGame->getUnitManager()->size(); i++)
 	{
 		Vector2D direction;
 		float distance, strength;
-
+		Unit* currentUnit = listOfTargets->getUnit(i);
 		// if not the character then check for distance
-		if (i != pOwner->getPositionComponent()->getID())
+		if (currentUnit != pOwner)
 		{
 			// check if the target is close
-			direction = listOfTargets->getUnit(i)->getPositionComponent()->getPosition() - pOwner->getPositionComponent()->getPosition();
+			direction = currentUnit->getPositionComponent()->getPosition() - pOwner->getPositionComponent()->getPosition();
 			distance = direction.getLength();
 
 			if (distance < threshold)
 			{
 				// calculate the strength of repulsion
-				strength = min(decayCoeff / pow(distance, 2), maxAccel);
+				strength = min((decayCoeff / (distance*distance)), maxAccel);
 
 				// add the acceleration
 				direction.normalize();
-				data.acc += strength * direction.getLength();
+				data.acc += direction * strength;
 				
 				neighborCount = neighborCount + 1;
 			}
 
 		}
 	}
+
+	data.rotAcc = 0;
+	data.rotVel = 0;
 
 	// return the result
 	this->mData = data;
