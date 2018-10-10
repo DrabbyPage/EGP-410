@@ -68,6 +68,8 @@ private:
 	GraphicsBufferID mEnemyIconBufferID = "enemy";
 	GraphicsBufferID mTargetBufferID = "target";
 
+	std::string selectedSteering;
+
 };
 
 float genRandomBinomial();//range -1:1 from "Artificial Intelligence for Games", Millington and Funge

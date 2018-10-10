@@ -81,6 +81,9 @@
     <ClCompile Include="WanderAndChaseSteering.cpp" />
     <ClCompile Include="WanderSteering.cpp" />
   </ItemGroup>
+  <ItemGroup>
+    <Text Include="FlockValues.txt" />
+  </ItemGroup>
   <PropertyGroup Label="Globals">
     <ProjectGuid>{07ED8114-0659-4424-9468-50DBBEA5882A}</ProjectGuid>
     <RootNamespace>allegrotest</RootNamespace>

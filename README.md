@@ -22,6 +22,9 @@ your platform's proper SDK.
 
 3. The keyboard inputs 
      - Left Mouse Click: moves the player to the point
-     - Enter: Spawns a random unit
+     - A: Spawns a random unit
      - D: Deletes a random unit
      - Esc: Exits the program 
+
+4. Any other notes
+     - 

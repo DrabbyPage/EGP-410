@@ -47,7 +47,7 @@ Steering* SeparationSteering::getSteering()
 		float distance, strength;
 		Unit* currentUnit = listOfTargets->getUnit(i);
 		// if not the character then check for distance
-		if (currentUnit != pOwner)
+		if (currentUnit != pOwner && currentUnit != NULL)
 		{
 			// check if the target is close
 			direction = currentUnit->getPositionComponent()->getPosition() - pOwner->getPositionComponent()->getPosition();

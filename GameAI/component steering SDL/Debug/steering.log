@@ -1,3 +1,24 @@
-﻿  Cohesion.cpp
-d:\github\egp-410\gameai\component steering sdl\cohesion.cpp(75): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
+﻿  Game.cpp
+  Generating Code...
+  Compiling...
+  main.cpp
+  InputSystem.cpp
+  Generating Code...
+  Skipping... (no relevant changes detected)
+  WanderSteering.cpp
+  WanderAndChaseSteering.cpp
+  UnitManager.cpp
+  Unit.cpp
+  Separation.cpp
+  SeekSteering.cpp
+  PositionComponent.cpp
+  PlayerMoveToMessage.cpp
+  GameMessageManager.cpp
+  FlockSteering.cpp
+  FaceSteering.cpp
+  Cohesion.cpp
+  BlendedSteer.cpp
+  ArriveSteering.cpp
+  ArriveAndFaceSteering.cpp
+  Alignment.cpp
   steering.vcxproj -> D:\GitHub\EGP-410\GameAI\component steering SDL\Debug\steering.exe

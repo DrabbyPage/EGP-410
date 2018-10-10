@@ -4,6 +4,8 @@
 #include <iostream>
 #include <math.h>
 #include <cassert>
+#include <fstream>
+#include <string>
 
 #include "Steering.h"
 #include "Cohesion.h"
@@ -19,6 +21,29 @@
 
 FlockSteering::FlockSteering(const UnitID& ownerID, const Vector2D& targetLoc, const UnitID& targetID, bool shouldFlee): Steering()
 {
+	float alignWeight, cohesionWeight, separWeight, wanderWeight;
+	std::string value;
+	fileName = "FlockValues.txt";
+	mFile.open(fileName);
+
+	mFile.ignore(256, ':');
+	std::getline(mFile, value);
+	alignWeight = stof(value);
+
+	mFile.ignore(256, ':');
+	std::getline(mFile, value);
+	cohesionWeight = stof(value);
+
+	mFile.ignore(256, ':');
+	std::getline(mFile, value);
+	separWeight = stof(value);
+
+	mFile.ignore(256, ':');
+	std::getline(mFile, value);
+	wanderWeight = stof(value);
+	
+	mFile.close();
+
 	mType = Steering::FLOCKING;
 
 	setOwnerID(ownerID);
@@ -34,11 +59,12 @@ FlockSteering::FlockSteering(const UnitID& ownerID, const Vector2D& targetLoc, c
 	flockSepSteer = new SeparationSteering(ownerID, targetLoc, targetID, shouldFlee);
 	flockWanderSteer = new WanderSteering(ownerID, targetLoc, targetID, shouldFlee);
 
-	flockBlendSteer->AddBehavior(flockCoSteer, 0.08f);
-	flockBlendSteer->AddBehavior(flockAlignSteer, 0.6f);
-	flockBlendSteer->AddBehavior(flockSepSteer, 1.5f);
-	flockBlendSteer->AddBehavior(flockWanderSteer, 0.03f);
+	flockBlendSteer->AddBehavior(flockCoSteer, cohesionWeight);
+	flockBlendSteer->AddBehavior(flockAlignSteer, alignWeight); 
+	flockBlendSteer->AddBehavior(flockSepSteer, separWeight);
+	flockBlendSteer->AddBehavior(flockWanderSteer, wanderWeight);
 }
+
 FlockSteering::~FlockSteering()
 {
 	delete flockBlendSteer;
@@ -46,6 +72,12 @@ FlockSteering::~FlockSteering()
 	delete flockCoSteer;
 	delete flockSepSteer;
 	delete flockWanderSteer;
+
+	mOutFile.open(fileName);
+	mOutFile << "Alignment: " << alignWeight << std::endl;
+	mOutFile << "Cohesion: " << cohesionWeight << std::endl;
+	mOutFile << "Separation: " << separWeight << std::endl;
+	mOutFile << "Wander: " << wanderWeight << std::endl;
 };
 
 Steering* FlockSteering::getSteering()
@@ -61,3 +93,24 @@ Steering* FlockSteering::getSteering()
 	this->mData = data;
 	return this;
 }
+
+void FlockSteering::setNewWeight(std::string steer, float newWeight)
+{
+	if (steer == "Cohesion")
+	{
+		cohesionWeight = newWeight;
+	}
+	else if (steer == "Alignment")
+	{
+		alignWeight = newWeight;
+	}
+	else if (steer == "Separation")
+	{
+		separWeight = newWeight;
+	}
+	else if (steer == "Wander")
+	{
+		wanderWeight = newWeight;
+	}
+}
+

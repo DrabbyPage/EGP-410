@@ -205,6 +205,34 @@ void Game::processLoop()
 	{
 		mpUnitManager->deleteRandomUnit();
 	}
+	else if (newInput == 'Q' || newInput == 'q')
+	{
+		selectedSteering = "Alignment";
+	}
+	else if (newInput == 'W' || newInput == 'w')
+	{
+		selectedSteering = "Cohesion";
+	}
+	else if (newInput == 'E' || newInput == 'e')
+	{
+		selectedSteering = "Separation";
+	}
+	else if (newInput == 'R' || newInput == 'r')
+	{
+		selectedSteering = "Wander";
+	}
+	else if (newInput == 'Z' || newInput == 'z')
+	{
+		
+		for (int i = 0; i < mpUnitManager->size(); i++)
+		{
+
+		}
+	}
+	else if (newInput == 'X' || newInput == 'x')
+	{
+
+	}
 
 	mShouldExit = mpInputSystem->checkExit();
 

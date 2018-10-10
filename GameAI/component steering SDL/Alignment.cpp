@@ -41,7 +41,7 @@ Steering* AlignmentSteering::getSteering()
 		float distance;
 		Unit* currentUnit = listOfCharacters->getUnit(i);
 		// if not the character then check for distance
-		if (currentUnit != pOwner)
+		if (currentUnit != pOwner && currentUnit != NULL)
 		{
 			// check if the target is close
 			direction = currentUnit->getPositionComponent()->getPosition() - pOwner->getPositionComponent()->getPosition();
@@ -60,11 +60,6 @@ Steering* AlignmentSteering::getSteering()
 	{
 		averageAngle = totalAngle / neighborCount;
 
-		float pOwnerX = pOwner->getPositionComponent()->getPosition().getX();
-		float pOwnerY = pOwner->getPositionComponent()->getPosition().getY();
-
-		//Vector2D newTargetLoc = Vector2D(pOwnerX + cos(averageAngle), pOwnerY + sin(averageAngle));
-
 		alignFaceSteer = FaceSteering(mOwnerID, mTargetLoc, mTargetID, false);
 		Steering* tempSteer;
 		tempSteer = alignFaceSteer.getSteering();
@@ -72,7 +67,7 @@ Steering* AlignmentSteering::getSteering()
 		if (tempSteer != NULL)
 		{
 			data.rotAcc = tempSteer->getData().rotAcc;
-			data.rotVel = tempSteer->getData().rotVel;
+			//data.rotVel = tempSteer->getData().rotVel;
 		}
 		else
 		{
