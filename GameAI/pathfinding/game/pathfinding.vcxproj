@@ -13,7 +13,7 @@
   <PropertyGroup Label="Globals">
     <ProjectGuid>{09059697-DB0D-44AE-B867-2437B1E3D875}</ProjectGuid>
     <RootNamespace>pathfinding</RootNamespace>
-    <WindowsTargetPlatformVersion>10.0.15063.0</WindowsTargetPlatformVersion>
+    <WindowsTargetPlatformVersion>10.0.16299.0</WindowsTargetPlatformVersion>
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="Configuration">
@@ -95,6 +95,7 @@
     <ClInclude Include="DebugContent.h" />
     <ClInclude Include="DebugDisplay.h" />
     <ClInclude Include="DepthFirstPathfinder.h" />
+    <ClInclude Include="DijkstraPath.h" />
     <ClInclude Include="GameApp.h" />
     <ClInclude Include="GameMessage.h" />
     <ClInclude Include="GameMessageManager.h" />
@@ -122,6 +123,7 @@
     <ClCompile Include="Connection.cpp" />
     <ClCompile Include="DebugDisplay.cpp" />
     <ClCompile Include="DepthFirstPathfinder.cpp" />
+    <ClCompile Include="DijkstraPath.cpp" />
     <ClCompile Include="GameApp.cpp" />
     <ClCompile Include="GameMessage.cpp" />
     <ClCompile Include="GameMessageManager.cpp" />
