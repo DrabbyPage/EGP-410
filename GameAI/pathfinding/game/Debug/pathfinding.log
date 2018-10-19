@@ -1,4 +1,6 @@
-﻿  DijkstraPath.cpp
-d:\github\egp-410\gameai\pathfinding\game\dijkstrapath.cpp(87): warning C4018: '<': signed/unsigned mismatch
-d:\github\egp-410\gameai\pathfinding\game\dijkstrapath.cpp(151): warning C4018: '<': signed/unsigned mismatch
+﻿  GameApp.cpp
+  InputSystem.cpp
+  main.cpp
+  PathToMessage.cpp
+  Generating Code...
   pathfinding.vcxproj -> D:\GitHub\EGP-410\GameAI\pathfinding\game\Debug\pathfinding.exe
