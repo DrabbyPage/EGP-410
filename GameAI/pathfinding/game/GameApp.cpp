@@ -24,6 +24,8 @@
 #include <fstream>
 #include <vector>
 
+#include "DijkstraPath.h"
+
 const int GRID_SQUARE_SIZE = 32;
 const std::string gFileName = "pathgrid.txt";
 
@@ -64,6 +66,7 @@ bool GameApp::init()
 	mpGridGraph->init();
 
 	mpPathfinder = new DepthFirstPathfinder(mpGridGraph);
+	//mpPathfinder = new DijkstraPath(mpGridGraph);
 
 	//load buffers
 	mpGraphicsBufferManager->loadBuffer(mBackgroundBufferID, "wallpaper.bmp");
@@ -134,4 +137,36 @@ void GameApp::processLoop()
 bool GameApp::endLoop()
 {
 	return Game::endLoop();
+}
+
+void GameApp::LookForPathChange(char charInput)
+{
+	switch (charInput)
+	{
+	case 'A':
+
+	case 'a':
+		//delete mpPathfinder;
+		//mpPathfinder = NULL;
+		//mpPathfinder = new AStarPath(mpGridGraph);
+		break;
+
+	case 'D':
+
+	case 'd':
+		delete mpPathfinder;
+		mpPathfinder = NULL;
+		mpPathfinder = new DepthFirstPathfinder(mpGridGraph);
+		break;
+
+	case 'F':
+
+	case 'f':
+		delete mpPathfinder;
+		mpPathfinder = NULL;
+		mpPathfinder = new DijkstraPath(mpGridGraph);
+		break;
+
+
+	}
 }

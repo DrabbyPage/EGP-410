@@ -10,7 +10,8 @@
 #include <algorithm>
 #include "GridPathfinder.h"
 
-DijkstraPath::DijkstraPath(Graph* pGraph) : GridPathfinder(dynamic_cast<GridGraph*>(pGraph))
+DijkstraPath::DijkstraPath(Graph* pGraph) 
+	: GridPathfinder(dynamic_cast<GridGraph*>(pGraph))
 {
 #ifdef VISUALIZE_PATH
 	mpPath = NULL;
@@ -30,7 +31,7 @@ DijkstraPath::~DijkstraPath()
 	}
 }
 
-Path* DijkstraPath::findPath(Graph* graph, Node* start, Node* end)
+Path* DijkstraPath::findPath(Node* start, Node* end)
 {
 	//make sure to delete the path when you are done!
 
@@ -60,7 +61,7 @@ Path* DijkstraPath::findPath(Graph* graph, Node* start, Node* end)
 	current.node = openNodes.front();
 
 	std::vector<Connection*> connections;
-	connections = graph->getConnections(current.node->getId());
+	connections = mpGraph->getConnections(current.node->getId());
 
 	// iterate through processing each node
 	// while length(open>0)
@@ -79,8 +80,8 @@ Path* DijkstraPath::findPath(Graph* graph, Node* start, Node* end)
 		else
 		{
 			// otherwise get this outgoing connections
-			// connections = graph.getConnections(current)
-			connections = graph->getConnections(current.node->getId());
+			// connections = mpGraph.getConnections(current)
+			connections = mpGraph->getConnections(current.node->getId());
 
 			// loop through each connection in turn 
 			// for connection in connections:

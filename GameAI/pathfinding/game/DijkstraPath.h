@@ -18,7 +18,7 @@ public:
 	DijkstraPath(Graph* pGraph);
 	~DijkstraPath();
 
-	Path* findPath(Graph* graph, Node* start, Node* end);//make sure to delete the path when you are done!
+	Path* findPath(Node* start, Node* end);//make sure to delete the path when you are done!
 	Path* ReverseThePath(Path* path);
 
 private:

@@ -37,7 +37,18 @@ void InputSystem::process()
 	//if escape key was down then exit the loop
 	if (state[SDL_SCANCODE_ESCAPE])
 	{
-		pGame->markForExit();// markForExit();
+		pGame->markForExit();
 	}
-
+	if (state[SDL_SCANCODE_A])
+	{
+		pGame->LookForPathChange('a');
+	}
+	if (state[SDL_SCANCODE_D])
+	{
+		pGame->LookForPathChange('d');
+	}
+	if (state[SDL_SCANCODE_F])
+	{
+		pGame->LookForPathChange('f');
+	}
 }
