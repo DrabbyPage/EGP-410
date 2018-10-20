@@ -1,6 +1,5 @@
 d:\github\egp-410\gameai\pathfinding\game\debug\vc141.pdb
 d:\github\egp-410\gameai\pathfinding\game\debug\vc141.idb
-d:\github\egp-410\gameai\pathfinding\game\debug\gridpathfinder.obj
 d:\github\egp-410\gameai\pathfinding\game\debug\gridgraph.obj
 d:\github\egp-410\gameai\pathfinding\game\debug\graph.obj
 d:\github\egp-410\gameai\pathfinding\game\debug\gamemessagemanager.obj
@@ -26,6 +25,9 @@ d:\github\egp-410\gameai\pathfinding\game\debug\pathfinder.obj
 d:\github\egp-410\gameai\pathfinding\game\debug\path.obj
 d:\github\egp-410\gameai\pathfinding\game\debug\node.obj
 d:\github\egp-410\gameai\pathfinding\game\debug\main.obj
+d:\github\egp-410\gameai\pathfinding\game\debug\inputsystem.obj
+d:\github\egp-410\gameai\pathfinding\game\debug\gridpathfinder.obj
+d:\github\egp-410\gameai\pathfinding\game\debug\dijkstrapath.obj
 d:\github\egp-410\gameai\pathfinding\game\debug\pathfinding.exe
 d:\github\egp-410\gameai\pathfinding\game\debug\pathfinding.ilk
 d:\github\egp-410\gameai\pathfinding\game\debug\pathfinding.pdb

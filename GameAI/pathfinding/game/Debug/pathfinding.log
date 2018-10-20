@@ -1,4 +1,4 @@
-﻿  GameApp.cpp
-  InputSystem.cpp
+﻿  DijkstraPath.cpp
+  GameApp.cpp
   Generating Code...
   pathfinding.vcxproj -> D:\GitHub\EGP-410\GameAI\pathfinding\game\Debug\pathfinding.exe

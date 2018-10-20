@@ -32,23 +32,34 @@ void InputSystem::process()
 	}
 
 	//get keyboard state
-	const Uint8 *state = SDL_GetKeyboardState(NULL);
+	SDL_Event newEvent;
+	SDL_PollEvent(&newEvent);
+	if (newEvent.type == SDL_KEYDOWN)
+	{		
+		if (newEvent.key.keysym.sym == SDLK_ESCAPE)
+		{
+			std::cout << "d was pressed" << std::endl;
+			pGame->markForExit();
+			return;
+		}
+		if (newEvent.key.keysym.sym == SDLK_d)
+		{
+			std::cout << "d was pressed" << std::endl;
+			pGame->LookForPathChange('d');
+			return;
+		}
+		if (newEvent.key.keysym.sym == SDLK_f)
+		{
+			std::cout << "f was pressed" << std::endl;
+			pGame->LookForPathChange('f');
+			return;
+		}
+		if (newEvent.key.keysym.sym == SDLK_a)
+		{
+			std::cout << "a was pressed" << std::endl;
+			pGame->LookForPathChange('a');
+			return;
+		}
 
-	//if escape key was down then exit the loop
-	if (state[SDL_SCANCODE_ESCAPE])
-	{
-		pGame->markForExit();
-	}
-	if (state[SDL_SCANCODE_A])
-	{
-		pGame->LookForPathChange('a');
-	}
-	if (state[SDL_SCANCODE_D])
-	{
-		pGame->LookForPathChange('d');
-	}
-	if (state[SDL_SCANCODE_F])
-	{
-		pGame->LookForPathChange('f');
 	}
 }

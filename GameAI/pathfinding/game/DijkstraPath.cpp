@@ -16,7 +16,7 @@ DijkstraPath::DijkstraPath(Graph* pGraph)
 #ifdef VISUALIZE_PATH
 	mpPath = NULL;
 #endif
-	dijkstraPath = nullptr;
+	//dijkstraPath = nullptr;
 }
 
 DijkstraPath::~DijkstraPath()
@@ -24,11 +24,11 @@ DijkstraPath::~DijkstraPath()
 #ifdef VISUALIZE_PATH
 	delete mpPath;
 #endif
-
+	/*
 	if (dijkstraPath != nullptr)
 	{
 		delete dijkstraPath;
-	}
+	}*/
 }
 
 Path* DijkstraPath::findPath(Node* start, Node* end)
@@ -42,10 +42,9 @@ Path* DijkstraPath::findPath(Node* start, Node* end)
 	// startRecord.costSoFar = 0;
 
 	NodeRecord startRecord = NodeRecord();
-	NodeRecord endNodeRecord = NodeRecord();
 
 	startRecord.node = start;
-	startRecord.connection = nullptr;
+	//startRecord.nodeRecordConnections = mpGraph->getConnections(start->getId());
 	startRecord.costSoFar = 0;
 
 
@@ -53,114 +52,125 @@ Path* DijkstraPath::findPath(Node* start, Node* end)
 	// open = PathfindingList()
 	// open += startRecord
 	// closed = PathfindingList()
-	std::vector<Node*> openNodes;
-	std::vector<Node*> closedNodes;
-	openNodes.push_back(startRecord.node);
+	std::vector<NodeRecord> openNodes;
+	std::vector<NodeRecord> closedNodes;
+	openNodes.push_back(startRecord);
 	
 	NodeRecord current = NodeRecord();
-	current.node = openNodes.front();
 
 	std::vector<Connection*> connections;
-	connections = mpGraph->getConnections(current.node->getId());
+	connections = mpGraph->getConnections(openNodes.front().node->getId());
 
 	// iterate through processing each node
 	// while length(open>0)
 	while (openNodes.size() > 0)
-	{
+	{	
+		NodeRecord endNodeRecord = NodeRecord();
+
 		// find the smallest element in the open list
 		// current = open.smallestElement()
-		current.node = openNodes.front();
+		current = openNodes.front();
 
 		// if it is the goal node then terminate
 		// if( current.node == goal: break
 		if (current.node == end)
 		{
+			std::cout << "at the end" << std::endl;
 			break;
 		}
+		// otherwise get this outgoing connections
 		else
 		{
-			// otherwise get this outgoing connections
 			// connections = mpGraph.getConnections(current)
 			connections = mpGraph->getConnections(current.node->getId());
-
+			
 			// loop through each connection in turn 
 			// for connection in connections:
-			for (int i = 0; i < connections.size(); i++)
+			for (unsigned int i = 0; i < connections.size(); i++)
 			{
 				// get the cost estimate for the end node
 				// end node = connection.getNode()
 				// endNodeCost = current.costSoFar + connection.getCost()
 				Node* endNode = connections[i]->getToNode();
-				float endNodeCost = startRecord.costSoFar + connections[i]->getCost();
-
+				Connection* endConnect = connections[i];
+				float endNodeCost = current.costSoFar + connections[i]->getCost();
+				
+				bool inClosedList = false;
+				bool inOpenList = false;
+				
 				// skip if the node is closed
 				// if(closed.contains(endNode): continue
-				if (std::find(closedNodes.begin(), closedNodes.end(), endNode) != closedNodes.end())
+				for (auto record = closedNodes.begin(); record != closedNodes.end(); record++)
 				{
-					continue;
-				}
-				if (std::find(openNodes.begin(), openNodes.end(), endNode) != openNodes.end())
-				{
-					// else if open.contains(endNode):
-
-					// here we find the record in the open list
-					// corresponding to the endNode
-					// endNodeRecord = open.find(endNode)
-					endNodeRecord.node = endNode;
-
-					// if(endNodeRecord.cost <= endNodeCost)
-					// continue
-					if (endNodeRecord.costSoFar <= endNodeCost)
+					if (record->node == endNode)
 					{
-						continue;
+						inClosedList = true;
+						break;
 					}
 				}
-				else
+				// else if open.contains(endNode):
+				if (!inClosedList)
 				{
-					// otherwise we know we've got an unvisited node
-					// so make a record of it
-					// else:
-					// endNodeRecord = newNodeRecord()
-					// endNodeRecord = endNode
-					endNodeRecord.costSoFar = endNodeCost;
-					endNodeRecord.node = endNode;
+					for (auto record = openNodes.begin(); record < openNodes.end(); record++)
+					{
+						if (record->node == endNode)
+						{
+							// here we find the record in the open list corresponding to the endNode
+							// endNodeRecord = open.find(endNode)
+							endNodeRecord.node = record->node;
+							inOpenList = true;
+							// if(endNodeRecord.cost <= endNodeCost)
+							// continue
+							if (endNodeRecord.costSoFar <= endNodeCost)
+							{
+								continue;
+							}
+							break;
+						}
+					}
 				}
+				// otherwise we know we've got an unvisited node so make a record of it
+				if(!inClosedList && !inOpenList)
+				{
+					// endNodeRecord = new NodeRecord()
+					// endNodeRecord.node = endNode
+					endNodeRecord.node = endNode;
 
-
-				// we're here if we need to update the node
-				// update the cost and connection
-				// endNodeRecord.cost = endNodeCost
-				// endNodeRecord.connection = connection
-				endNodeRecord.costSoFar = endNodeCost;
-				endNodeRecord.connection = connections[i];
+					// we're here if we need to update the node
+					// update the cost and connection
+					endNodeRecord.costSoFar = endNodeCost;
+					endNodeRecord.nodeRecordConnections = endConnect;
+				}
 
 				// and add it to the open list
-				// if not open.contains(endNode)
-				// open+= endNodeRecord
-				if (std::find(openNodes.begin(), openNodes.end(), endNode) != openNodes.end())
+				// if NOT open.contains(endNode)
+				if (!inClosedList)
 				{
-					openNodes.push_back(endNodeRecord.node);
+					bool inOpen = false;
+					for (auto record = openNodes.begin(); record < openNodes.end(); record++)
+					{
+						if (record->node == endNodeRecord.node)
+						{
+							inOpen = true;
+							break;
+						}
+					}
+
+					if (!inOpen)
+					{
+						openNodes.push_back(endNodeRecord);
+					}
 				}
-
 			}
-
+			
 			// we've finished looking at the connections for
 			// the current node, so add it to the closed list
 			// and remove it form the open list:
-			// open -= current
-			// closed += current
-			for (int i = 0; i < openNodes.size(); i++)
-			{
-				if (openNodes[i] == current.node)
-				{
-					openNodes.erase(openNodes.begin() + i);
-					closedNodes.push_back(current.node);
-					break;
-				}
-			}
 
 		}
-
+		openNodes.erase(openNodes.begin());
+		closedNodes.push_back(current);
+		mVisitedNodes.push_back(current.node);
 	}
 
 	// we're here if we've either found the goal, or 
@@ -177,12 +187,13 @@ Path* DijkstraPath::findPath(Node* start, Node* end)
 
 		// compile the list of connections in the path
 		// path = []
+		/*
 		if (dijkstraPath != nullptr)
 		{
 			delete dijkstraPath;
-		}
+		}*/
 
-		dijkstraPath = new Path();
+		Path* dijkstraPath = new Path();
 
 		// work pack along the path, accumulating connections
 		// while(current.node != start):
@@ -191,12 +202,37 @@ Path* DijkstraPath::findPath(Node* start, Node* end)
 		while (current.node != start)
 		{
 			dijkstraPath->addNode(current.node);
-			current.node = current.connection->getFromNode();
+			current.node = current.nodeRecordConnections->getFromNode();
+			
+			for (auto node = closedNodes.begin(); node < closedNodes.end(); node++)
+			{
+				if (node->node == current.node)
+				{
+					current.nodeRecordConnections = node->nodeRecordConnections;
+				}
+			}
+
 		}
 
 		// reverse the path, and return it
 		// return reverse(path)
-		dijkstraPath = ReverseThePath(dijkstraPath);
+		//dijkstraPath = ReverseThePath(dijkstraPath);
+		Path* tempPath = new Path();
+		
+		std::cout << "reversing the path" << std::endl;
+		for (int i = 0; i < dijkstraPath->getNumNodes(); i++)
+		{
+			Node* newNode;
+			int lastNodeIndex;
+
+			lastNodeIndex = dijkstraPath->getNumNodes() - (i + 1);
+
+			newNode = dijkstraPath->peekNode(lastNodeIndex);
+
+			tempPath->addNode(newNode);
+		}
+		dijkstraPath = tempPath;
+		//delete tempPath;
 
 #ifdef VISUALIZE_PATH
 		mpPath = dijkstraPath;
@@ -207,28 +243,3 @@ Path* DijkstraPath::findPath(Node* start, Node* end)
 
 }
 
-Path* DijkstraPath::ReverseThePath(Path* path)
-{
-	Path* newPath = new Path();
-
-	for (int i = 0; i < path->getNumNodes(); i++)
-	{
-		Node* newNode;
-		int lastNodeIndex;
-
-		lastNodeIndex = path->getNumNodes() - (i + 1);
-
-		newNode = path->peekNode(lastNodeIndex);
-
-		newPath->addNode(newNode);
-	}
-
-	if (newPath->getNumNodes() > 0)
-	{
-		return newPath;
-	}
-	else
-	{
-		return nullptr;
-	}
-}

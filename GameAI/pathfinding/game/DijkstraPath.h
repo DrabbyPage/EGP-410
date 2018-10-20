@@ -19,16 +19,31 @@ public:
 	~DijkstraPath();
 
 	Path* findPath(Node* start, Node* end);//make sure to delete the path when you are done!
-	Path* ReverseThePath(Path* path);
 
 private:
-	Path* dijkstraPath;
+	//Path* dijkstraPath;
 };
 
 struct NodeRecord
 {
+	NodeRecord(Node* newNode, Connection* newConnections, float newCost)
+	{
+		node = newNode;
+		costSoFar = newCost;
+
+		nodeRecordConnections = newConnections;
+
+	}
+
+	NodeRecord()
+	{
+		node = nullptr;
+		costSoFar = 0;
+		nodeRecordConnections = nullptr;
+	}
+
 	Node* node;
-	Connection* connection;
+	Connection* nodeRecordConnections;
 	float costSoFar;
 };
 

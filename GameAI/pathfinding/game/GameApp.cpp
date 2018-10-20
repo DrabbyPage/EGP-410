@@ -65,8 +65,8 @@ bool GameApp::init()
 	//init the nodes and connections
 	mpGridGraph->init();
 
-	mpPathfinder = new DepthFirstPathfinder(mpGridGraph);
-	//mpPathfinder = new DijkstraPath(mpGridGraph);
+	//mpPathfinder = new DepthFirstPathfinder(mpGridGraph);
+	mpPathfinder = new DijkstraPath(mpGridGraph);
 
 	//load buffers
 	mpGraphicsBufferManager->loadBuffer(mBackgroundBufferID, "wallpaper.bmp");
@@ -146,24 +146,21 @@ void GameApp::LookForPathChange(char charInput)
 	case 'A':
 
 	case 'a':
-		//delete mpPathfinder;
-		//mpPathfinder = NULL;
+		std::cout << "changing to a*" << std::endl;
 		//mpPathfinder = new AStarPath(mpGridGraph);
 		break;
 
 	case 'D':
 
 	case 'd':
-		delete mpPathfinder;
-		mpPathfinder = NULL;
+		std::cout << "changing to depth first search" << std::endl;
 		mpPathfinder = new DepthFirstPathfinder(mpGridGraph);
 		break;
 
 	case 'F':
 
 	case 'f':
-		delete mpPathfinder;
-		mpPathfinder = NULL;
+		std::cout << "changing to dijkstra" << std::endl;
 		mpPathfinder = new DijkstraPath(mpGridGraph);
 		break;
 
