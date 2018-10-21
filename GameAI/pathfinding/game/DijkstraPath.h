@@ -21,7 +21,7 @@ public:
 	Path* findPath(Node* start, Node* end);//make sure to delete the path when you are done!
 
 private:
-	//Path* dijkstraPath;
+
 };
 
 struct NodeRecord

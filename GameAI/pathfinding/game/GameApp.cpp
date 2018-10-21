@@ -25,6 +25,7 @@
 #include <vector>
 
 #include "DijkstraPath.h"
+//#include "AStar.h"
 
 const int GRID_SQUARE_SIZE = 32;
 const std::string gFileName = "pathgrid.txt";

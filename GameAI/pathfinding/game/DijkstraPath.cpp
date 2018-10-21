@@ -10,9 +10,12 @@
 #include <algorithm>
 #include "GridPathfinder.h"
 
+// has a memory leak when reallocating mpPath you need to find where to delete the fucker
+
 DijkstraPath::DijkstraPath(Graph* pGraph) 
 	: GridPathfinder(dynamic_cast<GridGraph*>(pGraph))
 {
+
 #ifdef VISUALIZE_PATH
 	mpPath = NULL;
 #endif
@@ -185,7 +188,6 @@ Path* DijkstraPath::findPath(Node* start, Node* end)
 		// reverse the path, and return it
 		Path* tempPath = new Path();
 		
-		std::cout << "reversing the path" << std::endl;
 		for (int i = 0; i < dijkstraPath->getNumNodes(); i++)
 		{
 			Node* newNode;
@@ -203,6 +205,7 @@ Path* DijkstraPath::findPath(Node* start, Node* end)
 #ifdef VISUALIZE_PATH
 		mpPath = dijkstraPath;
 #endif
+		delete tempPath;
 		return dijkstraPath;
 	}
 
