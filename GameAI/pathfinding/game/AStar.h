@@ -5,13 +5,11 @@
 #include "GridPathfinder.h"
 #include <vector>
 
-
-class Path;
-class Graph;
-class GraphicsBuffer;
-class Grid;
-class Connection;
-class Heuristic;
+#include"Path.h"
+#include "Graph.h"
+#include "Grid.h"
+#include "Connection.h"
+#include "Heuristic.h"
 
 class AStarPath : public GridPathfinder
 {
@@ -19,32 +17,24 @@ public:
 	AStarPath(Graph* pGraph);
 	~AStarPath();
 
-	Path* findPath(Node* start, Node* end, Heuristic* heur);//make sure to delete the path when you are done!
+	Path* findPath(Node* start, Node* end);//make sure to delete the path when you are done!
 
 private:
 
 };
 
-struct NodeRecord
+struct StarNodeRecord
 {
-	NodeRecord(Node* newNode, Connection* newConnections, float newCost, float newEstiCost)
-	{
-		node = newNode;
-		costSoFar = newCost;
-		estiTotalCost = newEstiCost;
-		nodeRecordConnections = newConnections;
-	}
-
-	NodeRecord()
+	StarNodeRecord()
 	{
 		node = nullptr;
 		costSoFar = 0;
 		estiTotalCost = 0;
-		nodeRecordConnections = nullptr;
+		recordConnection = nullptr;
 	}
 
 	Node* node;
-	Connection* nodeRecordConnections;
+	Connection* recordConnection;
 	float costSoFar;
 	float estiTotalCost;
 };

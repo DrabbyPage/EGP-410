@@ -105,9 +105,9 @@ Path* DijkstraPath::findPath(Node* start, Node* end)
 							inOpenList = true;
 
 							// if(endNodeRecord.cost <= endNodeCost)
-							// continue
 							if (endNodeRecord.costSoFar <= endNodeCost)
 							{
+								// continue
 								continue;
 							}
 							break;
@@ -205,7 +205,7 @@ Path* DijkstraPath::findPath(Node* start, Node* end)
 #ifdef VISUALIZE_PATH
 		mpPath = dijkstraPath;
 #endif
-		delete tempPath;
+		//delete tempPath;
 		return dijkstraPath;
 	}
 

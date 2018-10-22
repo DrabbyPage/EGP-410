@@ -12,13 +12,8 @@ class Node;
 class Heuristic
 {
 public:
-	// default constructor
-	Heuristic();
 	// constructor, takes in the goal node for estimating
-	Heuristic(Node* endNode)
-	{
-		heurEndNode = endNode;
-	}
+	Heuristic(Node* endNode);
 	~Heuristic();
 
 	//generates an estimated cost to reach the stored

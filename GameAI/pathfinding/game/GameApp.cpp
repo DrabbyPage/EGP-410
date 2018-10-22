@@ -25,7 +25,7 @@
 #include <vector>
 
 #include "DijkstraPath.h"
-//#include "AStar.h"
+#include "AStar.h"
 
 const int GRID_SQUARE_SIZE = 32;
 const std::string gFileName = "pathgrid.txt";
@@ -148,7 +148,7 @@ void GameApp::LookForPathChange(char charInput)
 
 	case 'a':
 		std::cout << "changing to a*" << std::endl;
-		//mpPathfinder = new AStarPath(mpGridGraph);
+		mpPathfinder = new AStarPath(mpGridGraph);
 		break;
 
 	case 'D':
