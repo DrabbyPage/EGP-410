@@ -16,21 +16,25 @@ DijkstraPath::DijkstraPath(Graph* pGraph)
 	: GridPathfinder(dynamic_cast<GridGraph*>(pGraph))
 {
 
-#ifdef VISUALIZE_PATH
+	#ifdef VISUALIZE_PATH
 	mpPath = NULL;
-#endif
+	#endif
 }
 
 DijkstraPath::~DijkstraPath()
 {
-#ifdef VISUALIZE_PATH
+	#ifdef VISUALIZE_PATH
 	delete mpPath;
-#endif
+	#endif
 }
 
 Path* DijkstraPath::findPath(Node* start, Node* end)
 {
 	//make sure to delete the path when you are done!
+	#ifdef VISUALIZE_PATH
+	delete mpPath;
+	mVisitedNodes.clear();
+	#endif
 
 	//initialize the record for the start nodes
 
@@ -144,8 +148,6 @@ Path* DijkstraPath::findPath(Node* start, Node* end)
 					}
 				}
 			}
-			
-
 		}
 
 		// we've finished looking at the connections for
@@ -165,7 +167,6 @@ Path* DijkstraPath::findPath(Node* start, Node* end)
 	}
 	else
 	{
-
 		Path* dijkstraPath = new Path();
 
 		// work pack along the path, accumulating connections
@@ -182,11 +183,10 @@ Path* DijkstraPath::findPath(Node* start, Node* end)
 					current.nodeRecordConnections = node->nodeRecordConnections;
 				}
 			}
-
 		}
 
 		// reverse the path, and return it
-		Path* tempPath = new Path();
+		Path* reversePath = new Path();
 		
 		for (int i = 0; i < dijkstraPath->getNumNodes(); i++)
 		{
@@ -197,16 +197,15 @@ Path* DijkstraPath::findPath(Node* start, Node* end)
 
 			newNode = dijkstraPath->peekNode(lastNodeIndex);
 
-			tempPath->addNode(newNode);
+			reversePath->addNode(newNode);
 		}
 		delete dijkstraPath;
-		dijkstraPath = tempPath;
 
-#ifdef VISUALIZE_PATH
-		mpPath = dijkstraPath;
-#endif
+		#ifdef VISUALIZE_PATH
+		mpPath = reversePath;
+		#endif
 		//delete tempPath;
-		return dijkstraPath;
+		return reversePath;
 	}
 
 }

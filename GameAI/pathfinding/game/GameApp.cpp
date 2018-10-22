@@ -120,10 +120,11 @@ void GameApp::processLoop()
 	GraphicsBuffer* pBackBuffer = mpGraphicsSystem->getBackBuffer();
 	//copy to back buffer
 	mpGridVisualizer->draw( *pBackBuffer );
-#ifdef VISUALIZE_PATH
+
+	#ifdef VISUALIZE_PATH
 	//show pathfinder visualizer
 	mpPathfinder->drawVisualization(mpGrid, pBackBuffer);
-#endif
+	#endif
 
 	mpDebugDisplay->draw( pBackBuffer );
 

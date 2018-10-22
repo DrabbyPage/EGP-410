@@ -28,6 +28,12 @@ AStarPath::~AStarPath()
 
 Path* AStarPath::findPath(Node* start, Node* end)
 {
+	//make sure to delete the path when you are done!
+	#ifndef VISUALIZE_PATH
+	delete mpPath;
+	mVisitedNodes.clear();
+	#endif
+
 	Heuristic* heur = new Heuristic(end);
 	//make sure to delete the path when you are done!
 
@@ -251,7 +257,7 @@ Path* AStarPath::findPath(Node* start, Node* end)
 		// reverse the path and return it
 
 		// reverse the path, and return it
-		Path* tempPath = new Path();
+		Path* reversePath = new Path();
 
 		for (int i = 0; i < a_Star_Path->getNumNodes(); i++)
 		{
@@ -262,16 +268,15 @@ Path* AStarPath::findPath(Node* start, Node* end)
 
 			newNode = a_Star_Path->peekNode(lastNodeIndex);
 
-			tempPath->addNode(newNode);
+			reversePath->addNode(newNode);
 		}
-		delete heur;
+		//delete heur;
 		delete a_Star_Path;
-		a_Star_Path = tempPath;
 
 		#ifdef VISUALIZE_PATH
-		mpPath = a_Star_Path;
+		mpPath = reversePath;
 		#endif
-		return a_Star_Path;
+		return reversePath;
 		// return reverse path
 	}
 }
