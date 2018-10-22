@@ -34,7 +34,7 @@ float Heuristic::estimate(Node* currentNode)
 	Vector2D nodePos = pGame->getGrid()->getULCornerOfSquare(currentNode->getId());
 	Vector2D endNodePos = pGame->getGrid()->getULCornerOfSquare(heurEndNode->getId());
 
-	Vector2D diff = nodePos - endNodePos;
+	Vector2D diff = endNodePos - nodePos;
 	float distance = diff.getLength();
 	//float distance = sqrt(pow(diff.getX(),2) + pow(diff.getY(),2));
 

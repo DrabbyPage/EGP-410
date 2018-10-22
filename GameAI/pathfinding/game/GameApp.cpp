@@ -149,6 +149,7 @@ void GameApp::LookForPathChange(char charInput)
 
 	case 'a':
 		std::cout << "changing to a*" << std::endl;
+		delete mpPathfinder;
 		mpPathfinder = new AStarPath(mpGridGraph);
 		break;
 
@@ -156,6 +157,7 @@ void GameApp::LookForPathChange(char charInput)
 
 	case 'd':
 		std::cout << "changing to depth first search" << std::endl;
+		delete mpPathfinder;
 		mpPathfinder = new DepthFirstPathfinder(mpGridGraph);
 		break;
 
@@ -163,6 +165,7 @@ void GameApp::LookForPathChange(char charInput)
 
 	case 'f':
 		std::cout << "changing to dijkstra" << std::endl;
+		delete mpPathfinder;
 		mpPathfinder = new DijkstraPath(mpGridGraph);
 		break;
 

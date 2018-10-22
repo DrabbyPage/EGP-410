@@ -115,7 +115,7 @@ Path* AStarPath::findPath(Node* start, Node* end)
 					if (endNodeRecord.costSoFar <= endNodeCost)
 					{
 						// continue;
-						break;
+						continue;
 					}
 					// otherwise remove it from the closed list;
 					else
