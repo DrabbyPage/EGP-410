@@ -10,8 +10,6 @@
 #include <algorithm>
 #include "GridPathfinder.h"
 
-// has a memory leak when reallocating mpPath you need to find where to delete the fucker
-
 DijkstraPath::DijkstraPath(Graph* pGraph) 
 	: GridPathfinder(dynamic_cast<GridGraph*>(pGraph))
 {
@@ -63,7 +61,6 @@ Path* DijkstraPath::findPath(Node* start, Node* end)
 		current = openNodes.front();
 
 		// if it is the goal node then terminate
-		// if( current.node == goal: break
 		if (current.node == end)
 		{
 			std::cout << "at the end" << std::endl;
@@ -76,7 +73,6 @@ Path* DijkstraPath::findPath(Node* start, Node* end)
 			connections = mpGraph->getConnections(current.node->getId());
 			
 			// loop through each connection in turn 
-			// for connection in connections:
 			for (unsigned int i = 0; i < connections.size(); i++)
 			{
 				// get the cost estimate for the end node
@@ -88,7 +84,6 @@ Path* DijkstraPath::findPath(Node* start, Node* end)
 				bool inOpenList = false;
 				
 				// skip if the node is closed
-				// if(closed.contains(endNode): continue
 				for (auto record = closedNodes.begin(); record != closedNodes.end(); record++)
 				{
 					if (record->node == endNode)
@@ -170,7 +165,6 @@ Path* DijkstraPath::findPath(Node* start, Node* end)
 		Path* dijkstraPath = new Path();
 
 		// work pack along the path, accumulating connections
-		// while(current.node != start):
 		while (current.node != start)
 		{
 			dijkstraPath->addNode(current.node);
@@ -204,7 +198,7 @@ Path* DijkstraPath::findPath(Node* start, Node* end)
 		#ifdef VISUALIZE_PATH
 		mpPath = reversePath;
 		#endif
-		//delete tempPath;
+
 		return reversePath;
 	}
 
