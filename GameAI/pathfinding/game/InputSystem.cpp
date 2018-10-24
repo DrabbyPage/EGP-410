@@ -38,7 +38,7 @@ void InputSystem::process()
 	{		
 		if (newEvent.key.keysym.sym == SDLK_ESCAPE)
 		{
-			std::cout << "d was pressed" << std::endl;
+			std::cout << "ending the scene" << std::endl;
 			pGame->markForExit();
 			return;
 		}

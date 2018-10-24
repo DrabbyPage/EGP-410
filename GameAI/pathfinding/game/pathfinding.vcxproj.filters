@@ -114,10 +114,10 @@
     <ClInclude Include="InputSystem.h">
       <Filter>Common\Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="AStar.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="Heuristic.h">
+      <Filter>Header Files\pathfinding</Filter>
+    </ClInclude>
+    <ClInclude Include="AStar.h">
       <Filter>Header Files\pathfinding</Filter>
     </ClInclude>
   </ItemGroup>

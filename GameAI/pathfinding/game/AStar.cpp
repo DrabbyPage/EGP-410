@@ -139,10 +139,8 @@ Path* AStarPath::findPath(Node* start, Node* end)
 					{
 						if (record->node == endNode)
 						{
-							break;
-						}
-						else
-						{
+							inOpenList = true;
+
 							// here we find the record in the open list corresponding to the endNode
 							// endNodeRecord = open.find(endNode)
 							endNodeRecord.node = record->node;
@@ -162,12 +160,14 @@ Path* AStarPath::findPath(Node* start, Node* end)
 								// endNodeHeuristic = endNodeRecord.cost - endNodeRecord.costSoFar
 								endNodeHeuristic = endNodeRecord.recordConnection->getCost() - endNodeRecord.costSoFar;
 							}
+							break;
 						}
+
 					}
 				}
 				// otherwise we know we've got an unvisited node so make a record for it
 				// else:
-				else if (!inClosedList && !inOpenList)
+				if (!inClosedList && !inOpenList)
 				{
 					// endNodeRecord = new StarNodeRecord()
 					// endNodeRecord.node = endNode
@@ -188,28 +188,27 @@ Path* AStarPath::findPath(Node* start, Node* end)
 					endNodeRecord.recordConnection = connections[i];
 					endNodeRecord.estiTotalCost = endNodeCost + endNodeHeuristic;
 
-					// and add it to the openList
-					// if not open.contains(endNode): // but by this point we know that it isnt in the open list
-					if (!inClosedList)
-					{
-						bool inOpen = false;
-						for (auto record = openList.begin(); record < openList.end(); record++)
-						{
-							if (record->node == endNodeRecord.node)
-							{
-								inOpen = true;
-								break;
-							}
-						}
-
-						if (!inOpen)
-						{
-							openList.push_back(endNodeRecord);
-						}
-					}
-					
 				}
 
+				// and add it to the openList
+				// if not open.contains(endNode): // but by this point we know that it isnt in the open list
+				if (!inClosedList)
+				{
+					bool inOpen = false;
+					for (auto record = openList.begin(); record < openList.end(); record++)
+					{
+						if (record->node == endNodeRecord.node)
+						{
+							inOpen = true;
+							break;
+						}
+					}
+
+					if (!inOpen)
+					{
+						openList.push_back(endNodeRecord);
+					}
+				}
 			}
 			// we've finished looking at the connections for the current node so add it to the closed 
 			// list and remove it from the open list
@@ -227,6 +226,7 @@ Path* AStarPath::findPath(Node* start, Node* end)
 	{
 		// we've run out of nodes without finding the goal, so theres no solution
 		// return none
+		std::cout << "did not end on goal node" << std::endl;
 		return nullptr;
 	}
 	// else:
