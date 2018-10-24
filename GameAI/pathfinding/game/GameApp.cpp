@@ -146,12 +146,20 @@ void GameApp::LookForPathChange(char charInput)
 {
 	switch (charInput)
 	{
+		PathfindingDebugContent* pContent;
 	case 'A':
 
 	case 'a':
 		std::cout << "changing to a*" << std::endl;
 		delete mpPathfinder;
+		delete mpDebugDisplay;
+
 		mpPathfinder = new AStarPath(mpGridGraph);
+
+		//debug display
+		pContent = new PathfindingDebugContent(mpPathfinder);
+		mpDebugDisplay = new DebugDisplay(Vector2D(0, 12), pContent);
+
 		break;
 
 	case 'D':
@@ -159,7 +167,14 @@ void GameApp::LookForPathChange(char charInput)
 	case 'd':
 		std::cout << "changing to depth first search" << std::endl;
 		delete mpPathfinder;
+		delete mpDebugDisplay;
+
 		mpPathfinder = new DepthFirstPathfinder(mpGridGraph);
+
+		//debug display
+		pContent = new PathfindingDebugContent(mpPathfinder);
+		mpDebugDisplay = new DebugDisplay(Vector2D(0, 12), pContent);
+
 		break;
 
 	case 'F':
@@ -167,9 +182,17 @@ void GameApp::LookForPathChange(char charInput)
 	case 'f':
 		std::cout << "changing to dijkstra" << std::endl;
 		delete mpPathfinder;
+		delete mpDebugDisplay;
+
 		mpPathfinder = new DijkstraPath(mpGridGraph);
+
+		//debug display
+		pContent = new PathfindingDebugContent(mpPathfinder);
+		mpDebugDisplay = new DebugDisplay(Vector2D(0, 12), pContent);
+
 		break;
 
-
+	default:
+		break;
 	}
 }

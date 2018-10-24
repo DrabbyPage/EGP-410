@@ -54,7 +54,7 @@ void GridPathfinder::drawVisualization( Grid* pGrid, GraphicsBuffer* pDest )
 	static Color startColor = Color(1,255,128);
 	static Color stopColor = Color(1,128,255);
 
-	if( mpPath != NULL )
+	if( mpPath != NULL && mpPath->getNumNodes() > 0 )
 	{
 		Color currentPathColor = pathColor;
 		unsigned int numNodes = mpPath->getNumNodes();

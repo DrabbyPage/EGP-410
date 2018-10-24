@@ -15,7 +15,7 @@ string PathfindingDebugContent::getDebugString()
 	stringstream theStream;
 
 #ifdef VISUALIZE_PATH
-	if( mpPathfinder->mpPath != NULL )
+	if( mpPathfinder->mpPath != NULL)
 	{
 		theStream << "Pathlength:"<< mpPathfinder->mpPath->getNumNodes();
 	}
