@@ -80,7 +80,7 @@ void main()
 	delete gpGame;
 	gpGame = NULL;
 
-	gMemoryTracker.reportAllocations( cout );
+	//gMemoryTracker.reportAllocations( cout );
 
 	system("pause");
 
@@ -120,7 +120,7 @@ void main()
 	delete pAction3;
 
 	delete gpGame;
-	gMemoryTracker.reportAllocations( cout );
+	//gMemoryTracker.reportAllocations( cout );
 
 	system("pause");
 

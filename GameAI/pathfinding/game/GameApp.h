@@ -22,6 +22,9 @@ class DebugDisplay;
 
 class InputSystem;
 
+class UnitManager;
+class ComponentManager;
+
 const float LOOP_TARGET_TIME = 33.3f;//how long should each frame of execution take? 30fps = 33.3ms/frame
 
 
@@ -46,6 +49,9 @@ public:
 	inline GridPathfinder* getPathfinder() { return mpPathfinder; };
 	inline Grid* getGrid() { return mpGrid; };
 	inline GridGraph* getGridGraph() { return mpGridGraph; };
+
+	inline UnitManager* getUnitManager() { return mpUnitManager; };
+	inline ComponentManager* getComponentManager() { return mpComponentManager; };
 private:
 	GameMessageManager* mpMessageManager;
 	Grid* mpGrid;
@@ -53,9 +59,17 @@ private:
 	GridGraph* mpGridGraph;
 	DebugDisplay* mpDebugDisplay;
 
+	ComponentManager* mpComponentManager;
+	UnitManager* mpUnitManager;
+
 	GridPathfinder* mpPathfinder;
 
 	InputSystem* mpInputSystem;
 
 };
+
+float genRandomBinomial();//range -1:1 from "Artificial Intelligence for Games", Millington and Funge
+float genRandomFloat();//range 0:1 from "Artificial Intelligence for Games", Millington and Funge
+//float mapRotationToRange(float rotation, float low, float high);
+
 

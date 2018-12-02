@@ -20,6 +20,8 @@ public:
 	//just for visualization
 public:
 	void drawVisualization( Grid* pGrid, GraphicsBuffer* pDest );
+	void drawVisualization(Grid* pGrid, GraphicsBuffer* pDest, Path pPath);
+
 protected:
 	std::vector<Node*> mVisitedNodes;
 	Path* mpPath;

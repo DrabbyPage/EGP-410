@@ -3,8 +3,9 @@
     "",
     "\\DeanLib",
     "\\GameAI",
-    "\\GameAI\\component steering SDL"
+    "\\GameAI\\pathfinding",
+    "\\GameAI\\pathfinding\\game"
   ],
-  "SelectedNode": "\\GameAI\\component steering SDL\\steering.sln",
+  "SelectedNode": "\\GameAI\\pathfinding\\game\\pathfinding.sln",
   "PreviewInSolutionExplorer": false
 }

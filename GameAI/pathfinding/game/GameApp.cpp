@@ -196,3 +196,19 @@ void GameApp::LookForPathChange(char charInput)
 		break;
 	}
 }
+
+/*
+void mapRotation(float& rotation)
+{
+	rotation = fmod(rotation, TAU);
+
+	if (rotation > PI)
+	{
+		rotation -= TAU;
+	}
+	else if (rotation < -PI)
+	{
+		rotation += TAU;
+	}
+}
+*/

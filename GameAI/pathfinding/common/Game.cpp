@@ -122,7 +122,7 @@ float genRandomFloat()
 	float r = (float)rand()/(float)RAND_MAX;
 	return r;
 }
-
+/*
 float mapRotationToRange( float rotation, float low, float high )
 {
 	while( rotation < low )
@@ -136,3 +136,4 @@ float mapRotationToRange( float rotation, float low, float high )
 	}
 	return rotation;
 }
+*/

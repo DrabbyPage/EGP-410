@@ -1,2 +1,51 @@
-﻿  GameApp.cpp
+﻿  Color.cpp
+  Font.cpp
+  Game.cpp
+  GraphicsBuffer.cpp
+  GraphicsBufferManager.cpp
+  GraphicsSystem.cpp
+  Grid.cpp
+  GridVisualizer.cpp
+  Renderer.cpp
+  Sprite.cpp
+  SpriteManager.cpp
+  AlignSteering.cpp
+  ArriveAndFaceSteering.cpp
+  ArriveSteering.cpp
+  AStar.cpp
+  Component.cpp
+  ComponentManager.cpp
+  Connection.cpp
+  DebugDisplay.cpp
+  DepthFirstPathfinder.cpp
+  Generating Code...
+  Compiling...
+  DijkstraPath.cpp
+  FaceSteering.cpp
+  GameApp.cpp
+  GameMessage.cpp
+  GameMessageManager.cpp
+  Graph.cpp
+  GridGraph.cpp
+  GridPathfinder.cpp
+  Heuristic.cpp
+  InputSystem.cpp
+  main.cpp
+  Node.cpp
+  Path.cpp
+  Pathfinder.cpp
+  PathfindingDebugContent.cpp
+  PathSmoothing.cpp
+  PathSteering.cpp
+  PathToMessage.cpp
+  PhysicsComponent.cpp
+  PositionComponent.cpp
+  Generating Code...
+  Compiling...
+  SeekSteering.cpp
+  Steering.cpp
+  SteeringComponent.cpp
+  Unit.cpp
+  UnitManager.cpp
+  Generating Code...
   pathfinding.vcxproj -> D:\GitHub\EGP-410\GameAI\pathfinding\game\Debug\pathfinding.exe

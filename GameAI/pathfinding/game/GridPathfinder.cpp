@@ -78,4 +78,44 @@ void GridPathfinder::drawVisualization( Grid* pGrid, GraphicsBuffer* pDest )
 
 	mpVisualizer->draw(*pDest);
 }
+
+void GridPathfinder::drawVisualization(Grid* pGrid, GraphicsBuffer* pDest, Path pPath)
+{
+	delete mpVisualizer;
+	mpVisualizer = new GridVisualizer(pGrid);
+	static Color startPathColor = Color(255, 117, 2);
+	static Color endPathColor = Color(255, 255, 255);
+	static Color visitedColor = GREEN_COLOR;
+	static Color startColor = Color(1, 255, 128);
+	static Color stopColor = Color(1, 128, 255);
+
+	Color currentPathColor = startPathColor;
+	int numNodes = pPath.getNumNodes();
+
+	for (int i = 1; i < numNodes - 1; i++)
+	{
+		if (pPath.peekNode(i) == nullptr)
+		{
+			std::cout << "WHAT" << std::endl;
+		}
+
+		mpVisualizer->addColor(pPath.peekNode(i)->getId(), currentPathColor);
+		float lerpVal = lerp(i, 1, numNodes - 1);
+		currentPathColor =
+			Color(
+			(int)((startPathColor.getR() * (1.0f - lerpVal) + (endPathColor.getR() * lerpVal))),
+				(int)((startPathColor.getG() * (1.0f - lerpVal) + (endPathColor.getG() * lerpVal))),
+				(int)((startPathColor.getB() * (1.0f - lerpVal) + (endPathColor.getB() * lerpVal))));
+	}
+
+	if (numNodes > 0)
+	{
+		//add beginning and ending color
+		mpVisualizer->addColor(pPath.peekNode(0)->getId(), startColor);
+		mpVisualizer->addColor(pPath.peekNode(pPath.getNumNodes() - 1)->getId(), stopColor);
+	}
+
+	mpVisualizer->draw(*pDest);
+}
+
 #endif
