@@ -26,6 +26,7 @@ const IDType BACKGROUND_SPRITE_ID = 0;
 const IDType PLAYER_ICON_SPRITE_ID = 1;
 const IDType AI_ICON_SPRITE_ID = 2;
 const IDType TARGET_SPRITE_ID = 3;
+const IDType PAC_MAN_SPRITE_ID = 4;
 
 class Game:public Trackable
 {
@@ -63,6 +64,11 @@ protected:
 	Font* mpFont;
 
 	GraphicsBufferID mBackgroundBufferID = "background";
+	GraphicsBufferID mPlayerIconBufferID = "player";
+	GraphicsBufferID mEnemyIconBufferID = "enemy";
+	GraphicsBufferID mTargetBufferID = "target";
+	GraphicsBufferID mPacManID = "pacman";
+
 
 };
 

@@ -12,7 +12,7 @@ public:
 	inline PathSmoothing() {};
 	inline ~PathSmoothing() {};
 
-	Path smoothPath(Path inputPath);
+	Path* smoothPath(Path* inputPath);
 	bool clearedRaycast(Node* outputNode, Node* inputNode);
 };
 

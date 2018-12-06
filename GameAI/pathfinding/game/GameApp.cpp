@@ -19,6 +19,9 @@
 #include "DebugDisplay.h"
 #include "PathfindingDebugContent.h"
 #include "InputSystem.h"
+#include "UnitManager.h"
+#include "Unit.h"
+#include "ComponentManager.h"
 
 #include <SDL.h>
 #include <fstream>
@@ -26,17 +29,25 @@
 
 #include "DijkstraPath.h"
 #include "AStar.h"
+#include "PathSmoothing.h"
 
 const int GRID_SQUARE_SIZE = 32;
 const std::string gFileName = "pathgrid.txt";
+const Uint32 MAX_UNITS = 100;
+const Uint32 UNIT_COUNT = 5;
 
-GameApp::GameApp()
-:mpMessageManager(NULL)
-,mpGrid(NULL)
-,mpGridGraph(NULL)
-,mpPathfinder(NULL)
-,mpDebugDisplay(NULL)
+GameApp::GameApp() :
+	mpInputSystem(nullptr),
+	mpComponentManager(nullptr),
+	mpUnitManager(nullptr),
+	mpMessageManager(nullptr),
+	mpGrid(nullptr),
+	mpPathfinder(nullptr),
+	mpGridGraph(nullptr),
+	mpDebugDisplay(nullptr),
+	mpPathSmoothing(nullptr)
 {
+
 }
 
 GameApp::~GameApp()
@@ -66,18 +77,78 @@ bool GameApp::init()
 	//init the nodes and connections
 	mpGridGraph->init();
 
-	//mpPathfinder = new DepthFirstPathfinder(mpGridGraph);
-	//mpPathfinder = new DijkstraPath(mpGridGraph);
-	mpPathfinder = new AStarPath(mpGridGraph);
+	// loading managers
+	mpComponentManager = new ComponentManager(MAX_UNITS);
+	mpUnitManager = new UnitManager(MAX_UNITS);
 
 	//load buffers
 	mpGraphicsBufferManager->loadBuffer(mBackgroundBufferID, "wallpaper.bmp");
+	mpGraphicsBufferManager->loadBuffer(mPlayerIconBufferID, "arrow.png");
+	mpGraphicsBufferManager->loadBuffer(mEnemyIconBufferID, "PacManGhost.png");
+	mpGraphicsBufferManager->loadBuffer(mTargetBufferID, "target.png");
+	mpGraphicsBufferManager->loadBuffer(mPacManID, "pacman.png");
+
+	// loading pathfinders
+	//mpPathfinder = new DepthFirstPathfinder(mpGridGraph);
+	//mpPathfinder = new DijkstraPath(mpGridGraph);
+	mpPathfinder = new AStarPath(mpGridGraph);
+	mpPathSmoothing = new PathSmoothing();
+
 
 	//setup sprites
 	GraphicsBuffer* pBackGroundBuffer = mpGraphicsBufferManager->getBuffer( mBackgroundBufferID );
 	if( pBackGroundBuffer != NULL )
 	{
 		mpSpriteManager->createAndManageSprite( BACKGROUND_SPRITE_ID, pBackGroundBuffer, 0, 0, (float)pBackGroundBuffer->getWidth(), (float)pBackGroundBuffer->getHeight() );
+	}
+
+	GraphicsBuffer* pPlayerBuffer = mpGraphicsBufferManager->getBuffer(mPlayerIconBufferID);
+	Sprite* pArrowSprite = NULL;
+
+	if (pPlayerBuffer != NULL)
+	{
+		pArrowSprite = mpSpriteManager->createAndManageSprite(PLAYER_ICON_SPRITE_ID, pPlayerBuffer, 0, 0, (float)pPlayerBuffer->getWidth(), (float)pPlayerBuffer->getHeight());
+	}
+
+	GraphicsBuffer* pAIBuffer = mpGraphicsBufferManager->getBuffer(mEnemyIconBufferID);
+	Sprite* pEnemyArrow = NULL;
+
+	if (pAIBuffer != NULL)
+	{
+		pEnemyArrow = mpSpriteManager->createAndManageSprite(AI_ICON_SPRITE_ID, pAIBuffer, 0, 0, (float)pAIBuffer->getWidth(), (float)pAIBuffer->getHeight());
+	}
+
+	GraphicsBuffer* pTargetBuffer = mpGraphicsBufferManager->getBuffer(mTargetBufferID);
+
+	if (pTargetBuffer != NULL)
+	{
+		mpSpriteManager->createAndManageSprite(TARGET_SPRITE_ID, pTargetBuffer, 0, 0, (float)pTargetBuffer->getWidth(), (float)pTargetBuffer->getHeight());
+	}
+
+	GraphicsBuffer* pPacManBuffer = mpGraphicsBufferManager->getBuffer(mPacManID);
+	Sprite* pPacManSprite = NULL;
+	if (pPacManBuffer != NULL)
+	{
+		pPacManSprite = mpSpriteManager->createAndManageSprite(PAC_MAN_SPRITE_ID, pPacManBuffer, (float)pPacManBuffer->getWidth() / 3, 0, (float)pPacManBuffer->getWidth() / 3, (float)pPacManBuffer->getHeight());
+	}
+
+	Unit* pUnit = mpUnitManager->createRandomUnit(*mpSpriteManager->getSprite(PAC_MAN_SPRITE_ID));
+	pUnit->setSteering(Steering::PATH, Vector2D(pUnit->getPositionComponent()->getPosition()));
+
+	if (pUnit == nullptr)
+	{
+		mpUnitManager->deleteRandomUnit();
+	}
+
+	for (int i = 0; i < UNIT_COUNT; ++i)
+	{
+		Unit* pUnit = mpUnitManager->createRandomUnit(*mpSpriteManager->getSprite(AI_ICON_SPRITE_ID));
+		pUnit->setSteering(Steering::PATH, Vector2D(pUnit->getPositionComponent()->getPosition()));
+
+		if (pUnit == nullptr)
+		{
+			mpUnitManager->deleteRandomUnit();
+		}
 	}
 
 	//debug display
@@ -90,23 +161,35 @@ bool GameApp::init()
 
 void GameApp::cleanup()
 {
+	delete mpInputSystem;
+	mpInputSystem = nullptr;
+
 	delete mpMessageManager;
-	mpMessageManager = NULL;
+	mpMessageManager = nullptr;
+
+	delete mpUnitManager;
+	mpUnitManager = nullptr;
 
 	delete mpGrid;
-	mpGrid = NULL;
+	mpGrid = nullptr;
 
 	delete mpGridVisualizer;
-	mpGridVisualizer = NULL;
+	mpGridVisualizer = nullptr;
 
 	delete mpGridGraph;
-	mpGridGraph = NULL;
-
-	delete mpPathfinder;
-	mpPathfinder = NULL;
+	mpGridGraph = nullptr;
 
 	delete mpDebugDisplay;
-	mpDebugDisplay = NULL;
+	mpDebugDisplay = nullptr;
+
+	delete mpPathfinder;
+	mpPathfinder = nullptr;
+
+	delete mpComponentManager;
+	mpComponentManager = nullptr;
+
+	delete mpPathSmoothing;
+	mpPathSmoothing = nullptr;
 }
 
 void GameApp::beginLoop()
@@ -114,6 +197,8 @@ void GameApp::beginLoop()
 	//should be the first thing done
 	Game::beginLoop();
 }
+
+const float TARGET_ELAPSED_MS = LOOP_TARGET_TIME / 1000.0f;
 
 void GameApp::processLoop()
 {
@@ -129,7 +214,13 @@ void GameApp::processLoop()
 
 	mpDebugDisplay->draw( pBackBuffer );
 
+	mpUnitManager->updateAll(TARGET_ELAPSED_MS);
+	mpComponentManager->update(TARGET_ELAPSED_MS);
 	mpMessageManager->processMessagesForThisframe();
+
+	mpMessageManager->processMessagesForThisframe();
+
+	mpUnitManager->drawAll();
 	
 	mpInputSystem->process();
 

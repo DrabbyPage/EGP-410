@@ -27,6 +27,7 @@ public:
 	Unit* createRandomUnit(const Sprite& sprite);
 
 	Unit* getUnit(const UnitID& id) const;
+	inline const std::map<UnitID, Unit*>& getUnitMap() const { return mUnitMap; };
 	void deleteUnit(const UnitID& id);
 	void deleteRandomUnit();
 
@@ -34,8 +35,6 @@ public:
 	void updateAll(float elapsedTime);
 
 	Unit* getPlayerUnit() const { return getUnit(PLAYER_UNIT_ID); };
-
-	int size();
 
 private:
 	static UnitID msNextUnitID;

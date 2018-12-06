@@ -5,18 +5,18 @@
 #include "Vector2D.h"
 #include "Grid.h"
 
-Path PathSmoothing::smoothPath(Path inputPath)
+Path* PathSmoothing::smoothPath(Path* inputPath)
 {
 	// if the path is only two nodes long then we can't smooth it so return
-	if (inputPath.getNumNodes() <= 2)
+	if (inputPath->getNumNodes() <= 2)
 	{
 		std::cout << "Path is less than two units" << std::endl;
 		return inputPath;
 	}
 
 	// compile an output path
-	Path outputPath;
-	outputPath.addNode(inputPath.peekNode(0));
+	Path* outputPath = new Path();
+	outputPath->addNode(inputPath->peekNode(0));
 	
 	// keep track of where we are in the inputPath we start at 2, because
 	// we assume two adjacent nodes will pass the raycast
@@ -24,17 +24,17 @@ Path PathSmoothing::smoothPath(Path inputPath)
 	int amountOfOutput = 1;
 
 	// loop until we find the last item in the input
-	while(inputIndex < inputPath.getNumNodes() - 1)
+	while(inputIndex < inputPath->getNumNodes() - 1)
 	{
-		amountOfOutput = outputPath.getNumNodes();
+		amountOfOutput = outputPath->getNumNodes();
 
 		// check if we can "see" the next node (there is no wall/ blocking value in the way)
-		bool rayClear = clearedRaycast(outputPath.peekNode(amountOfOutput - 1), inputPath.peekNode(inputIndex));
+		bool rayClear = clearedRaycast(outputPath->peekNode(amountOfOutput - 1), inputPath->peekNode(inputIndex));
 
 		if(!rayClear)
 		{
 			// the ray text failed, add the last node that passed to the output list
-			outputPath.addNode(inputPath.peekNode(inputIndex - 1));
+			outputPath->addNode(inputPath->peekNode(inputIndex - 1));
 		}
 		
 		// consider the next node
@@ -42,7 +42,7 @@ Path PathSmoothing::smoothPath(Path inputPath)
 	}
 
 	// we've reached the end of the input path, add the end node to the output and return it
-	outputPath.addNode(inputPath.peekNode(inputPath.getNumNodes() - 1));
+	outputPath->addNode(inputPath->peekNode(inputPath->getNumNodes() - 1));
 
 	// return outputPath
 	return outputPath;

@@ -24,6 +24,8 @@ class InputSystem;
 
 class UnitManager;
 class ComponentManager;
+class PathSmoothing;
+//class AStarPath;
 
 const float LOOP_TARGET_TIME = 33.3f;//how long should each frame of execution take? 30fps = 33.3ms/frame
 
@@ -52,6 +54,9 @@ public:
 
 	inline UnitManager* getUnitManager() { return mpUnitManager; };
 	inline ComponentManager* getComponentManager() { return mpComponentManager; };
+
+	inline PathSmoothing* getPathSmoothing() { return mpPathSmoothing; };
+
 private:
 	GameMessageManager* mpMessageManager;
 	Grid* mpGrid;
@@ -62,10 +67,10 @@ private:
 	ComponentManager* mpComponentManager;
 	UnitManager* mpUnitManager;
 
+	PathSmoothing* mpPathSmoothing;
 	GridPathfinder* mpPathfinder;
 
 	InputSystem* mpInputSystem;
-
 };
 
 float genRandomBinomial();//range -1:1 from "Artificial Intelligence for Games", Millington and Funge

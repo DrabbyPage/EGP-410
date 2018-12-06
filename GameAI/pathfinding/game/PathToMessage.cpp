@@ -4,6 +4,7 @@
 #include "GridPathfinder.h"
 #include "Grid.h"
 #include "GridGraph.h"
+#include "PathSmoothing.h"
 
 PathToMessage::PathToMessage( const Vector2D& from, const Vector2D& to )
 :GameMessage(PATH_TO_MESSAGE)
@@ -19,6 +20,7 @@ PathToMessage::~PathToMessage()
 void PathToMessage::process()
 {
 	GameApp* pGame = dynamic_cast<GameApp*>(gpGame);
+
 	if( pGame != NULL ) 
 	{
 		GridPathfinder* pPathfinder = pGame->getPathfinder();
@@ -29,5 +31,12 @@ void PathToMessage::process()
 		Node* pFromNode = pGridGraph->getNode( fromIndex );
 		Node* pToNode = pGridGraph->getNode( toIndex );
 		pPathfinder->findPath( pFromNode, pToNode );
+
+		if (pPathfinder->getPath() != nullptr)
+		{
+			PathSmoothing* pPathSmoothing = pGame->getPathSmoothing();
+			Path* path = pPathSmoothing->smoothPath(pPathfinder->getPath()); //pGame->getPathfinder()->findPath(pFromNode, pToNode);
+			pPathfinder->setPath(path);
+		}
 	}
 }
