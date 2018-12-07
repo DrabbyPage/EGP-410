@@ -36,7 +36,7 @@ Steering* PathSteering::getSteering()
 		pGame->getPathfinder()->drawVisualization(pGame->getGrid(), pGame->getGraphicsSystem()->getBackBuffer(), mPath);
 
 		Vector2D direction = mTargetLoc - pOwner->getPositionComponent()->getPosition();
-		float targetRadiusSquared = 60.0f * 60.0f;
+		float targetRadiusSquared = 60.0f;
 
 		if (direction.getLengthSquared() < targetRadiusSquared && mPath.peekNode(targetPathIndex) != nullptr)
 		{

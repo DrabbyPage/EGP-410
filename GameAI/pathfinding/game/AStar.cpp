@@ -60,7 +60,6 @@ Path* AStarPath::findPath(Node* start, Node* end)
 		// if it is the goal node then terminate
 		if (current.node == end)
 		{
-			std::cout << "Reached the end of A_Star" << std::endl;
 			break;
 		}
 		// otherwise get its outgoing connections

@@ -51,9 +51,27 @@ void GridGraph::init()
 				//check for blocking terrain
 				if( mpGrid->getValueAtIndex(adjacencies[adjIndex]) != BLOCKING_VALUE )
 				{
+					const int RIGHT = pFromNode->getId() + 1,
+						LEFT = pFromNode->getId() - 1,
+						UP = pFromNode->getId() - mpGrid->getGridWidth(),
+						DOWN = pFromNode->getId() + mpGrid->getGridWidth();
+
 					Node* pToNode = mNodes[ adjacencies[adjIndex] ];//find to node
 
-					Connection* pConnection = new Connection( pFromNode, pToNode, 1.0f );//create a connection
+					Connection* pConnection;
+
+					bool notDiagonal = pToNode->getId() == LEFT || pToNode->getId() == RIGHT || pToNode->getId() == UP || pToNode->getId() == DOWN;
+
+					// if ( connection is diagonal then cost is more)
+					if (notDiagonal)
+					{
+						pConnection = new Connection(pFromNode, pToNode, 1.0f);//create a connection
+					}
+					// else the cost is one
+					else
+					{
+						pConnection = new Connection(pFromNode, pToNode, 10000);//create a connection
+					}
 
 					//add connection to connection vectors
 					mConnections.push_back( pConnection );

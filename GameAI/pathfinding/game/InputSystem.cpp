@@ -42,24 +42,5 @@ void InputSystem::process()
 			gpGame->markForExit();
 			return;
 		}
-		if (newEvent.key.keysym.sym == SDLK_d)
-		{
-			std::cout << "d was pressed" << std::endl;
-			pGame->LookForPathChange('d');
-			return;
-		}
-		if (newEvent.key.keysym.sym == SDLK_f)
-		{
-			std::cout << "f was pressed" << std::endl;
-			pGame->LookForPathChange('f');
-			return;
-		}
-		if (newEvent.key.keysym.sym == SDLK_a)
-		{
-			std::cout << "a was pressed" << std::endl;
-			pGame->LookForPathChange('a');
-			return;
-		}
-
 	}
 }
