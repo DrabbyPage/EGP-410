@@ -165,3 +165,44 @@ void UnitManager::updateAll(float elapsedTime)
 		it->second->update(elapsedTime);
 	}
 }
+
+void UnitManager::checkCollisions()
+{
+	if (getPlayerUnit() != nullptr)
+	{
+		for (unsigned int i = 1; i < mUnitMap.size(); i++)
+		{
+			if (collision(mUnitMap[0], mUnitMap[i]))
+			{
+				// if collision is an enemy kill obj
+
+				// if obj is pip then add score
+				std::cout << "there was a collision" << std::endl;
+			}
+		}
+	}
+}
+
+bool UnitManager::collision(Unit* obj1, Unit* obj2)
+{
+	Vector2D obj1Pos = obj1->getPositionComponent()->getPosition();
+	Vector2D obj2Pos = obj2->getPositionComponent()->getPosition();
+	//If the leftmost or rightmost point of the first sprite lies somewhere inside the second, continue.
+	if ((obj1Pos.getX() >= obj2Pos.getX()
+		&& obj1Pos.getX() <= (obj2Pos.getX() + obj2->mSprite.getWidth()))
+		|| ((obj1Pos.getX() + obj1->mSprite.getWidth()) >= obj2Pos.getX()
+		&& (obj1Pos.getX() + obj1->mSprite.getWidth()) <= (obj2Pos.getX() + obj2->mSprite.getWidth())))
+	{
+		//Now we look at the y axis:
+		if ((obj1Pos.getY() >= obj2Pos.getY()
+			&& obj1Pos.getY() <= (obj2Pos.getY() + obj2->mSprite.getHeight()))
+			|| ((obj1Pos.getY() + obj1->mSprite.getHeight()) >= obj2Pos.getY()
+			&& (obj1Pos.getY() + obj1->mSprite.getHeight()) <= (obj2Pos.getY() + obj2->mSprite.getHeight())))
+		{
+			//The sprites appear to overlap.
+			return true;
+		}
+	}
+	//The sprites do not overlap:
+	return false;
+}

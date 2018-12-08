@@ -134,7 +134,6 @@ bool GameApp::init()
 
 	Unit* pUnit = mpUnitManager->createPlayerUnit(*mpSpriteManager->getSprite(PAC_MAN_SPRITE_ID));
 	pUnit->setSteering(Steering::PAC_MAN, Vector2D(512, 544));
-	//pUnit->setSteering(Steering::PATH, Vector2D(512, 544));
 	Steering* temp = pUnit->getSteeringComponent()->getSteering();
 	pUnit->getPositionComponent()->setPosition(Vector2D(512, 544));
 
@@ -218,6 +217,7 @@ void GameApp::processLoop()
 	mpDebugDisplay->draw( pBackBuffer );
 
 	mpUnitManager->updateAll(TARGET_ELAPSED_MS);
+	mpUnitManager->checkCollisions();
 	mpComponentManager->update(TARGET_ELAPSED_MS);
 	mpMessageManager->processMessagesForThisframe();
 

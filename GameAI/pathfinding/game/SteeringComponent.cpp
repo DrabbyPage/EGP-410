@@ -87,6 +87,14 @@ void SteeringComponent::setData(const SteeringData& data)
 		mpSteering = new PacManSteering(data.ownerID, data.targetLoc, data.targetID);
 		break;
 	}
+	case Steering::GHOST:
+	{
+		/*
+		delete mpSteering;
+		mpSteering = new PacManSteering(data.ownerID, data.targetLoc, data.targetID);
+		break;
+		*/
+	}
 	default:
 	{
 		//std::cout << "Unknown steering component!" << std::endl;
