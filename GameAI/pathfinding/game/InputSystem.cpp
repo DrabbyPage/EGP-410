@@ -1,6 +1,7 @@
 
 #include "InputSystem.h"
 #include "GameApp.h"
+#include "Grid.h"
 
 InputSystem::InputSystem()
 {
@@ -25,9 +26,19 @@ void InputSystem::process()
 		Vector2D pos(x, y);
 		if (lastPos.getX() != pos.getX() || lastPos.getY() != pos.getY())
 		{
-			GameMessage* pMessage = new PathToMessage(lastPos, pos);
-			pGame->getMessageManager()->addMessage(pMessage, 0);
-			lastPos = pos;
+			Grid* pGrid = pGame->getGrid();
+
+			if (pGame->getGrid()->getValueAtPixelXY((int)pos.getX(), (int)pos.getY()) == BLOCKING_VALUE)
+			{
+				std::cout << "you clicked on a wall" << std::endl;
+			}
+			else
+			{
+				GameMessage* pMessage = new PathToMessage(lastPos, pos);
+				pGame->getMessageManager()->addMessage(pMessage, 0);
+				lastPos = pos;
+			}
+
 		}
 	}
 

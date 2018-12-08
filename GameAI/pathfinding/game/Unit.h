@@ -25,6 +25,15 @@ const Uint32 DEFAULT_QUEUE_CAPACITY = 8;
 class Unit : public Trackable
 {
 public:
+	enum UnitType
+	{
+		INVALID_TYPE = -1,
+		PAC_MAN,
+		GHOST,
+		BIG_PIP,
+		SMALL_PIP
+	};
+
 	void draw() const;
 	float getFacing() const;
 	void update(float elapsedTime){};
@@ -36,11 +45,14 @@ public:
 	float getMaxSpeed() const { return mMaxSpeed; };
 	float getMaxRotAcc() const { return mMaxRotAcc; };
 	float getMaxRotVel() const { return mMaxRotVel; };
+	UnitType getTag()const { return mUnitTag; };
 	void setShowTarget(bool val) { mShowTarget = val; };
+	void setTag(UnitType newTag) { mUnitTag = newTag; };
 
 	void setSteering(Steering::SteeringType type, Vector2D targetLoc = ZERO_VECTOR2D, UnitID targetUnitID = INVALID_UNIT_ID);
 
 private:
+	UnitType mUnitTag;
 	UnitID mID;
 	ComponentID mPhysicsComponentID;
 	ComponentID mPositionComponentID;

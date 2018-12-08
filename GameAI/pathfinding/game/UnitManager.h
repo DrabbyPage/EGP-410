@@ -15,7 +15,6 @@ struct PhysicsData;
 
 const UnitID PLAYER_UNIT_ID = 0;
 
-
 class UnitManager : public Trackable
 {
 public:
@@ -38,6 +37,7 @@ public:
 
 	void checkCollisions();
 	bool collision(Unit* obj1, Unit* obj2);
+	void randomizeUnitPos(Unit* unit);
 
 private:
 	static UnitID msNextUnitID;

@@ -31,13 +31,16 @@ void PathToMessage::process()
 		GridPathfinder* pPathfinder = pGame->getPathfinder();
 		GridGraph* pGridGraph = pGame->getGridGraph();
 		Grid* pGrid = pGame->getGrid();
-		int toIndex = pGrid->getSquareIndexFromPixelXY((int)mTo.getX(), (int)mTo.getY());
-		Node* pToNode = pGridGraph->getNode(toIndex);
 
 		Unit* player = pGame->getUnitManager()->getPlayerUnit();
 		Vector2D unitPosition = player->getPositionComponent()->getPosition();
 		int fromIndex = pGrid->getSquareIndexFromPixelXY(static_cast<int>(unitPosition.getX()), static_cast<int>(unitPosition.getY()));
 		Node* pFromNode = pGridGraph->getNode(fromIndex);
+
+		int toIndex = pGrid->getSquareIndexFromPixelXY((int)mTo.getX(), (int)mTo.getY());		
+
+		Node* pToNode = pGridGraph->getNode(toIndex);
+
 		pPathfinder->findPath(pFromNode, pToNode);
 
 		PacManSteering* pathSteering = static_cast<PacManSteering*>(player->getSteeringComponent()->getSteering());
