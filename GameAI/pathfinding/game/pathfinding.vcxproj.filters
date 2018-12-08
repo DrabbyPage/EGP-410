@@ -189,6 +189,21 @@
     <ClInclude Include="PathSmoothing.h">
       <Filter>Header Files\pathfinding</Filter>
     </ClInclude>
+    <ClInclude Include="KinematicArriveSteering.h">
+      <Filter>Header Files\Steering</Filter>
+    </ClInclude>
+    <ClInclude Include="KinematicFaceSteering.h">
+      <Filter>Header Files\Steering</Filter>
+    </ClInclude>
+    <ClInclude Include="KinematicAlignSteering.h">
+      <Filter>Header Files\Steering</Filter>
+    </ClInclude>
+    <ClInclude Include="PacManSteering.h">
+      <Filter>Header Files\Steering</Filter>
+    </ClInclude>
+    <ClInclude Include="KinematicArriveFaceSteering.h">
+      <Filter>Header Files\Steering</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\common\Game.cpp">
@@ -325,6 +340,21 @@
     </ClCompile>
     <ClCompile Include="PathSmoothing.cpp">
       <Filter>Source Files\pathfinding</Filter>
+    </ClCompile>
+    <ClCompile Include="KinematicArriveSteering.cpp">
+      <Filter>Source Files\Steering</Filter>
+    </ClCompile>
+    <ClCompile Include="KinematicFaceSteering.cpp">
+      <Filter>Source Files\Steering</Filter>
+    </ClCompile>
+    <ClCompile Include="KinematicAlignSteering.cpp">
+      <Filter>Source Files\Steering</Filter>
+    </ClCompile>
+    <ClCompile Include="PacManSteering.cpp">
+      <Filter>Source Files\Steering</Filter>
+    </ClCompile>
+    <ClCompile Include="KinematicArriveFaceSteering.cpp">
+      <Filter>Source Files\Steering</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

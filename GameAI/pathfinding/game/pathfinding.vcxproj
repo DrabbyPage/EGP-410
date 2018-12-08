@@ -111,7 +111,12 @@
     <ClInclude Include="GridPathfinder.h" />
     <ClInclude Include="Heuristic.h" />
     <ClInclude Include="InputSystem.h" />
+    <ClInclude Include="KinematicAlignSteering.h" />
+    <ClInclude Include="KinematicArriveFaceSteering.h" />
+    <ClInclude Include="KinematicArriveSteering.h" />
+    <ClInclude Include="KinematicFaceSteering.h" />
     <ClInclude Include="Node.h" />
+    <ClInclude Include="PacManSteering.h" />
     <ClInclude Include="Path.h" />
     <ClInclude Include="Pathfinder.h" />
     <ClInclude Include="PathfindingDebugContent.h" />
@@ -157,8 +162,13 @@
     <ClCompile Include="GridPathfinder.cpp" />
     <ClCompile Include="Heuristic.cpp" />
     <ClCompile Include="InputSystem.cpp" />
+    <ClCompile Include="KinematicAlignSteering.cpp" />
+    <ClCompile Include="KinematicArriveFaceSteering.cpp" />
+    <ClCompile Include="KinematicArriveSteering.cpp" />
+    <ClCompile Include="KinematicFaceSteering.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="Node.cpp" />
+    <ClCompile Include="PacManSteering.cpp" />
     <ClCompile Include="Path.cpp" />
     <ClCompile Include="Pathfinder.cpp" />
     <ClCompile Include="PathfindingDebugContent.cpp" />

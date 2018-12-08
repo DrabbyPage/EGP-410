@@ -47,7 +47,7 @@ int main(int argc, char **argv)
 
 	MemoryTracker::getInstance()->reportAllocations(std::cout);
 
-	system("pause");
+	//system("pause");
 
 	return 0;
 }

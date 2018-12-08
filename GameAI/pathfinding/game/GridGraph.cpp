@@ -62,12 +62,12 @@ void GridGraph::init()
 
 					bool notDiagonal = pToNode->getId() == LEFT || pToNode->getId() == RIGHT || pToNode->getId() == UP || pToNode->getId() == DOWN;
 
-					// if ( connection is diagonal then cost is more)
+					// if ( connection is not diagonal then cost is 1)
 					if (notDiagonal)
 					{
 						pConnection = new Connection(pFromNode, pToNode, 1.0f);//create a connection
 					}
-					// else the cost is one
+					// else the cost is more
 					else
 					{
 						pConnection = new Connection(pFromNode, pToNode, 10000);//create a connection

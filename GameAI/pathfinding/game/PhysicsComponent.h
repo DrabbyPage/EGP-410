@@ -10,7 +10,7 @@
 class PositionComponent;
 
 static const float MAX_ACC = 250.0f;
-static const float MAX_SPEED = 220.0f;
+static const float MAX_SPEED = 400;
 static const float MAX_ROT_ACC = 1.0f;
 static const float MAX_ROT_VEL = 5.0f;
 

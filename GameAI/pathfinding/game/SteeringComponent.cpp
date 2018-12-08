@@ -5,6 +5,7 @@
 #include "FaceSteering.h"
 #include "ArriveAndFaceSteering.h"
 #include "PathSteering.h"
+#include "PacManSteering.h"
 
 SteeringComponent::SteeringComponent(const ComponentID& id, const ComponentID& physicsComponentID) :
 	Component(id),
@@ -78,6 +79,12 @@ void SteeringComponent::setData(const SteeringData& data)
 	{
 		delete mpSteering;
 		mpSteering = new PathSteering(data.ownerID, data.targetLoc, data.targetID);
+		break;
+	}
+	case Steering::PAC_MAN:
+	{
+		delete mpSteering;
+		mpSteering = new PacManSteering(data.ownerID, data.targetLoc, data.targetID);
 		break;
 	}
 	default:

@@ -132,8 +132,11 @@ bool GameApp::init()
 		pPacManSprite = mpSpriteManager->createAndManageSprite(PAC_MAN_SPRITE_ID, pPacManBuffer, (float)pPacManBuffer->getWidth() / 3, 0, (float)pPacManBuffer->getWidth() / 3, (float)pPacManBuffer->getHeight());
 	}
 
-	Unit* pUnit = mpUnitManager->createRandomUnit(*mpSpriteManager->getSprite(PAC_MAN_SPRITE_ID));
-	pUnit->setSteering(Steering::PATH, Vector2D(pUnit->getPositionComponent()->getPosition()));
+	Unit* pUnit = mpUnitManager->createPlayerUnit(*mpSpriteManager->getSprite(PAC_MAN_SPRITE_ID));
+	pUnit->setSteering(Steering::PAC_MAN, Vector2D(512, 544));
+	//pUnit->setSteering(Steering::PATH, Vector2D(512, 544));
+	Steering* temp = pUnit->getSteeringComponent()->getSteering();
+	pUnit->getPositionComponent()->setPosition(Vector2D(512, 544));
 
 	if (pUnit == nullptr)
 	{

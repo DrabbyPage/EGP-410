@@ -24,7 +24,13 @@ public:
 		WANDER,
 		WANDER_AND_CHASE,
 		ARRIVE_AND_FACE,
-		PATH
+		PATH,
+		KIN_ALIGN,
+		KIN_ARRIVE,
+		KIN_FACE,
+		KIN_FACE_ARRIVE,
+		PAC_MAN,
+		GHOST
 	};
 
 	//constructors and destructors

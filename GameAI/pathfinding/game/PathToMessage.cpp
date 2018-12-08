@@ -9,6 +9,7 @@
 #include "Unit.h"
 #include "UnitManager.h"
 #include "SteeringComponent.h"
+#include "PacManSteering.h"
 
 PathToMessage::PathToMessage( const Vector2D& from, const Vector2D& to )
 :GameMessage(PATH_TO_MESSAGE)
@@ -30,19 +31,16 @@ void PathToMessage::process()
 		GridPathfinder* pPathfinder = pGame->getPathfinder();
 		GridGraph* pGridGraph = pGame->getGridGraph();
 		Grid* pGrid = pGame->getGrid();
-		//int fromIndex = pGrid->getSquareIndexFromPixelXY( (int)mFrom.getX(), (int)mFrom.getY() );
 		int toIndex = pGrid->getSquareIndexFromPixelXY((int)mTo.getX(), (int)mTo.getY());
-		//Node* pFromNode = pGridGraph->getNode( fromIndex );
 		Node* pToNode = pGridGraph->getNode(toIndex);
-		//pPathfinder->findPath( pFromNode, pToNode );
 
-		Unit* player = pGame->getUnitManager()->getUnit(1);
+		Unit* player = pGame->getUnitManager()->getPlayerUnit();
 		Vector2D unitPosition = player->getPositionComponent()->getPosition();
 		int fromIndex = pGrid->getSquareIndexFromPixelXY(static_cast<int>(unitPosition.getX()), static_cast<int>(unitPosition.getY()));
 		Node* pFromNode = pGridGraph->getNode(fromIndex);
 		pPathfinder->findPath(pFromNode, pToNode);
 
-		PathSteering* pathSteering = static_cast<PathSteering*>(player->getSteeringComponent()->getSteering());
+		PacManSteering* pathSteering = static_cast<PacManSteering*>(player->getSteeringComponent()->getSteering());
 		PathSmoothing* pPathSmoothing = pGame->getPathSmoothing();
 
 
@@ -55,7 +53,7 @@ void PathToMessage::process()
 
 		if (path)
 		{
-			Path unitPath = *pPathfinder->getPath();//*pPathSmoothing->smoothPath(path);
+			Path unitPath = *pPathfinder->getPath();//*pPathSmoothing->smoothPath(path);// uncomment to smooth path
 			pathSteering->setPath(unitPath);
 		}
 	}
