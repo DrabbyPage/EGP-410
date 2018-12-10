@@ -50,8 +50,12 @@ public:
 	inline Timer* getMasterTimer() const { return mpMasterTimer; };
 	inline double getCurrentTime() const { return mpMasterTimer->getElapsedTime(); };
 	inline Font* getFont() const { return mpFont; };
+	int getScore() { return mpGameScore; };
+	int getHighScore() { return mpHighScore; };
 
 	void markForExit() { mShouldExit = true; };
+
+	void addScore(int addValue) { mpGameScore += addValue; };
 
 protected:
 	GraphicsSystem* mpGraphicsSystem;
@@ -73,8 +77,8 @@ protected:
 	GraphicsBufferID mBigPipID = "bigpip";
 	GraphicsBufferID mSmallPipID = "smallpip";
 
-
-
+	int mpGameScore;
+	int mpHighScore;
 };
 
 float genRandomBinomial();//range -1:1 from "Artificial Intelligence for Games", Millington and Funge

@@ -5,6 +5,8 @@
 #include "GraphicsSystem.h"
 #include "Color.h"
 
+#include <sstream>
+
 using namespace std;
 
 DebugDisplay::DebugDisplay( const Vector2D& pos, DebugContent* pContent )
@@ -20,7 +22,18 @@ DebugDisplay::~DebugDisplay()
 
 void DebugDisplay::draw( GraphicsBuffer* pBuffer )
 {
-	string toDisplay = mpContent->getDebugString();
-	gpGame->getGraphicsSystem()->writeText(*pBuffer, *(gpGame->getFont()), mPos.getX(), mPos.getY(), toDisplay, BLACK_COLOR);
+	string scoreDisplay; // = mpContent->getDebugString();
+	string highScoreDisplay; 
+	std::stringstream scoreText;
+	std::stringstream highScoreText;
+
+	scoreText << "Score: " << gpGame->getScore();
+	highScoreText << "High Score: " << gpGame->getHighScore();
+
+	scoreDisplay = scoreText.str();
+	highScoreDisplay = highScoreText.str();
+
+	gpGame->getGraphicsSystem()->writeText(*pBuffer, *(gpGame->getFont()), mPos.getX(), mPos.getY()-4, scoreDisplay, YELLOW_COLOR);
+	gpGame->getGraphicsSystem()->writeText(*pBuffer, *(gpGame->getFont()), mPos.getX()+600, mPos.getY()-4, highScoreDisplay, YELLOW_COLOR);
 
 }

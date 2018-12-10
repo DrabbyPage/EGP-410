@@ -43,7 +43,6 @@ public:
 	virtual void beginLoop();
 	virtual void processLoop();
 	virtual bool endLoop();
-	void LookForPathChange(char charInput);
 
 	//accessors
 	inline GameMessageManager* getMessageManager() { return mpMessageManager; };

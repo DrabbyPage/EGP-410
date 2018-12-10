@@ -2,6 +2,7 @@
 #include <sstream>
 #include <ctime>
 #include <cstdlib>
+#include <fstream>
 
 #include "Game.h"
 #include "GraphicsSystem.h"
@@ -65,6 +66,20 @@ bool Game::init()
 	//load Font
 	mpFont = new Font("cour.ttf", 24);
 
+	// game score is 0 at start
+	mpGameScore = 0;
+
+	// loading the high score
+	std::ifstream inputFile;
+	std::string highScoreString;
+
+	inputFile.open("HighScore.txt");
+	inputFile >> highScoreString;
+	inputFile.close();
+
+	int newHighScore = std::stoi(highScoreString);
+	mpHighScore = newHighScore;
+
 	return true;
 }
 
@@ -101,7 +116,7 @@ void Game::beginLoop()
 
 void Game::processLoop()
 {
-		mpGraphicsSystem->swap();
+	mpGraphicsSystem->swap();
 }
 
 bool Game::endLoop()
@@ -110,7 +125,6 @@ bool Game::endLoop()
 	mpLoopTimer->sleepUntilElapsed( mLoopTargetTime );
 	return mShouldExit;
 }
-
 
 float genRandomBinomial()
 {
@@ -122,18 +136,3 @@ float genRandomFloat()
 	float r = (float)rand()/(float)RAND_MAX;
 	return r;
 }
-/*
-float mapRotationToRange( float rotation, float low, float high )
-{
-	while( rotation < low )
-	{
-		rotation += ( 2.0f * (float)PI );
-	}
-
-	while( rotation > high )
-	{
-		rotation -= ( 2.0f * (float)PI );
-	}
-	return rotation;
-}
-*/

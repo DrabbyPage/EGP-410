@@ -168,6 +168,8 @@ void UnitManager::updateAll(float elapsedTime)
 
 void UnitManager::checkCollisions()
 {
+	GameApp* pGame = dynamic_cast<GameApp*>(gpGame);
+
 	if (getPlayerUnit() != nullptr)
 	{
 		for (unsigned int i = 1; i < mUnitMap.size(); i++)
@@ -187,20 +189,19 @@ void UnitManager::checkCollisions()
 					else if (mUnitMap[i]->getTag() == Unit::SMALL_PIP)
 					{
 						//std::cout << "collision with the small pip" << std::endl;
-						//randomizeUnitPos(mUnitMap[i]);
 						deleteUnit(mUnitMap[i]->mID);
+						pGame->addScore(10);
 						break;
 					}
 					// if obj is big pip then add score and make state of enemies to vulnerable
 					else if (mUnitMap[i]->getTag() == Unit::BIG_PIP)
 					{
 						std::cout << "collision with the Big pip" << std::endl;
-						//randomizeUnitPos(mUnitMap[i]);
 						deleteUnit(mUnitMap[i]->mID);
+						pGame->addScore(50);
 						break;
 					}
 				}
-
 			}
 		}
 	}
@@ -211,7 +212,7 @@ bool UnitManager::collision(Unit* obj1, Unit* obj2)
 	Vector2D obj1Pos = obj1->getPositionComponent()->getPosition();
 	Vector2D obj2Pos = obj2->getPositionComponent()->getPosition();
 
-	float modifier = 13;
+	float modifier = 10;
 
 	//If the leftmost or rightmost point of the first sprite lies somewhere inside the second, continue.
 	// the +- modifier are shrinking the area in which we want the collision... it allows the player more leeway when getting 
@@ -233,21 +234,4 @@ bool UnitManager::collision(Unit* obj1, Unit* obj2)
 	}
 	//The sprites do not overlap:
 	return false;
-}
-
-void UnitManager::randomizeUnitPos(Unit* unit)
-{
-	GameApp* pGame = dynamic_cast<GameApp*>(gpGame);
-
-	int posX;
-	int posY;
-
-	do
-	{
-		posX = (rand() % pGame->getGrid()->getGridWidth()) * pGame->getGrid()->getSquareSize();
-		posY = (rand() % pGame->getGrid()->getGridHeight()) * pGame->getGrid()->getSquareSize();
-
-	} while (pGame->getGrid()->getValueAtPixelXY((int)posX, (int)posY) == BLOCKING_VALUE);
-
-	unit->getPositionComponent()->setPosition(Vector2D(posX, posY));
 }

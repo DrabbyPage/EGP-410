@@ -194,6 +194,8 @@ bool GameApp::init()
 	PathfindingDebugContent* pContent = new PathfindingDebugContent( mpPathfinder );
 	mpDebugDisplay = new DebugDisplay( Vector2D(0,12), pContent );
 
+	mpGameScore = 0;
+
 	mpMasterTimer->start();
 	return true;
 }
@@ -251,8 +253,6 @@ void GameApp::processLoop()
 	mpPathfinder->drawVisualization(mpGrid, pBackBuffer);
 	#endif
 
-	mpDebugDisplay->draw( pBackBuffer );
-
 	mpUnitManager->updateAll(TARGET_ELAPSED_MS);
 	mpUnitManager->checkCollisions();
 	mpComponentManager->update(TARGET_ELAPSED_MS);
@@ -261,6 +261,8 @@ void GameApp::processLoop()
 	mpMessageManager->processMessagesForThisframe();
 
 	mpUnitManager->drawAll();
+
+	mpDebugDisplay->draw(pBackBuffer);
 	
 	mpInputSystem->process();
 

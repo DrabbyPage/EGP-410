@@ -89,11 +89,9 @@ void SteeringComponent::setData(const SteeringData& data)
 	}
 	case Steering::GHOST:
 	{
-		/*
 		delete mpSteering;
 		mpSteering = new PacManSteering(data.ownerID, data.targetLoc, data.targetID);
 		break;
-		*/
 	}
 	default:
 	{
