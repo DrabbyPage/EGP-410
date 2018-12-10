@@ -83,13 +83,15 @@ bool GameApp::init()
 
 	//load buffers
 	mpGraphicsBufferManager->loadBuffer(mBackgroundBufferID, "wallpaper.bmp");
-	mpGraphicsBufferManager->loadBuffer(mPlayerIconBufferID, "arrow.png");
-	mpGraphicsBufferManager->loadBuffer(mEnemyIconBufferID, "PacManGhost.png");
-	mpGraphicsBufferManager->loadBuffer(mTargetBufferID, "target.png");
 	mpGraphicsBufferManager->loadBuffer(mPacManID, "pacman.png");
 	mpGraphicsBufferManager->loadBuffer(mBigPipID, "BigPip.png");
 	mpGraphicsBufferManager->loadBuffer(mSmallPipID, "SmallPip.png");
-
+	mpGraphicsBufferManager->loadBuffer(mEnemyPowerUpID, "EnemyPowerUp.png");
+	mpGraphicsBufferManager->loadBuffer(mRedGhostID, "PacManGhostRed.png");
+	mpGraphicsBufferManager->loadBuffer(mPinkGhostID, "PacManGhostPink.png");
+	mpGraphicsBufferManager->loadBuffer(mOrangeGhostID, "PacManGhostOrange.png");
+	mpGraphicsBufferManager->loadBuffer(mGreenGhostID, "PacManGhostGreen.png");
+	mpGraphicsBufferManager->loadBuffer(mEdibleGhostID, "GhostEatable.png");
 
 	// loading pathfinders
 	//mpPathfinder = new DepthFirstPathfinder(mpGridGraph);
@@ -97,98 +99,9 @@ bool GameApp::init()
 	mpPathfinder = new AStarPath(mpGridGraph);
 	mpPathSmoothing = new PathSmoothing();
 
+	createSprites();
 
-	//setup sprites
-	GraphicsBuffer* pBackGroundBuffer = mpGraphicsBufferManager->getBuffer( mBackgroundBufferID );
-	if( pBackGroundBuffer != NULL )
-	{
-		mpSpriteManager->createAndManageSprite( BACKGROUND_SPRITE_ID, pBackGroundBuffer, 0, 0, (float)pBackGroundBuffer->getWidth(), (float)pBackGroundBuffer->getHeight() );
-	}
-
-	GraphicsBuffer* pPlayerBuffer = mpGraphicsBufferManager->getBuffer(mPlayerIconBufferID);
-	Sprite* pArrowSprite = NULL;
-	if (pPlayerBuffer != NULL)
-	{
-		pArrowSprite = mpSpriteManager->createAndManageSprite(PLAYER_ICON_SPRITE_ID, pPlayerBuffer, 0, 0, (float)pPlayerBuffer->getWidth(), (float)pPlayerBuffer->getHeight());
-	}
-
-	GraphicsBuffer* pAIBuffer = mpGraphicsBufferManager->getBuffer(mEnemyIconBufferID);
-	Sprite* pEnemyArrow = NULL;
-	if (pAIBuffer != NULL)
-	{
-		pEnemyArrow = mpSpriteManager->createAndManageSprite(AI_ICON_SPRITE_ID, pAIBuffer, 0, 0, (float)pAIBuffer->getWidth(), (float)pAIBuffer->getHeight());
-	}
-
-	GraphicsBuffer* pTargetBuffer = mpGraphicsBufferManager->getBuffer(mTargetBufferID);
-	if (pTargetBuffer != NULL)
-	{
-		mpSpriteManager->createAndManageSprite(TARGET_SPRITE_ID, pTargetBuffer, 0, 0, (float)pTargetBuffer->getWidth(), (float)pTargetBuffer->getHeight());
-	}
-
-	GraphicsBuffer* pPacManBuffer = mpGraphicsBufferManager->getBuffer(mPacManID);
-	Sprite* pPacManSprite = NULL;
-	if (pPacManBuffer != NULL)
-	{
-		pPacManSprite = mpSpriteManager->createAndManageSprite(PAC_MAN_SPRITE_ID, pPacManBuffer, (float)pPacManBuffer->getWidth() / 3, 0, (float)pPacManBuffer->getWidth() / 3, (float)pPacManBuffer->getHeight());
-	}
-
-	GraphicsBuffer* pBigPipBuffer = mpGraphicsBufferManager->getBuffer(mBigPipID);
-	Sprite* pBigPipSprite = NULL;
-	if (pBigPipBuffer != NULL)
-	{
-		pPacManSprite = mpSpriteManager->createAndManageSprite(BIG_PIP_SPRITE_ID, pBigPipBuffer, 0, 0, (float)pBigPipBuffer->getWidth(), (float)pBigPipBuffer->getHeight());
-	}
-
-	GraphicsBuffer* pSmallPipBuffer = mpGraphicsBufferManager->getBuffer(mSmallPipID);
-	Sprite* pSmallPipSprite = NULL;
-	if (pSmallPipBuffer != NULL)
-	{
-		pPacManSprite = mpSpriteManager->createAndManageSprite(SMALL_PIP_SPRITE_ID, pSmallPipBuffer, 0, 0, (float)pSmallPipBuffer->getWidth(), (float)pSmallPipBuffer->getHeight());
-	}
-
-	// making pacman
-	{
-		Unit* pPacMan = mpUnitManager->createPlayerUnit(*mpSpriteManager->getSprite(PAC_MAN_SPRITE_ID));
-		pPacMan->setSteering(Steering::PAC_MAN, Vector2D(512, 544));
-		Steering* temp = pPacMan->getSteeringComponent()->getSteering();
-		pPacMan->getPositionComponent()->setPosition(Vector2D(512, 544));
-		pPacMan->setTag(Unit::PAC_MAN);
-	}
-
-	// making ghosts
-	for (int i = 0; i < UNIT_COUNT; ++i)
-	{
-		Unit* pGhost = mpUnitManager->createUnit(*mpSpriteManager->getSprite(AI_ICON_SPRITE_ID));
-		pGhost->getPositionComponent()->setPosition(Vector2D(448 + (32 * i), 448));
-		pGhost->setSteering(Steering::PATH, Vector2D(pGhost->getPositionComponent()->getPosition()));
-		pGhost->setTag(Unit::GHOST);
-	}
-
-	// creating big pips
-	{
-		Unit* pBigPipUpLeft = mpUnitManager->createUnit(*mpSpriteManager->getSprite(BIG_PIP_SPRITE_ID));
-		pBigPipUpLeft->getPositionComponent()->setPosition(Vector2D(96, 32));
-		pBigPipUpLeft->setTag(Unit::BIG_PIP);
-
-		Unit* pBigPipUpRight = mpUnitManager->createUnit(*mpSpriteManager->getSprite(BIG_PIP_SPRITE_ID));
-		pBigPipUpRight->getPositionComponent()->setPosition(Vector2D(896, 32));
-		pBigPipUpRight->setTag(Unit::BIG_PIP);
-
-		Unit* pBigPipDownLeft = mpUnitManager->createUnit(*mpSpriteManager->getSprite(BIG_PIP_SPRITE_ID));
-		pBigPipDownLeft->getPositionComponent()->setPosition(Vector2D(96, 704));
-		pBigPipDownLeft->setTag(Unit::BIG_PIP);
-
-		Unit* pBigPipDownRight = mpUnitManager->createUnit(*mpSpriteManager->getSprite(BIG_PIP_SPRITE_ID));
-		pBigPipDownRight->getPositionComponent()->setPosition(Vector2D(896, 704));
-		pBigPipDownRight->setTag(Unit::BIG_PIP);
-	}
-	
-	// creating small pips
-	for (int i = 0; i < 100; i++)
-	{
-		Unit* pSmallPip = mpUnitManager->createRandomUnit(*mpSpriteManager->getSprite(SMALL_PIP_SPRITE_ID));
-		pSmallPip->setTag(Unit::SMALL_PIP);
-	}
+	createUnits();
 
 	//debug display
 	PathfindingDebugContent* pContent = new PathfindingDebugContent( mpPathfinder );
@@ -274,3 +187,149 @@ bool GameApp::endLoop()
 {
 	return Game::endLoop();
 }
+
+void GameApp::createSprites()
+{
+	//setup sprites
+	GraphicsBuffer* pBackGroundBuffer = mpGraphicsBufferManager->getBuffer(mBackgroundBufferID);
+	if (pBackGroundBuffer != NULL)
+	{
+		mpSpriteManager->createAndManageSprite(BACKGROUND_SPRITE_ID, pBackGroundBuffer, 0, 0, (float)pBackGroundBuffer->getWidth(), (float)pBackGroundBuffer->getHeight());
+	}
+
+	GraphicsBuffer* pPacManBuffer = mpGraphicsBufferManager->getBuffer(mPacManID);
+	Sprite* pPacManSprite = NULL;
+	if (pPacManBuffer != NULL)
+	{
+		pPacManSprite = mpSpriteManager->createAndManageSprite(PAC_MAN_SPRITE_ID, pPacManBuffer, (float)pPacManBuffer->getWidth() / 3, 0, (float)pPacManBuffer->getWidth() / 3, (float)pPacManBuffer->getHeight());
+	}
+
+	GraphicsBuffer* pBigPipBuffer = mpGraphicsBufferManager->getBuffer(mBigPipID);
+	Sprite* pBigPipSprite = NULL;
+	if (pBigPipBuffer != NULL)
+	{
+		pBigPipSprite = mpSpriteManager->createAndManageSprite(BIG_PIP_SPRITE_ID, pBigPipBuffer, 0, 0, (float)pBigPipBuffer->getWidth(), (float)pBigPipBuffer->getHeight());
+	}
+
+	GraphicsBuffer* pSmallPipBuffer = mpGraphicsBufferManager->getBuffer(mSmallPipID);
+	Sprite* pSmallPipSprite = NULL;
+	if (pSmallPipBuffer != NULL)
+	{
+		pSmallPipSprite = mpSpriteManager->createAndManageSprite(SMALL_PIP_SPRITE_ID, pSmallPipBuffer, 0, 0, (float)pSmallPipBuffer->getWidth(), (float)pSmallPipBuffer->getHeight());
+	}
+
+	GraphicsBuffer* pEnemyPowerBuffer = mpGraphicsBufferManager->getBuffer(mEnemyPowerUpID);
+	Sprite* pEnemyPowerSprite = NULL;
+	if (pEnemyPowerBuffer != NULL)
+	{
+		pEnemyPowerSprite = mpSpriteManager->createAndManageSprite(ENEMY_POWER_UP_SPRITE_ID, pEnemyPowerBuffer, 0, 0, (float)pEnemyPowerBuffer->getWidth(), (float)pEnemyPowerBuffer->getHeight());
+	}
+
+	GraphicsBuffer* pRedGhostBuffer = mpGraphicsBufferManager->getBuffer(mRedGhostID);
+	Sprite* pRedGhostSprite = NULL;
+	if (pRedGhostBuffer != NULL)
+	{
+		pRedGhostSprite = mpSpriteManager->createAndManageSprite(RED_GHOST_SPRITE, pRedGhostBuffer, 0, 0, (float)pRedGhostBuffer->getWidth(), (float)pRedGhostBuffer->getHeight());
+	}
+
+	GraphicsBuffer* pPinkGhostBuffer = mpGraphicsBufferManager->getBuffer(mPinkGhostID);
+	Sprite* pPinkGhostSprite = NULL;
+	if (pPinkGhostBuffer != NULL)
+	{
+		pPinkGhostSprite = mpSpriteManager->createAndManageSprite(PINK_GHOST_SPRITE, pPinkGhostBuffer, 0, 0, (float)pPinkGhostBuffer->getWidth(), (float)pPinkGhostBuffer->getHeight());
+	}
+
+	GraphicsBuffer* pOrangeGhostBuffer = mpGraphicsBufferManager->getBuffer(mOrangeGhostID);
+	Sprite* pOrangeGhostSprite = NULL;
+	if (pOrangeGhostBuffer != NULL)
+	{
+		pOrangeGhostSprite = mpSpriteManager->createAndManageSprite(ORANGE_GHOST_SPRITE, pOrangeGhostBuffer, 0, 0, (float)pOrangeGhostBuffer->getWidth(), (float)pOrangeGhostBuffer->getHeight());
+	}
+
+	GraphicsBuffer* pGreenGhostBuffer = mpGraphicsBufferManager->getBuffer(mGreenGhostID);
+	Sprite* pGreenGhostSprite = NULL;
+	if (pGreenGhostBuffer != NULL)
+	{
+		pGreenGhostSprite = mpSpriteManager->createAndManageSprite(GREEN_GHOST_SPRITE, pGreenGhostBuffer, 0, 0, (float)pGreenGhostBuffer->getWidth(), (float)pGreenGhostBuffer->getHeight());
+	}
+
+	GraphicsBuffer* pEdibleGhostBuffer = mpGraphicsBufferManager->getBuffer(mGreenGhostID);
+	Sprite* pEdibleGhostSprite = NULL;
+	if (pEdibleGhostBuffer != NULL)
+	{
+		pEdibleGhostSprite = mpSpriteManager->createAndManageSprite(EDIBLE_GHOST_SPRITE, pEdibleGhostBuffer, 0, 0, (float)pEdibleGhostBuffer->getWidth(), (float)pEdibleGhostBuffer->getHeight());
+	}
+}
+
+void GameApp::createUnits()
+{
+
+	// making pacman
+	{
+		Unit* pPacMan = mpUnitManager->createPlayerUnit(*mpSpriteManager->getSprite(PAC_MAN_SPRITE_ID));
+		pPacMan->setSteering(Steering::PAC_MAN, Vector2D(512, 544));
+		Steering* temp = pPacMan->getSteeringComponent()->getSteering();
+		pPacMan->getPositionComponent()->setPosition(Vector2D(512, 544));
+		pPacMan->setTag(Unit::PAC_MAN);
+	}
+
+	// making ghosts
+	int i = 0;
+	{
+		Unit* pRedGhost = mpUnitManager->createUnit(*mpSpriteManager->getSprite(RED_GHOST_SPRITE));
+		pRedGhost->getPositionComponent()->setPosition(Vector2D(448 + (32 * i), 448));
+		pRedGhost->setSteering(Steering::PATH, Vector2D(pRedGhost->getPositionComponent()->getPosition()));
+		pRedGhost->setTag(Unit::GHOST);
+		i++;
+
+		Unit* pPinkGhost = mpUnitManager->createUnit(*mpSpriteManager->getSprite(PINK_GHOST_SPRITE));
+		pPinkGhost->getPositionComponent()->setPosition(Vector2D(448 + (32 * i), 448));
+		pPinkGhost->setSteering(Steering::PATH, Vector2D(pPinkGhost->getPositionComponent()->getPosition()));
+		pPinkGhost->setTag(Unit::GHOST);
+		i++;
+
+		Unit* pOrangeGhost = mpUnitManager->createUnit(*mpSpriteManager->getSprite(ORANGE_GHOST_SPRITE));
+		pOrangeGhost->getPositionComponent()->setPosition(Vector2D(448 + (32 * i), 448));
+		pOrangeGhost->setSteering(Steering::PATH, Vector2D(pOrangeGhost->getPositionComponent()->getPosition()));
+		pOrangeGhost->setTag(Unit::GHOST);
+		i++;
+
+		Unit* pGreenGhost = mpUnitManager->createUnit(*mpSpriteManager->getSprite(GREEN_GHOST_SPRITE));
+		pGreenGhost->getPositionComponent()->setPosition(Vector2D(448 + (32 * i), 448));
+		pGreenGhost->setSteering(Steering::PATH, Vector2D(pGreenGhost->getPositionComponent()->getPosition()));
+		pGreenGhost->setTag(Unit::GHOST);
+		i++;
+	}
+
+	// creating enemy power up
+	Unit* pEnemyPower = mpUnitManager->createRandomUnit(*mpSpriteManager->getSprite(ENEMY_POWER_UP_SPRITE_ID));
+	pEnemyPower->setTag(Unit::ENEMY_POWER_UP);
+
+	// creating big pips
+	{
+		Unit* pBigPipUpLeft = mpUnitManager->createUnit(*mpSpriteManager->getSprite(BIG_PIP_SPRITE_ID));
+		pBigPipUpLeft->getPositionComponent()->setPosition(Vector2D(96, 32));
+		pBigPipUpLeft->setTag(Unit::BIG_PIP);
+
+		Unit* pBigPipUpRight = mpUnitManager->createUnit(*mpSpriteManager->getSprite(BIG_PIP_SPRITE_ID));
+		pBigPipUpRight->getPositionComponent()->setPosition(Vector2D(896, 32));
+		pBigPipUpRight->setTag(Unit::BIG_PIP);
+
+		Unit* pBigPipDownLeft = mpUnitManager->createUnit(*mpSpriteManager->getSprite(BIG_PIP_SPRITE_ID));
+		pBigPipDownLeft->getPositionComponent()->setPosition(Vector2D(96, 704));
+		pBigPipDownLeft->setTag(Unit::BIG_PIP);
+
+		Unit* pBigPipDownRight = mpUnitManager->createUnit(*mpSpriteManager->getSprite(BIG_PIP_SPRITE_ID));
+		pBigPipDownRight->getPositionComponent()->setPosition(Vector2D(896, 704));
+		pBigPipDownRight->setTag(Unit::BIG_PIP);
+	}
+
+	// creating small pips
+	for (int i = 0; i < 100; i++)
+	{
+		Unit* pSmallPip = mpUnitManager->createRandomUnit(*mpSpriteManager->getSprite(SMALL_PIP_SPRITE_ID));
+		pSmallPip->setTag(Unit::SMALL_PIP);
+	}
+
+}
+

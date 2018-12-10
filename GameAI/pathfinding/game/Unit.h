@@ -9,9 +9,6 @@
 #include "PositionComponent.h"
 #include "Sprite.h"
 #include "Steering.h"
-//#include "CircularQueue.h"
-//#include "Transaction.h"
-//#include "TransactionProcessor.h"
 
 class PhysicsComponent;
 class SteeringComponent;
@@ -31,7 +28,8 @@ public:
 		PAC_MAN,
 		GHOST,
 		BIG_PIP,
-		SMALL_PIP
+		SMALL_PIP,
+		ENEMY_POWER_UP
 	};
 
 	void draw() const;

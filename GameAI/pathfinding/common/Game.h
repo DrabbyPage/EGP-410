@@ -29,6 +29,12 @@ const IDType TARGET_SPRITE_ID = 3;
 const IDType PAC_MAN_SPRITE_ID = 4;
 const IDType BIG_PIP_SPRITE_ID = 5;
 const IDType SMALL_PIP_SPRITE_ID = 6;
+const IDType ENEMY_POWER_UP_SPRITE_ID = 7;
+const IDType RED_GHOST_SPRITE = 8;
+const IDType PINK_GHOST_SPRITE = 9;
+const IDType ORANGE_GHOST_SPRITE = 10;
+const IDType GREEN_GHOST_SPRITE = 11;
+const IDType EDIBLE_GHOST_SPRITE = 12;
 
 class Game:public Trackable
 {
@@ -76,6 +82,13 @@ protected:
 	GraphicsBufferID mPacManID = "pacman";
 	GraphicsBufferID mBigPipID = "bigpip";
 	GraphicsBufferID mSmallPipID = "smallpip";
+	GraphicsBufferID mEnemyPowerUpID = "enemypowerup";
+	GraphicsBufferID mRedGhostID = "ghostred";
+	GraphicsBufferID mGreenGhostID = "ghostgreen";
+	GraphicsBufferID mOrangeGhostID = "ghostorange";
+	GraphicsBufferID mPinkGhostID = "ghostpink";
+	GraphicsBufferID mEdibleGhostID = "edibleghost";
+
 
 	int mpGameScore;
 	int mpHighScore;

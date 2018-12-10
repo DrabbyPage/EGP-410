@@ -44,6 +44,9 @@ public:
 	virtual void processLoop();
 	virtual bool endLoop();
 
+	void createSprites();
+	void createUnits();
+
 	//accessors
 	inline GameMessageManager* getMessageManager() { return mpMessageManager; };
 	inline GridVisualizer* getGridVisualizer() { return mpGridVisualizer; };
