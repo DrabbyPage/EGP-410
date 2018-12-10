@@ -123,6 +123,17 @@ bool Game::endLoop()
 {
 	//mpMasterTimer->start();
 	mpLoopTimer->sleepUntilElapsed( mLoopTargetTime );
+	if (mShouldExit == true)
+	{
+		if (mpGameScore > mpHighScore)
+		{
+			mpHighScore = mpGameScore;
+			std::ofstream outputFile;
+			outputFile.open("HighScore.txt");
+			outputFile << mpHighScore;
+			outputFile.close();
+		}
+	}
 	return mShouldExit;
 }
 

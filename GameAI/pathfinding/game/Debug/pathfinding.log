@@ -1,2 +1,4 @@
-﻿  UnitManager.cpp
+﻿  Game.cpp
+  UnitManager.cpp
+  Generating Code...
   pathfinding.vcxproj -> D:\GitHub\EGP-410\GameAI\pathfinding\game\Debug\pathfinding.exe
