@@ -52,6 +52,18 @@
     <Filter Include="Source Files\Steering">
       <UniqueIdentifier>{7dcbf36c-5b1c-48e7-b208-d5d8037a9430}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Header Files\StateMachine">
+      <UniqueIdentifier>{905a7079-dd8b-4ea9-9789-1be8a073fb55}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\StateMachine">
+      <UniqueIdentifier>{dac28df8-dd9d-45be-9361-aa99c6db26fe}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\StateMachine\Events">
+      <UniqueIdentifier>{c0c997cb-a846-4278-905d-27177bab5d3d}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\StateMachine\Events">
+      <UniqueIdentifier>{1ec0534d-f149-4c2d-b459-4e481290998c}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\common\Game.h">
@@ -204,6 +216,9 @@
     <ClInclude Include="KinematicArriveFaceSteering.h">
       <Filter>Header Files\Steering</Filter>
     </ClInclude>
+    <ClInclude Include="StateMachine.h">
+      <Filter>Header Files\StateMachine</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\common\Game.cpp">
@@ -355,6 +370,9 @@
     </ClCompile>
     <ClCompile Include="KinematicArriveFaceSteering.cpp">
       <Filter>Source Files\Steering</Filter>
+    </ClCompile>
+    <ClCompile Include="StateMachine.cpp">
+      <Filter>Source Files\StateMachine</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

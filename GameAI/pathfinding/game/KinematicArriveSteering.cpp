@@ -5,6 +5,9 @@
 #include "UnitManager.h"
 #include "Unit.h"
 
+#include <fstream>
+#include <string>
+
 const float KinematicArriveSteer::msTARGET_RADIUS = 0.01f;
 const float KinematicArriveSteer::msSLOW_RADIUS = 300.0f;
 const float KinematicArriveSteer::msTIME_TO_TARGET = 0.1f;
@@ -39,7 +42,29 @@ Steering* KinematicArriveSteer::getSteering()
 	PhysicsData data = pOwner->getPhysicsComponent()->getData();
 
 	targetSpeed = pOwner->getMaxSpeed();
-	targetSpeed = 40.0f;
+
+	std::ifstream characterSpeed;
+
+	if (pOwner->getTag() == Unit::GHOST)
+	{
+		characterSpeed.open("GhostSpeed.txt");
+		std::string charSpeedString;
+		characterSpeed >> charSpeedString;
+		targetSpeed = std::stof(charSpeedString);
+		characterSpeed.close();
+	}
+	else if (pOwner->getTag() == Unit::PAC_MAN)
+	{
+		characterSpeed.open("PacManSpeed.txt");
+		std::string charSpeedString;
+		characterSpeed >> charSpeedString;
+		targetSpeed = std::stof(charSpeedString);
+		characterSpeed.close();
+	}
+	else
+	{
+		targetSpeed = 40;
+	}
 
 	targetVelocity = direction;
 	targetVelocity.normalize();

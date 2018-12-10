@@ -1,4 +1,5 @@
 #include <map>
+#include <string>
 
 #include "UnitManager.h"
 #include "Unit.h"
@@ -176,7 +177,7 @@ void UnitManager::checkCollisions()
 		{
 			if (mUnitMap[i] != NULL)
 			{
-				if (collision(mUnitMap[0], mUnitMap[i]))
+				if (collisionDistBased(mUnitMap[0], mUnitMap[i]))
 				{
 					// if collision is an enemy kill obj
 					if (mUnitMap[i]->getTag() == Unit::GHOST)
@@ -219,14 +220,14 @@ bool UnitManager::collision(Unit* obj1, Unit* obj2)
 	// items and getting attacked
 	if ((obj1Pos.getX()+modifier >= obj2Pos.getX()+modifier
 		&& obj1Pos.getX()+modifier <= (obj2Pos.getX()+modifier + obj2->mSprite.getWidth()-modifier))
-		|| ((obj1Pos.getX()+modifier + obj1->mSprite.getWidth()-modifier) >= obj2Pos.getX()+modifier
-		&& (obj1Pos.getX()+modifier + obj1->mSprite.getWidth()-modifier) <= (obj2Pos.getX()+modifier + obj2->mSprite.getWidth()-modifier)))
+		|| ((obj1Pos.getX()+modifier + (obj1->mSprite.getWidth()-modifier)) >= obj2Pos.getX()+modifier
+		&& (obj1Pos.getX()+modifier + (obj1->mSprite.getWidth()-modifier)) <= (obj2Pos.getX()+modifier + obj2->mSprite.getWidth()-modifier)))
 	{
 		//Now we look at the y axis:
-		if ((obj1Pos.getY() + modifier >= obj2Pos.getY()
+		if ((obj1Pos.getY() >= obj2Pos.getY()
 			&& obj1Pos.getY() + modifier <= (obj2Pos.getY() + obj2->mSprite.getHeight()))
-			|| ((obj1Pos.getY() + modifier + obj1->mSprite.getHeight()-modifier) >= obj2Pos.getY() + modifier
-			&& (obj1Pos.getY() + modifier + obj1->mSprite.getHeight()-modifier) <= (obj2Pos.getY() + modifier + obj2->mSprite.getHeight()-modifier)))
+			|| ((obj1Pos.getY() + (obj1->mSprite.getHeight()-modifier)) >= obj2Pos.getY()
+			&& (obj1Pos.getY() + (obj1->mSprite.getHeight()-modifier)) <= (obj2Pos.getY() + obj2->mSprite.getHeight()-modifier)))
 		{
 			//The sprites appear to overlap.
 			return true;
@@ -234,4 +235,32 @@ bool UnitManager::collision(Unit* obj1, Unit* obj2)
 	}
 	//The sprites do not overlap:
 	return false;
+}
+
+bool UnitManager::collisionDistBased(Unit* obj1, Unit* obj2)
+{
+	Vector2D obj1Pos = obj1->getPositionComponent()->getPosition();
+	Vector2D obj2Pos = obj2->getPositionComponent()->getPosition();
+
+	Vector2D diff = obj1Pos - obj2Pos;
+
+	float dist = diff.getLength();
+	float collisionDist = 0;
+
+	std::ifstream collisionDistFile;
+
+	collisionDistFile.open("CollisionDistance.txt");
+	std::string collisionDistString;
+	collisionDistFile >> collisionDistString;
+	collisionDist = std::stof(collisionDistString);
+	collisionDistFile.close();
+
+	if (dist < collisionDist)
+	{
+		return true;
+	}
+	else
+	{
+		return false;
+	}
 }

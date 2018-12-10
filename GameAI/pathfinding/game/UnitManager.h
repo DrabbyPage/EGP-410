@@ -37,6 +37,7 @@ public:
 
 	void checkCollisions();
 	bool collision(Unit* obj1, Unit* obj2);
+	bool collisionDistBased(Unit* obj1, Unit* obj2);
 
 private:
 	static UnitID msNextUnitID;

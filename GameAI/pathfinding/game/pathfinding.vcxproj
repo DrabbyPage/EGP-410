@@ -126,6 +126,7 @@
     <ClInclude Include="PhysicsComponent.h" />
     <ClInclude Include="PositionComponent.h" />
     <ClInclude Include="SeekSteering.h" />
+    <ClInclude Include="StateMachine.h" />
     <ClInclude Include="Steering.h" />
     <ClInclude Include="SteeringComponent.h" />
     <ClInclude Include="Unit.h" />
@@ -178,6 +179,7 @@
     <ClCompile Include="PhysicsComponent.cpp" />
     <ClCompile Include="PositionComponent.cpp" />
     <ClCompile Include="SeekSteering.cpp" />
+    <ClCompile Include="StateMachine.cpp" />
     <ClCompile Include="Steering.cpp" />
     <ClCompile Include="SteeringComponent.cpp" />
     <ClCompile Include="Unit.cpp" />
