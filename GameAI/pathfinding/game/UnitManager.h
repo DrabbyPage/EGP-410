@@ -39,6 +39,8 @@ public:
 	bool collision(Unit* obj1, Unit* obj2);
 	bool collisionDistBased(Unit* obj1, Unit* obj2);
 
+	void resetAllUnitPos();
+
 private:
 	static UnitID msNextUnitID;
 	MemoryPool mPool;

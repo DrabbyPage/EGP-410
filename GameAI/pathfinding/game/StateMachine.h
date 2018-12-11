@@ -16,8 +16,10 @@ class StateTransition;
 enum TransitionType
 {
 	INVALID_TRANSITION_TYPE = -1,
-	KABOOM_TRANSITION = 0,
-	END_GAME_TRANSITION = 1
+	GHOST_CHASE = 0,
+	GHOST_WANDER = 1,
+	GHOST_FLEE = 2,
+	GHOST_EDIBLE = 3
 };
 
 typedef int SM_idType;

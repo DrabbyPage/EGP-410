@@ -266,7 +266,7 @@ void GameApp::createUnits()
 
 	// making pacman
 	{
-		Unit* pPacMan = mpUnitManager->createPlayerUnit(*mpSpriteManager->getSprite(PAC_MAN_SPRITE_ID));
+		Unit* pPacMan = mpUnitManager->createPlayerUnit(*mpSpriteManager->getSprite(PAC_MAN_SPRITE_ID), Unit::PAC_MAN);
 		pPacMan->setSteering(Steering::PAC_MAN, Vector2D(512, 544));
 		Steering* temp = pPacMan->getSteeringComponent()->getSteering();
 		pPacMan->getPositionComponent()->setPosition(Vector2D(512, 544));
@@ -276,28 +276,24 @@ void GameApp::createUnits()
 	// making ghosts
 	int i = 0;
 	{
-		Unit* pRedGhost = mpUnitManager->createUnit(*mpSpriteManager->getSprite(RED_GHOST_SPRITE));
+		Unit* pRedGhost = mpUnitManager->createUnit(*mpSpriteManager->getSprite(RED_GHOST_SPRITE), Unit::GHOST);
 		pRedGhost->getPositionComponent()->setPosition(Vector2D(448 + (32 * i), 448));
 		pRedGhost->setSteering(Steering::PATH, Vector2D(pRedGhost->getPositionComponent()->getPosition()));
-		pRedGhost->setTag(Unit::GHOST);
 		i++;
 
-		Unit* pPinkGhost = mpUnitManager->createUnit(*mpSpriteManager->getSprite(PINK_GHOST_SPRITE));
+		Unit* pPinkGhost = mpUnitManager->createUnit(*mpSpriteManager->getSprite(PINK_GHOST_SPRITE), Unit::GHOST);
 		pPinkGhost->getPositionComponent()->setPosition(Vector2D(448 + (32 * i), 448));
 		pPinkGhost->setSteering(Steering::PATH, Vector2D(pPinkGhost->getPositionComponent()->getPosition()));
-		pPinkGhost->setTag(Unit::GHOST);
 		i++;
 
-		Unit* pOrangeGhost = mpUnitManager->createUnit(*mpSpriteManager->getSprite(ORANGE_GHOST_SPRITE));
+		Unit* pOrangeGhost = mpUnitManager->createUnit(*mpSpriteManager->getSprite(ORANGE_GHOST_SPRITE), Unit::GHOST);
 		pOrangeGhost->getPositionComponent()->setPosition(Vector2D(448 + (32 * i), 448));
 		pOrangeGhost->setSteering(Steering::PATH, Vector2D(pOrangeGhost->getPositionComponent()->getPosition()));
-		pOrangeGhost->setTag(Unit::GHOST);
 		i++;
 
-		Unit* pGreenGhost = mpUnitManager->createUnit(*mpSpriteManager->getSprite(GREEN_GHOST_SPRITE));
+		Unit* pGreenGhost = mpUnitManager->createUnit(*mpSpriteManager->getSprite(GREEN_GHOST_SPRITE), Unit::GHOST);
 		pGreenGhost->getPositionComponent()->setPosition(Vector2D(448 + (32 * i), 448));
 		pGreenGhost->setSteering(Steering::PATH, Vector2D(pGreenGhost->getPositionComponent()->getPosition()));
-		pGreenGhost->setTag(Unit::GHOST);
 		i++;
 	}
 

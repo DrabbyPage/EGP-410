@@ -175,7 +175,7 @@ void UnitManager::checkCollisions()
 	{
 		for (unsigned int i = 1; i < mUnitMap.size(); i++)
 		{
-			if (mUnitMap[i] != NULL)
+			if (mUnitMap[i] != NULL && mUnitMap[i]->getUnitActive())
 			{
 				if (collisionDistBased(mUnitMap[0], mUnitMap[i]))
 				{
@@ -190,7 +190,8 @@ void UnitManager::checkCollisions()
 					else if (mUnitMap[i]->getTag() == Unit::SMALL_PIP)
 					{
 						//std::cout << "collision with the small pip" << std::endl;
-						deleteUnit(mUnitMap[i]->mID);
+						//deleteUnit(mUnitMap[i]->mID);
+						mUnitMap[i]->setUnitActive(false);
 						pGame->addScore(10);
 						break;
 					}
@@ -198,7 +199,8 @@ void UnitManager::checkCollisions()
 					else if (mUnitMap[i]->getTag() == Unit::BIG_PIP)
 					{
 						std::cout << "collision with the Big pip" << std::endl;
-						deleteUnit(mUnitMap[i]->mID);
+						//deleteUnit(mUnitMap[i]->mID);
+						mUnitMap[i]->setUnitActive(false);
 						pGame->addScore(50);
 						break;
 					}
@@ -263,4 +265,27 @@ bool UnitManager::collisionDistBased(Unit* obj1, Unit* obj2)
 	{
 		return false;
 	}
+}
+
+void UnitManager::resetAllUnitPos()
+{
+	// setting pacman's positions
+	mUnitMap[0]->getPositionComponent()->setPosition(Vector2D(512, 544));
+
+	// resetting the ghost positions
+	int i = 0;
+	{
+		mUnitMap[1]->getPositionComponent()->setPosition(Vector2D(448 + (32 * i), 448));
+		i++;
+
+		mUnitMap[2]->getPositionComponent()->setPosition(Vector2D(448 + (32 * i), 448));
+		i++;
+
+		mUnitMap[3]->getPositionComponent()->setPosition(Vector2D(448 + (32 * i), 448));
+		i++;
+
+		mUnitMap[4]->getPositionComponent()->setPosition(Vector2D(448 + (32 * i), 448));
+		i++;
+	}
+
 }
