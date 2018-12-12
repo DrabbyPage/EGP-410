@@ -53,7 +53,7 @@ public:
 	float getMaxRotAcc() const { return mMaxRotAcc; };
 	float getMaxRotVel() const { return mMaxRotVel; };
 	UnitType getTag()const { return mUnitTag; };
-	StateMachine getStateMachine() { return mUnitStateMachine; };
+	StateMachine* getStateMachine() { return mUnitStateMachine; };
 
 	bool getShowTarget() { return mShowTarget; };
 	bool getUnitActive() { return mUnitActive; };
@@ -94,7 +94,7 @@ private:
 
 	friend class UnitManager;
 
-	StateMachine mUnitStateMachine;
+	StateMachine* mUnitStateMachine;
 
 	StateTransition * mpWanderTransition;
 	StateTransition * mpFleeTransition;

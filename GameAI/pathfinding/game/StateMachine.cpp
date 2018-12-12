@@ -55,7 +55,7 @@ void StateMachine::transitionToState( const SM_idType& targetID )
 
 StateMachine::~StateMachine()
 {
-	for (int i = 0; i < mStates.size(); i++)
+	for (unsigned int i = 0; i < mStates.size(); i++)
 	{
 		delete mStates[i];
 	}

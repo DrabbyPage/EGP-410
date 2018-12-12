@@ -49,7 +49,7 @@ Unit::Unit(const Sprite& sprite, UnitType tag) :
 	else if (mUnitTag == GHOST)
 	{
 		unitHealthFileName = "GhostHealth.txt";
-		//createGhostStates();
+		createGhostStates();
 	}
 
 	// if it is a ghost or pacman give the unit a health
@@ -69,13 +69,15 @@ Unit::Unit(const Sprite& sprite, UnitType tag) :
 
 Unit::~Unit()
 {
-	/*
-	delete mpWanderTransition;
-	delete mpFleeTransition;
-	delete mpChaseTransition;
-	delete mpEdibleTransition;
-	mUnitStateMachine.~StateMachine();
-	*/
+	if (mUnitTag == GHOST)
+	{
+		delete mpWanderTransition;
+		delete mpFleeTransition;
+		delete mpChaseTransition;
+		delete mpEdibleTransition;
+		delete mUnitStateMachine;
+	}
+
 }
 
 void Unit::update(float elapsedTime)
@@ -133,7 +135,7 @@ void Unit::update(float elapsedTime)
 		}
 		else
 		{
-			//mUnitStateMachine.update();
+			mUnitStateMachine->update();
 		}
 	}
 	else if (mUnitTag == PAC_MAN)
@@ -241,7 +243,7 @@ void Unit::speedUpUnit(float multiplier)
 	mSpeedMultiplier = multiplier;
 }
 
-/*
+
 void Unit::createGhostStates()
 {
 	GhostWanderState* pWanderState = new GhostWanderState(0);
@@ -270,14 +272,15 @@ void Unit::createGhostStates()
 	pEdibleState->addTransition(mpChaseTransition);
 	pEdibleState->addTransition(mpWanderTransition);
 
-	mUnitStateMachine.addState(pWanderState);
-	mUnitStateMachine.addState(pFleeState);
-	mUnitStateMachine.addState(pChaseState);
-	mUnitStateMachine.addState(pEdibleState);
+	mUnitStateMachine = new StateMachine();
 
-	mUnitStateMachine.setInitialStateID(0);
+	mUnitStateMachine->addState(pWanderState);
+	mUnitStateMachine->addState(pFleeState);
+	mUnitStateMachine->addState(pChaseState);
+	mUnitStateMachine->addState(pEdibleState);
 
-	mUnitStateMachine.getCurrentState();
+	mUnitStateMachine->setInitialStateID(0);
+
+	mUnitStateMachine->getCurrentState();
 
 }
-*/

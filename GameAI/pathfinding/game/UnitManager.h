@@ -20,7 +20,13 @@ class UnitManager : public Trackable
 {
 public:
 	UnitManager(Uint32 maxSize);
-	~UnitManager(){};
+	~UnitManager()
+	{
+		for (auto it = mUnitMap.begin(); it != mUnitMap.end(); ++it)
+		{
+			it->second->~Unit();
+		}
+	};
 
 	Unit* createUnit(const Sprite& sprite, Unit::UnitType unitTag = Unit::INVALID_TYPE, bool shouldWrap = true, const PositionData& posData = ZERO_POSITION_DATA, const PhysicsData& physicsData = ZERO_PHYSICS_DATA, const UnitID& id = INVALID_UNIT_ID);
 	Unit* createPlayerUnit(const Sprite& sprite, Unit::UnitType unitTag = Unit::INVALID_TYPE, bool shouldWrap = true, const PositionData& posData = ZERO_POSITION_DATA, const PhysicsData& physicsData = ZERO_PHYSICS_DATA);
