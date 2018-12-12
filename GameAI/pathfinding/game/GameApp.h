@@ -78,6 +78,7 @@ private:
 	InputSystem* mpInputSystem;
 
 	bool canDestroyEnemies;
+	float timer;
 };
 
 float genRandomBinomial();//range -1:1 from "Artificial Intelligence for Games", Millington and Funge

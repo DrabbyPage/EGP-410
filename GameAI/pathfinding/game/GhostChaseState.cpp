@@ -90,11 +90,11 @@ StateTransition* GhostChaseState::update()
 
 		Node* pFromNode = pGridGraph->getNode(fromIndex);
 		Node* pToNode = pGridGraph->getNode(toIndex);
-		mpPath = pPathfinder->findPath(pFromNode, pToNode);
 
 		if (pGrid->getValueAtIndex(fromIndex) == INTERSECTION_VALUE || mpPath == nullptr)
 		{
 			/*THIS NEEDS TO pathfind peemans location ONLY at intersections*/
+			mpPath = pPathfinder->findPath(pFromNode, pToNode);
 		}
 
 		GhostSteering* pGhostSteer = dynamic_cast<GhostSteering*>(pGame->getUnitManager()->getUnit(i)->getSteeringComponent()->getSteering());
@@ -143,22 +143,10 @@ StateTransition* GhostChaseState::update()
 		pGhostSteer->setPath(mpPath);
 		//reset the index every click
 
-
-		//check within radius of player and take damage if you are
-		if (abs(GhostPosCenter.getX() - pGame->getUnitManager()->getPlayerUnit()->getPositionComponent()->getPosition().getX()) < 60
-			&& abs(GhostPosCenter.getY() - pGame->getUnitManager()->getPlayerUnit()->getPositionComponent()->getPosition().getY()) < 60)
-		{
-			if (timer > 20)
-			{
-				pGame->getUnitManager()->getPlayerUnit()->hurtUnit(1);
-				timer = 0;
-			}
-
-		}
-
 		if (pGame->getCanDestroyEnemies())
 		{
 			//transition back to flee
+			mTransitionToFlee = true;
 		}
 
 		//IF PLAYER IS OUTSIDE OF RADIUS
@@ -170,28 +158,16 @@ StateTransition* GhostChaseState::update()
 			if (abs(GhostPosCenter.getX() - pGame->getUnitManager()->getPlayerUnit()->getPositionComponent()->getPosition().getX()) >= 60
 				&& abs(GhostPosCenter.getY() - pGame->getUnitManager()->getPlayerUnit()->getPositionComponent()->getPosition().getY()) >= 60)
 			{
-				map<TransitionType, StateTransition*>::iterator iter = mTransitions.find(GHOST_WANDER);
-				if (iter != mTransitions.end())//found?
-				{
-					StateTransition* pTransition = iter->second;
-					return pTransition;
-				}
+				mTransitionToWander = true;
 			}
 		}
 
 		if (pGrid->getValueAtIndex(fromIndex) == SPAWNING_VALUE && timer > 60)
 		{
-			map<TransitionType, StateTransition*>::iterator iter = mTransitions.find(GHOST_IDLE);
-			if (iter != mTransitions.end())//found?
-			{
-				StateTransition* pTransition = iter->second;
-				return pTransition;
-			}
+			mTransitionToIdle = true;
 		}
 
 		return NULL;//no transition
 	}
-
-
-	return NULL;//no transition
+	return NULL;
 }

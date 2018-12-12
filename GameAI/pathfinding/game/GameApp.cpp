@@ -47,7 +47,7 @@ GameApp::GameApp() :
 	mpDebugDisplay(nullptr),
 	mpPathSmoothing(nullptr)
 {
-
+	canDestroyEnemies = false;
 }
 
 GameApp::~GameApp()
@@ -156,24 +156,43 @@ const float TARGET_ELAPSED_MS = LOOP_TARGET_TIME / 1000.0f;
 
 void GameApp::processLoop()
 {
+
 	//get back buffer
 	GraphicsBuffer* pBackBuffer = mpGraphicsSystem->getBackBuffer();
-	//copy to back buffer
-	mpGridVisualizer->draw( *pBackBuffer );
+	if (!gpGame->getLostState())
+	{
+		//copy to back buffer
+		mpGridVisualizer->draw(*pBackBuffer);
 
-	#ifdef VISUALIZE_PATH
-	//show pathfinder visualizer
-	mpPathfinder->drawVisualization(mpGrid, pBackBuffer);
-	#endif
+#ifdef VISUALIZE_PATH
+		//show pathfinder visualizer
+		mpPathfinder->drawVisualization(mpGrid, pBackBuffer);
+#endif
 
-	mpUnitManager->updateAll(TARGET_ELAPSED_MS);
-	mpUnitManager->checkCollisions();
-	mpComponentManager->update(TARGET_ELAPSED_MS);
-	mpMessageManager->processMessagesForThisframe();
+		mpUnitManager->updateAll(TARGET_ELAPSED_MS);
+		mpUnitManager->checkCollisions();
+		mpComponentManager->update(TARGET_ELAPSED_MS);
+		mpMessageManager->processMessagesForThisframe();
 
-	mpMessageManager->processMessagesForThisframe();
+		mpMessageManager->processMessagesForThisframe();
 
-	mpUnitManager->drawAll();
+		mpUnitManager->drawAll();
+
+		if (canDestroyEnemies)
+		{
+			timer += TARGET_ELAPSED_MS;
+
+			float maxEatTime = 10.0f;
+
+			if (timer > maxEatTime)
+			{
+				timer = 0;
+				canDestroyEnemies = false;
+			}
+		}
+
+	}
+
 
 	mpDebugDisplay->draw(pBackBuffer);
 	

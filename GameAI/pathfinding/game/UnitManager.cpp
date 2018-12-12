@@ -16,11 +16,15 @@
 #include "PathSmoothing.h"
 #include "PathSteering.h"
 #include "PacManSteering.h"
+#include "GhostSteering.h"
 
 
 UnitID UnitManager::msNextUnitID = PLAYER_UNIT_ID + 1;
 
 using namespace std;
+
+void resetPath(Unit* unit);
+void resetGhostPath(Unit* unit);
 
 UnitManager::UnitManager(Uint32 maxSize) :
 	mPool(maxSize, sizeof(Unit))
@@ -191,18 +195,34 @@ void UnitManager::checkCollisions()
 			{
 				if (collisionDistBased(mUnitMap[0], mUnitMap[i]))
 				{
-
+					
 					// if collision is an enemy kill obj
 					if (mUnitMap[i]->getTag() == Unit::GHOST)
 					{
 						std::cout << "collision with an enemy" << std::endl;
-						// fire off the death event
-						mUnitMap[0]->hurtUnit(1);
-						resetAllUnitPos();
+						if (pGame->getCanDestroyEnemies())
+						{
+							mUnitMap[i]->setUnitActive(false);
+							mUnitMap[1]->getPositionComponent()->setPosition(Vector2D(448 + (32), 448));
+						}
+						else
+						{
+							// fire off the death event
+							if (mUnitMap[0]->getHealth() > 1)
+							{
+								mUnitMap[0]->hurtUnit(1);
+								resetAllUnitPos();
+							}
+							else
+							{
+								gpGame->setLostState(true);
+							}
+						}
+
 						break;
 					}
 					// if obj is small pip then add score
-					else if (mUnitMap[i]->getTag() == Unit::SMALL_PIP)
+					 if (mUnitMap[i]->getTag() == Unit::SMALL_PIP)
 					{
 						//std::cout << "collision with the small pip" << std::endl;
 						//deleteUnit(mUnitMap[i]->mID);
@@ -216,6 +236,7 @@ void UnitManager::checkCollisions()
 						std::cout << "collision with the Big pip" << std::endl;
 						//deleteUnit(mUnitMap[i]->mID);
 						mUnitMap[i]->setUnitActive(false);
+						pGame->setCanDestroyEnemies(true);
 						pGame->addScore(50);
 						break;
 					}
@@ -300,46 +321,79 @@ void UnitManager::resetAllUnitPos()
 	// setting pacman's positions
 	{
 		mUnitMap[0]->getPositionComponent()->setPosition(Vector2D(512, 544));
-
-		GridPathfinder* pPathfinder = pGame->getPathfinder();
-		GridGraph* pGridGraph = pGame->getGridGraph();
-		Grid* pGrid = pGame->getGrid();
-
-		Vector2D unitPosition = mUnitMap[0]->getPositionComponent()->getPosition();
-		int fromIndex = pGrid->getSquareIndexFromPixelXY(static_cast<int>(unitPosition.getX()), static_cast<int>(unitPosition.getY()));
-		Node* pFromNode = pGridGraph->getNode(fromIndex);
-
-		int toIndex = pGrid->getSquareIndexFromPixelXY(600, 544);
-
-		Node* pToNode = pGridGraph->getNode(toIndex);
-
-		PacManSteering* pathSteering = static_cast<PacManSteering*>(mUnitMap[0]->getSteeringComponent()->getSteering());
-
-		Path* path;
-		path = pPathfinder->findPath(pFromNode, pToNode);
-
-		if (path)
-		{
-			std::cout << "there is a new path" << std::endl;
-			pathSteering->setPath(*path);
-		}
+		resetPath(mUnitMap[0]);
 	}
-
 
 	// resetting the ghost positions
 	int i = 0;
 	{
-		mUnitMap[1]->getPositionComponent()->setPosition(Vector2D(448 + (32 * i), 448));
-		i++;
+		mUnitMap[1]->getPositionComponent()->setPosition(Vector2D(448 + (32), 448));
+		resetGhostPath(mUnitMap[1]);
 
-		mUnitMap[2]->getPositionComponent()->setPosition(Vector2D(448 + (32 * i), 448));
-		i++;
+		mUnitMap[2]->getPositionComponent()->setPosition(Vector2D(448 + (32), 448));
+		resetGhostPath(mUnitMap[2]);
 
-		mUnitMap[3]->getPositionComponent()->setPosition(Vector2D(448 + (32 * i), 448));
-		i++;
+		mUnitMap[3]->getPositionComponent()->setPosition(Vector2D(448 + (32), 448));
+		resetGhostPath(mUnitMap[3]);
 
-		mUnitMap[4]->getPositionComponent()->setPosition(Vector2D(448 + (32 * i), 448));
-		i++;
+		mUnitMap[4]->getPositionComponent()->setPosition(Vector2D(448 + (32), 448));
+		resetGhostPath(mUnitMap[4]);
 	}
 
+}
+
+void resetPath(Unit* unit)
+{
+	GameApp* pGame = dynamic_cast<GameApp*>(gpGame);
+
+	GridPathfinder* pPathfinder = pGame->getPathfinder();
+	GridGraph* pGridGraph = pGame->getGridGraph();
+	Grid* pGrid = pGame->getGrid();
+
+	Vector2D unitPosition = unit->getPositionComponent()->getPosition();
+	int fromIndex = pGrid->getSquareIndexFromPixelXY(static_cast<int>(unitPosition.getX()), static_cast<int>(unitPosition.getY()));
+	Node* pFromNode = pGridGraph->getNode(fromIndex);
+
+	int toIndex = pGrid->getSquareIndexFromPixelXY(600, 544);
+
+	Node* pToNode = pGridGraph->getNode(toIndex);
+
+	PacManSteering* pathSteering = static_cast<PacManSteering*>(unit->getSteeringComponent()->getSteering());
+
+	Path* path;
+	path = pPathfinder->findPath(pFromNode, pToNode);
+
+	if (path)
+	{
+		std::cout << "there is a new path" << std::endl;
+		pathSteering->setPath(*path);
+	}
+}
+
+void resetGhostPath(Unit* unit)
+{
+	GameApp* pGame = dynamic_cast<GameApp*>(gpGame);
+
+	GridPathfinder* pPathfinder = pGame->getPathfinder();
+	GridGraph* pGridGraph = pGame->getGridGraph();
+	Grid* pGrid = pGame->getGrid();
+
+	Vector2D unitPosition = unit->getPositionComponent()->getPosition();
+	int fromIndex = pGrid->getSquareIndexFromPixelXY(static_cast<int>(unitPosition.getX()), static_cast<int>(unitPosition.getY()));
+	Node* pFromNode = pGridGraph->getNode(fromIndex);
+
+	int toIndex = pGrid->getSquareIndexFromPixelXY(unitPosition.getX(), unitPosition.getY());
+
+	Node* pToNode = pGridGraph->getNode(toIndex);
+
+	GhostSteering* pathSteering = static_cast<GhostSteering*>(unit->getSteeringComponent()->getSteering());
+
+	Path* path;
+	path = pPathfinder->findPath(pFromNode, pToNode);
+
+	if (path)
+	{
+		std::cout << "there is a new path" << std::endl;
+		pathSteering->setPath(path);
+	}
 }

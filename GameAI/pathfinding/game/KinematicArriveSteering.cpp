@@ -8,7 +8,7 @@
 #include <fstream>
 #include <string>
 
-const float KinematicArriveSteer::msTARGET_RADIUS = 0.01f;
+const float KinematicArriveSteer::msTARGET_RADIUS = 2.0f;
 const float KinematicArriveSteer::msSLOW_RADIUS = 300.0f;
 const float KinematicArriveSteer::msTIME_TO_TARGET = 0.1f;
 
@@ -22,7 +22,7 @@ Steering* KinematicArriveSteer::getSteering()
 {
 	GameApp* pGame = dynamic_cast<GameApp*>(gpGame);
 	Vector2D direction;
-	//float distance;
+	float distance;
 	float targetSpeed;
 	Vector2D targetVelocity;
 
@@ -37,7 +37,7 @@ Steering* KinematicArriveSteer::getSteering()
 	}
 
 	direction = mTargetLoc - pOwner->getPositionComponent()->getPosition();
-	//distance = direction.getLength();
+	distance = direction.getLength();
 
 	PhysicsData data = pOwner->getPhysicsComponent()->getData();
 
@@ -66,12 +66,21 @@ Steering* KinematicArriveSteer::getSteering()
 		targetSpeed = 40;
 	}
 
-	targetVelocity = direction;
-	targetVelocity.normalize();
-	targetVelocity *= targetSpeed;
+	if (distance > msTARGET_RADIUS)
+	{
+		targetVelocity = direction;
+		targetVelocity.normalize();
+		targetVelocity *= targetSpeed;
 
-	data.vel = targetVelocity;
-	data.rotVel = 0;
+		data.vel = targetVelocity;
+		data.rotVel = 0;
+	}
+	else
+	{
+		data.vel = 0;
+		data.rotVel = 0;
+	}
+
 
 	this->mData = data;
 	return this;

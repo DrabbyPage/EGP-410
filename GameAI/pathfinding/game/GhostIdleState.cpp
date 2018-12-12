@@ -11,7 +11,6 @@
 
 void GhostIdleState::onEntrance()
 {
-	cout << "\nEntering Ghost idle State id:" << mID << endl;
 	mGhostXDist = 0;
 	mGhostYDist = -32;
 	mGhostXDir = Vector2D(0, 0);
@@ -23,7 +22,7 @@ void GhostIdleState::onEntrance()
 
 void GhostIdleState::onExit()
 {
-	cout << "\nExiting Ghost idle State id:" << mID << endl;
+
 }
 
 StateTransition * GhostIdleState::update()
@@ -42,34 +41,19 @@ StateTransition * GhostIdleState::update()
 	int toIndex = pGrid->getSquareIndexFromPixelXY((int)GhostPosCenter.getX(), (int)GhostPosCenter.getY());
 	/*if we are on a INTERSECTION and it has 2+ connections, pick one, and proceed along that direction*/
 
-
-	//check within radius of player and take damage if you are
-	if (abs(GhostPosCenter.getX() - pGame->getUnitManager()->getPlayerUnit()->getPositionComponent()->getPosition().getX()) < 60
-		&& abs(GhostPosCenter.getY() - pGame->getUnitManager()->getPlayerUnit()->getPositionComponent()->getPosition().getY()) < 60)
-	{
-		if (timer > 20)
-		{
-			pGame->getUnitManager()->getPlayerUnit()->hurtUnit(1);
-			timer = 0;
-		}
-
-	}
 	if (pGame->getCanDestroyEnemies())
 	{
 		//transition back to flee
+		mTransitionToFlee = true;
 	}
 
 	//IF PLAYER IS OUTSIDE OF RADIUS
 	//when pacman is within a certain radius of ghost
 	//if on spawn point
-	if (timer > 50 && pGrid->getValueAtIndex(fromIndex) == SPAWNING_VALUE)
+	if (timer > 5 && pGrid->getValueAtIndex(fromIndex) == SPAWNING_VALUE)
 	{
-		map<TransitionType, StateTransition*>::iterator iter = mTransitions.find(GHOST_WANDER);
-		if (iter != mTransitions.end())//found?
-		{
-			StateTransition* pTransition = iter->second;
-			return pTransition;
-		}
+		timer = 0;
+		mTransitionToWander = true;
 	}
 
 

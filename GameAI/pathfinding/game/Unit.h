@@ -64,6 +64,8 @@ public:
 
 	void setSteering(Steering::SteeringType type, Vector2D targetLoc = ZERO_VECTOR2D, UnitID targetUnitID = INVALID_UNIT_ID);
 
+	int getHealth() { return mUnitHealth; };
+
 private:
 	UnitType mUnitTag;
 	UnitID mID;

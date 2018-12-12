@@ -63,6 +63,8 @@ public:
 
 	void addScore(int addValue) { mpGameScore += addValue; };
 
+	bool getLostState() { return mGameOver; }
+	void setLostState(bool newBool) { mGameOver = newBool; }
 protected:
 	GraphicsSystem* mpGraphicsSystem;
 	GraphicsBufferManager* mpGraphicsBufferManager;
@@ -92,6 +94,8 @@ protected:
 
 	int mpGameScore;
 	int mpHighScore;
+
+	bool mGameOver;
 };
 
 float genRandomBinomial();//range -1:1 from "Artificial Intelligence for Games", Millington and Funge

@@ -46,6 +46,7 @@ Steering* PacManSteering::getSteering()
 		}
 	}
 
+
 	Steering* steering = mKinArriveFaceSteer.getSteering();
 
 	data.acc = steering->getData().acc;
@@ -54,4 +55,18 @@ Steering* PacManSteering::getSteering()
 
 	this->mData = data;
 	return this;
+}
+
+void PacManSteering::setPath(Path path)
+{
+
+	GameApp* pGame = dynamic_cast<GameApp*>(gpGame);
+	Grid* pGrid = pGame->getGrid();
+	while (mPath.getNumNodes() > 0)
+	{
+		mPath.getAndRemoveNextNode();
+	}
+	mPath = path;
+	resetPathIndex();
+	setTargetLoc(pGame->getUnitManager()->getUnit(mOwnerID)->getPositionComponent()->getPosition());
 }

@@ -29,6 +29,7 @@ Game::Game()
 	,mpFont(NULL)
 	,mLoopTargetTime(0.0f)
 {
+	mGameOver = false;
 }
 
 Game::~Game()

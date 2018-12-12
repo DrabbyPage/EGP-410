@@ -72,10 +72,8 @@ StateTransition* GhostWanderState::update()
 			return pTransition;
 		}
 	}
-	
 	else
 	{
-		
 		srand((unsigned int)time(NULL));
 		/*set Ghost distances*/
 		timer++;
@@ -168,6 +166,7 @@ StateTransition* GhostWanderState::update()
 
 		//when pacman is within a certain radius of ghost
 		//needs to be at an intersection in order to change to chase
+		
 		if (pGrid->getValueAtIndex(fromIndex) == INTERSECTION_VALUE)
 		{
 			if (abs(GhostPosCenter.getX() - pGame->getUnitManager()->getPlayerUnit()->getPositionComponent()->getPosition().getX()) < 60
@@ -178,6 +177,7 @@ StateTransition* GhostWanderState::update()
 		}
 		
 		//means the Ghost is allowed to hurt the Ghost
+		
 		if (pGame->getCanDestroyEnemies())
 		{
 			//transition back to flee

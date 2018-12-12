@@ -5,7 +5,7 @@
 #include "UnitManager.h"
 #include "Unit.h"
 
-const float KinematicAlignSteer::msTARGET_RADIUS = 1.0f * DEG_TO_RAD;
+const float KinematicAlignSteer::msTARGET_RADIUS = 30.0f * DEG_TO_RAD;
 const float KinematicAlignSteer::msSLOW_RADIUS = 250.0f * DEG_TO_RAD;
 const float KinematicAlignSteer::msTIME_TO_TARGET = 0.1f;
 
