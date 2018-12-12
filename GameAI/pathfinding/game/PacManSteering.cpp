@@ -34,11 +34,10 @@ Steering* PacManSteering::getSteering()
 	if (mPath.getNumNodes() > 0)
 	{
 		pGame->getPathfinder()->drawVisualization(pGame->getGrid(), pGame->getGraphicsSystem()->getBackBuffer(), mPath);
-
 		Vector2D direction = mTargetLoc - pOwner->getPositionComponent()->getPosition();
-		float targetRadiusSquared = 60.0f;
+		float targetRadius = 60;
 
-		if (direction.getLengthSquared() < targetRadiusSquared && mPath.peekNode(targetPathIndex) != nullptr)
+		if (direction.getLengthSquared() < targetRadius && mPath.peekNode(targetPathIndex) != nullptr)
 		{
 			Vector2D target = pGrid->getULCornerOfSquare(mPath.peekNode(targetPathIndex)->getId());
 			setTargetLoc(target);

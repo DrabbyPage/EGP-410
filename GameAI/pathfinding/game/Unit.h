@@ -96,9 +96,9 @@ private:
 
 	StateMachine* mUnitStateMachine;
 
-	StateTransition * mpWanderTransition;
-	StateTransition * mpFleeTransition;
-	StateTransition * mpChaseTransition;
-	StateTransition * mpEdibleTransition;
+	StateTransition* mpWanderTransition;
+	StateTransition* mpFleeTransition;
+	StateTransition* mpChaseTransition;
+	StateTransition* mpIdleTransition;
 };
 

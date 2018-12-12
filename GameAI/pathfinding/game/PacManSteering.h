@@ -16,9 +16,13 @@ public:
 	virtual Steering* getSteering();
 
 	void setPath(Path path)
-	{
-		resetPathIndex();
+	{	
+		for (int i = 0; i < mPath.getNumNodes(); i++)
+		{
+			mPath.getAndRemoveNextNode();
+		}
 		mPath = path;
+		resetPathIndex();
 	}
 
 	void resetPathIndex()

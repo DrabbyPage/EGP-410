@@ -107,8 +107,9 @@
     <ClInclude Include="GameMessage.h" />
     <ClInclude Include="GameMessageManager.h" />
     <ClInclude Include="GhostChaseState.h" />
-    <ClInclude Include="GhostEdibleState.h" />
     <ClInclude Include="GhostFleeState.h" />
+    <ClInclude Include="GhostIdleState.h" />
+    <ClInclude Include="GhostSteering.h" />
     <ClInclude Include="Graph.h" />
     <ClInclude Include="GridGraph.h" />
     <ClInclude Include="GridPathfinder.h" />
@@ -163,8 +164,9 @@
     <ClCompile Include="GameMessage.cpp" />
     <ClCompile Include="GameMessageManager.cpp" />
     <ClCompile Include="GhostChaseState.cpp" />
-    <ClCompile Include="GhostEdibleState.cpp" />
     <ClCompile Include="GhostFleeState.cpp" />
+    <ClCompile Include="GhostIdleState.cpp" />
+    <ClCompile Include="GhostSteering.cpp" />
     <ClCompile Include="GhostWanderState.cpp" />
     <ClCompile Include="Graph.cpp" />
     <ClCompile Include="GridGraph.cpp" />

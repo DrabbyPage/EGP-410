@@ -14,9 +14,9 @@
 #include "UnitManager.h"
 
 #include "GhostChaseState.h"
-#include "GhostEdibleState.h"
 #include "GhostWanderState.h"
 #include "GhostFleeState.h"
+#include "GhostIdleState.h"
 
 Unit::Unit(const Sprite& sprite) :
 	mSprite(sprite),
@@ -74,7 +74,8 @@ Unit::~Unit()
 		delete mpWanderTransition;
 		delete mpFleeTransition;
 		delete mpChaseTransition;
-		delete mpEdibleTransition;
+		delete mpIdleTransition;
+
 		delete mUnitStateMachine;
 	}
 
@@ -109,6 +110,15 @@ void Unit::update(float elapsedTime)
 	}
 	else if (mUnitTag == GHOST)
 	{
+		GhostWanderState* pWanderState = dynamic_cast<GhostWanderState*>(mUnitStateMachine->getStateList().at(0));
+		pWanderState->setId(mID);
+		GhostFleeState* pFleeState = dynamic_cast<GhostFleeState*>(mUnitStateMachine->getStateList().at(1));
+		pFleeState->setId(mID);
+		GhostChaseState* pChaseState = dynamic_cast<GhostChaseState*>(mUnitStateMachine->getStateList().at(2));
+		pChaseState->setId(mID);
+		GhostIdleState* pIdleState = dynamic_cast<GhostIdleState*>(mUnitStateMachine->getStateList().at(3));
+		pIdleState->setId(mID);
+
 		// if the unit had died
 		if (!mUnitActive)
 		{
@@ -137,29 +147,6 @@ void Unit::update(float elapsedTime)
 		{
 			mUnitStateMachine->update();
 		}
-	}
-	else if (mUnitTag == PAC_MAN)
-	{
-		if (!mUnitActive)
-		{
-			// reset the position
-			mUnitHealth--;
-
-			if (mUnitHealth > 0)
-			{
-				mpPositionComponent->setPosition(Vector2D(512, 544));
-
-				GameApp* pGame = dynamic_cast<GameApp*>(gpGame);
-				pGame->getUnitManager()->resetAllUnitPos();
-
-				mUnitActive = true;
-			}
-			else
-			{
-				// end the game
-			}
-		}
-
 	}
 
 	// update teh speed multiplier  //3.0f is the max amount of time
@@ -243,44 +230,46 @@ void Unit::speedUpUnit(float multiplier)
 	mSpeedMultiplier = multiplier;
 }
 
-
 void Unit::createGhostStates()
 {
 	GhostWanderState* pWanderState = new GhostWanderState(0);
 	GhostFleeState* pFleeState = new GhostFleeState(1);
 	GhostChaseState* pChaseState = new GhostChaseState(2);
-	GhostEdibleState* pEdibleState = new GhostEdibleState(3);
+	GhostIdleState* pIdleState = new GhostIdleState(3);
 
 	mpWanderTransition = new StateTransition(GHOST_WANDER, 0);
 	mpFleeTransition = new StateTransition(GHOST_FLEE, 1);
 	mpChaseTransition = new StateTransition(GHOST_CHASE, 2);
-	mpEdibleTransition = new StateTransition(GHOST_EDIBLE, 3);
+	mpIdleTransition = new StateTransition(GHOST_IDLE, 3);
 
+	pWanderState->setId(mID);
 	pWanderState->addTransition(mpFleeTransition);
 	pWanderState->addTransition(mpChaseTransition);
-	pWanderState->addTransition(mpEdibleTransition);
+	pWanderState->addTransition(mpIdleTransition);
 
+	pFleeState->setId(mID);
 	pFleeState->addTransition(mpWanderTransition);
 	pFleeState->addTransition(mpChaseTransition);
-	pFleeState->addTransition(mpEdibleTransition);
+	pFleeState->addTransition(mpIdleTransition);
 
+	pChaseState->setId(mID);
 	pChaseState->addTransition(mpFleeTransition);
 	pChaseState->addTransition(mpWanderTransition);
-	pChaseState->addTransition(mpEdibleTransition);
+	pChaseState->addTransition(mpIdleTransition);
 
-	pEdibleState->addTransition(mpFleeTransition);
-	pEdibleState->addTransition(mpChaseTransition);
-	pEdibleState->addTransition(mpWanderTransition);
+	pIdleState->setId(mID);
+	pIdleState->addTransition(mpFleeTransition);
+	pIdleState->addTransition(mpChaseTransition);
+	pIdleState->addTransition(mpWanderTransition);
 
 	mUnitStateMachine = new StateMachine();
 
 	mUnitStateMachine->addState(pWanderState);
 	mUnitStateMachine->addState(pFleeState);
 	mUnitStateMachine->addState(pChaseState);
-	mUnitStateMachine->addState(pEdibleState);
+	mUnitStateMachine->addState(pIdleState);
 
 	mUnitStateMachine->setInitialStateID(0);
 
 	mUnitStateMachine->getCurrentState();
-
 }

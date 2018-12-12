@@ -19,7 +19,7 @@ enum TransitionType
 	GHOST_CHASE = 0,
 	GHOST_WANDER = 1,
 	GHOST_FLEE = 2,
-	GHOST_EDIBLE = 3
+	GHOST_IDLE = 3
 };
 
 typedef int SM_idType;
@@ -69,6 +69,7 @@ public:
 	void start();//go to the initial state
 
 	StateMachineState* getCurrentState() { return mpCurrentState; };
+	std::map<SM_idType, StateMachineState*>  getStateList() { return mStates; }
 
 protected:
 	void transitionToState( const SM_idType& targetID );//call onExit for old state and onEntrance for the new state

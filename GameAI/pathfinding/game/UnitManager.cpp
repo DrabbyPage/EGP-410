@@ -8,6 +8,15 @@
 #include "GraphicsSystem.h"
 #include "Grid.h"
 #include "StateMachine.h"
+#include "Path.h"
+
+#include "GridPathfinder.h"
+#include "Grid.h"
+#include "GridGraph.h"
+#include "PathSmoothing.h"
+#include "PathSteering.h"
+#include "PacManSteering.h"
+
 
 UnitID UnitManager::msNextUnitID = PLAYER_UNIT_ID + 1;
 
@@ -286,8 +295,36 @@ bool UnitManager::collisionDistBased(Unit* obj1, Unit* obj2)
 
 void UnitManager::resetAllUnitPos()
 {
+	GameApp* pGame = dynamic_cast<GameApp*>(gpGame);
+
 	// setting pacman's positions
-	mUnitMap[0]->getPositionComponent()->setPosition(Vector2D(512, 544));
+	{
+		mUnitMap[0]->getPositionComponent()->setPosition(Vector2D(512, 544));
+
+		GridPathfinder* pPathfinder = pGame->getPathfinder();
+		GridGraph* pGridGraph = pGame->getGridGraph();
+		Grid* pGrid = pGame->getGrid();
+
+		Vector2D unitPosition = mUnitMap[0]->getPositionComponent()->getPosition();
+		int fromIndex = pGrid->getSquareIndexFromPixelXY(static_cast<int>(unitPosition.getX()), static_cast<int>(unitPosition.getY()));
+		Node* pFromNode = pGridGraph->getNode(fromIndex);
+
+		int toIndex = pGrid->getSquareIndexFromPixelXY(600, 544);
+
+		Node* pToNode = pGridGraph->getNode(toIndex);
+
+		PacManSteering* pathSteering = static_cast<PacManSteering*>(mUnitMap[0]->getSteeringComponent()->getSteering());
+
+		Path* path;
+		path = pPathfinder->findPath(pFromNode, pToNode);
+
+		if (path)
+		{
+			std::cout << "there is a new path" << std::endl;
+			pathSteering->setPath(*path);
+		}
+	}
+
 
 	// resetting the ghost positions
 	int i = 0;

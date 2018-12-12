@@ -59,6 +59,8 @@ public:
 	inline ComponentManager* getComponentManager() { return mpComponentManager; };
 
 	inline PathSmoothing* getPathSmoothing() { return mpPathSmoothing; };
+	bool getCanDestroyEnemies() { return canDestroyEnemies; };
+	void setCanDestroyEnemies(bool newBool) { canDestroyEnemies = newBool; };
 
 private:
 	GameMessageManager* mpMessageManager;
@@ -74,6 +76,8 @@ private:
 	GridPathfinder* mpPathfinder;
 
 	InputSystem* mpInputSystem;
+
+	bool canDestroyEnemies;
 };
 
 float genRandomBinomial();//range -1:1 from "Artificial Intelligence for Games", Millington and Funge

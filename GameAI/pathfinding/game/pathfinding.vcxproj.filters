@@ -228,7 +228,10 @@
     <ClInclude Include="GhostChaseState.h">
       <Filter>Header Files\StateMachine\States</Filter>
     </ClInclude>
-    <ClInclude Include="GhostEdibleState.h">
+    <ClInclude Include="GhostSteering.h">
+      <Filter>Header Files\Steering</Filter>
+    </ClInclude>
+    <ClInclude Include="GhostIdleState.h">
       <Filter>Header Files\StateMachine\States</Filter>
     </ClInclude>
   </ItemGroup>
@@ -395,7 +398,10 @@
     <ClCompile Include="GhostFleeState.cpp">
       <Filter>Source Files\StateMachine\States</Filter>
     </ClCompile>
-    <ClCompile Include="GhostEdibleState.cpp">
+    <ClCompile Include="GhostSteering.cpp">
+      <Filter>Source Files\Steering</Filter>
+    </ClCompile>
+    <ClCompile Include="GhostIdleState.cpp">
       <Filter>Source Files\StateMachine\States</Filter>
     </ClCompile>
   </ItemGroup>

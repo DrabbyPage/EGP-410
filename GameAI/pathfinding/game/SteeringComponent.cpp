@@ -6,6 +6,7 @@
 #include "ArriveAndFaceSteering.h"
 #include "PathSteering.h"
 #include "PacManSteering.h"
+#include "GhostSteering.h"
 
 SteeringComponent::SteeringComponent(const ComponentID& id, const ComponentID& physicsComponentID) :
 	Component(id),
@@ -90,7 +91,9 @@ void SteeringComponent::setData(const SteeringData& data)
 	case Steering::GHOST:
 	{
 		delete mpSteering;
-		mpSteering = new PacManSteering(data.ownerID, data.targetLoc, data.targetID);
+		//mpSteering = new GhostSteering(data.ownerID, data.targetLoc, data.targetID);
+		mpSteering = new GhostSteering(data.ownerID, data.targetLoc, data.targetID, false);
+
 		break;
 	}
 	default:

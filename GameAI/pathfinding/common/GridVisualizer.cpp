@@ -27,7 +27,7 @@ void GridVisualizer::refresh()
 		//get any non-zero squares and send them to the visualizer
 		for( int i=0; i<size; i++ )
 		{
-			if( mpGrid->getValueAtIndex(i) != 0 )
+			if( mpGrid->getValueAtIndex(i) == 1  )
 			{
 				addColor( i, color );
 			}

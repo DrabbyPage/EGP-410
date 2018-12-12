@@ -21,8 +21,11 @@ I recommend running the program in Visual Studios 2017. Make sure that all libra
 your platform's proper SDK.
 
 3. The keyboard inputs 
-     - Left Mouse Click: Sets the goal Node, and tracks to it from the previous  
-     - A: Sets the pathfinding to A*
-     - D: Sets the pathfinding to depth-first
-     - F: Sets the pathfinding to Dijkstra
+     - Left Mouse Click: Sets Pac_Man's path
      - Esc: Exits the program
+
+4. Gameplay:
+	- pacman eats pips (10 points), and big pips(50 points)
+	- after big pip eaten, the ghosts are killable
+	- ghost wander until within range of pacman then pathfind to get to his location
+	- there are speed power ups for the enemy they are red like mines

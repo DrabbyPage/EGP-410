@@ -276,22 +276,22 @@ void GameApp::createUnits()
 	{
 		Unit* pRedGhost = mpUnitManager->createUnit(*mpSpriteManager->getSprite(RED_GHOST_SPRITE), Unit::GHOST);
 		pRedGhost->getPositionComponent()->setPosition(Vector2D(448 + (32 * i), 448));
-		pRedGhost->setSteering(Steering::PATH, Vector2D(pRedGhost->getPositionComponent()->getPosition()));
+		pRedGhost->setSteering(Steering::GHOST, Vector2D(pRedGhost->getPositionComponent()->getPosition()));
 		i++;
 
 		Unit* pPinkGhost = mpUnitManager->createUnit(*mpSpriteManager->getSprite(PINK_GHOST_SPRITE), Unit::GHOST);
 		pPinkGhost->getPositionComponent()->setPosition(Vector2D(448 + (32 * i), 448));
-		pPinkGhost->setSteering(Steering::PATH, Vector2D(pPinkGhost->getPositionComponent()->getPosition()));
+		pPinkGhost->setSteering(Steering::GHOST, Vector2D(pPinkGhost->getPositionComponent()->getPosition()));
 		i++;
 
 		Unit* pOrangeGhost = mpUnitManager->createUnit(*mpSpriteManager->getSprite(ORANGE_GHOST_SPRITE), Unit::GHOST);
 		pOrangeGhost->getPositionComponent()->setPosition(Vector2D(448 + (32 * i), 448));
-		pOrangeGhost->setSteering(Steering::PATH, Vector2D(pOrangeGhost->getPositionComponent()->getPosition()));
+		pOrangeGhost->setSteering(Steering::GHOST, Vector2D(pOrangeGhost->getPositionComponent()->getPosition()));
 		i++;
 
 		Unit* pGreenGhost = mpUnitManager->createUnit(*mpSpriteManager->getSprite(GREEN_GHOST_SPRITE), Unit::GHOST);
 		pGreenGhost->getPositionComponent()->setPosition(Vector2D(448 + (32 * i), 448));
-		pGreenGhost->setSteering(Steering::PATH, Vector2D(pGreenGhost->getPositionComponent()->getPosition()));
+		pGreenGhost->setSteering(Steering::GHOST, Vector2D(pGreenGhost->getPositionComponent()->getPosition()));
 		i++;
 	}
 

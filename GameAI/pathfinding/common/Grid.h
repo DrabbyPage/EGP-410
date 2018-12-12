@@ -8,6 +8,8 @@ class Vector2D;
 
 const int CLEAR_VALUE = 0;
 const int BLOCKING_VALUE = 1;
+const int SPAWNING_VALUE = 2;
+const int INTERSECTION_VALUE = 3;
 
 class Grid:public Trackable
 {
