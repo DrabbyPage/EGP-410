@@ -199,9 +199,11 @@ void UnitManager::checkCollisions()
 					// if collision is an enemy kill obj
 					if (mUnitMap[i]->getTag() == Unit::GHOST)
 					{
-						std::cout << "collision with an enemy" << std::endl;
+						//std::cout << "collision with an enemy" << std::endl;
 						if (pGame->getCanDestroyEnemies())
 						{
+							pGame->addScore(1000);
+
 							mUnitMap[i]->setUnitActive(false);
 							mUnitMap[1]->getPositionComponent()->setPosition(Vector2D(448 + (32), 448));
 						}
@@ -325,18 +327,17 @@ void UnitManager::resetAllUnitPos()
 	}
 
 	// resetting the ghost positions
-	int i = 0;
 	{
-		mUnitMap[1]->getPositionComponent()->setPosition(Vector2D(448 + (32), 448));
+		mUnitMap[1]->getPositionComponent()->setPosition(Vector2D(448 , 448));
 		resetGhostPath(mUnitMap[1]);
 
 		mUnitMap[2]->getPositionComponent()->setPosition(Vector2D(448 + (32), 448));
 		resetGhostPath(mUnitMap[2]);
 
-		mUnitMap[3]->getPositionComponent()->setPosition(Vector2D(448 + (32), 448));
+		mUnitMap[3]->getPositionComponent()->setPosition(Vector2D(448 + (64), 448));
 		resetGhostPath(mUnitMap[3]);
 
-		mUnitMap[4]->getPositionComponent()->setPosition(Vector2D(448 + (32), 448));
+		mUnitMap[4]->getPositionComponent()->setPosition(Vector2D(448 + (96), 448));
 		resetGhostPath(mUnitMap[4]);
 	}
 
@@ -362,10 +363,9 @@ void resetPath(Unit* unit)
 
 	Path* path;
 	path = pPathfinder->findPath(pFromNode, pToNode);
-
+ 
 	if (path)
 	{
-		std::cout << "there is a new path" << std::endl;
 		pathSteering->setPath(*path);
 	}
 }
@@ -382,7 +382,7 @@ void resetGhostPath(Unit* unit)
 	int fromIndex = pGrid->getSquareIndexFromPixelXY(static_cast<int>(unitPosition.getX()), static_cast<int>(unitPosition.getY()));
 	Node* pFromNode = pGridGraph->getNode(fromIndex);
 
-	int toIndex = pGrid->getSquareIndexFromPixelXY(unitPosition.getX(), unitPosition.getY());
+	int toIndex = pGrid->getSquareIndexFromPixelXY((int)unitPosition.getX(), (int)unitPosition.getY());
 
 	Node* pToNode = pGridGraph->getNode(toIndex);
 

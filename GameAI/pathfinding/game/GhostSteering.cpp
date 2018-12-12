@@ -66,7 +66,7 @@ Steering * GhostSteering::getSteering()
 	if (mPath.peekNode(mIndex) != NULL)
 	{
 		//get the grid and set the target to arrive and face so that it can move to it
-		Vector2D target = pGrid->getULCornerOfSquare(mPath.peekNode(mIndex)->getId());
+		Vector2D target = pGrid->getULCornerOfSquare(mPath.peekNode(mIndex)->getId());// +Vector2D(16, 16);
 
 		setTargetLoc(target);
 		//increase the index for the next node
@@ -148,11 +148,9 @@ void GhostSteering::centerToNode()
 	GameApp* pGame = dynamic_cast<GameApp*>(gpGame);
 	Unit* pOwner = pGame->getUnitManager()->getUnit(mOwnerID);
 
-	mPositionCentered = pOwner->getPositionComponent()->getPosition() + Vector2D(16, 16);
+	mPositionCentered = pOwner->getPositionComponent()->getPosition()+Vector2D(16,16);
 
 	mSquareIndexAtCenter = pGrid->getSquareIndexFromPixelXY((int)mPositionCentered.getX(), (int)mPositionCentered.getY());
-	if (pGrid->getValueAtIndex(mSquareIndexAtCenter) == INTERSECTION_VALUE)
-	{
-		pOwner->getPositionComponent()->setPosition(pGrid->getULCornerOfSquare(mSquareIndexAtCenter));
-	}
+	pOwner->getPositionComponent()->setPosition(pGrid->getULCornerOfSquare(mSquareIndexAtCenter));
+	
 }

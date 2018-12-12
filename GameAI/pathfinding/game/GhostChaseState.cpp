@@ -78,33 +78,31 @@ StateTransition* GhostChaseState::update()
 		GridPathfinder* pPathfinder = pGame->getPathfinder();
 		int i = mID;
 		timer++;
+
 		GridGraph* pGridGraph = pGame->getGridGraph();
 		Grid* pGrid = pGame->getGrid();
 		//get the from and to index from the grid
 		Vector2D GhostPosCenter = (pGame->getUnitManager()->getUnit(i)->getPositionComponent()->getPosition() + Vector2D(16, 16));
 
 		int fromIndex = pGrid->getSquareIndexFromPixelXY((int)GhostPosCenter.getX(), (int)GhostPosCenter.getY());
-		int toIndex = pGrid->getSquareIndexFromPixelXY((int)pGame->getUnitManager()->getPlayerUnit()->getPositionComponent()->getPosition().getX(), (int)pGame->getUnitManager()->getPlayerUnit()->getPositionComponent()->getPosition().getY());
+		int toIndex = pGrid->getSquareIndexFromPixelXY((int)pGame->getUnitManager()->getPlayerUnit()->getPositionComponent()->getPosition().getX(),(int)pGame->getUnitManager()->getPlayerUnit()->getPositionComponent()->getPosition().getY());
 		/*if we are on a INTERSECTION and it has 2+ connections, pick one, and proceed along that direction*/
 
 		Node* pFromNode = pGridGraph->getNode(fromIndex);
 		Node* pToNode = pGridGraph->getNode(toIndex);
 
-		if (pGrid->getValueAtIndex(fromIndex) == INTERSECTION_VALUE || mpPath == nullptr)
-		{
-			/*THIS NEEDS TO pathfind peemans location ONLY at intersections*/
-			mpPath = pPathfinder->findPath(pFromNode, pToNode);
-		}
+		mpPath = pPathfinder->findPath(pFromNode, pToNode);
 
 		GhostSteering* pGhostSteer = dynamic_cast<GhostSteering*>(pGame->getUnitManager()->getUnit(i)->getSteeringComponent()->getSteering());
 
 		/*find direction to next node. use that to go in*/
+
 		if (mpPath->peekNode(mPathIndex) != NULL)
 		{
 			mGhostXDist = (int)pGrid->getULCornerOfSquare(mpPath->peekNode(1)->getId()).getX() - (int)pGrid->getULCornerOfSquare(fromIndex).getX();
 			mGhostYDist = (int)pGrid->getULCornerOfSquare(mpPath->peekNode(1)->getId()).getY() - (int)pGrid->getULCornerOfSquare(fromIndex).getY();
 		}
-
+		
 
 		int x1, x2, y1, y2 = 0;
 

@@ -47,6 +47,7 @@ GameApp::GameApp() :
 	mpDebugDisplay(nullptr),
 	mpPathSmoothing(nullptr)
 {
+	timer = 0;
 	canDestroyEnemies = false;
 }
 
@@ -180,12 +181,14 @@ void GameApp::processLoop()
 
 		if (canDestroyEnemies)
 		{
+			std::cout <<timer<< "  : enemies can be eaten" << std::endl;
 			timer += TARGET_ELAPSED_MS;
 
 			float maxEatTime = 10.0f;
 
 			if (timer > maxEatTime)
 			{
+				std::cout << "cant eat anymore" << std::endl;
 				timer = 0;
 				canDestroyEnemies = false;
 			}
@@ -293,7 +296,7 @@ void GameApp::createUnits()
 	// making ghosts
 	{
 		Unit* pRedGhost = mpUnitManager->createUnit(*mpSpriteManager->getSprite(RED_GHOST_SPRITE), Unit::GHOST);
-		pRedGhost->getPositionComponent()->setPosition(Vector2D(448 + (32), 448));
+		pRedGhost->getPositionComponent()->setPosition(Vector2D(448, 448));
 		pRedGhost->setSteering(Steering::GHOST, Vector2D(pRedGhost->getPositionComponent()->getPosition()));
 
 		Unit* pPinkGhost = mpUnitManager->createUnit(*mpSpriteManager->getSprite(PINK_GHOST_SPRITE), Unit::GHOST);
@@ -305,7 +308,7 @@ void GameApp::createUnits()
 		pOrangeGhost->setSteering(Steering::GHOST, Vector2D(pOrangeGhost->getPositionComponent()->getPosition()));
 
 		Unit* pGreenGhost = mpUnitManager->createUnit(*mpSpriteManager->getSprite(GREEN_GHOST_SPRITE), Unit::GHOST);
-		pGreenGhost->getPositionComponent()->setPosition(Vector2D(448 + (64), 448));
+		pGreenGhost->getPositionComponent()->setPosition(Vector2D(448 + (64+32), 448));
 		pGreenGhost->setSteering(Steering::GHOST, Vector2D(pGreenGhost->getPositionComponent()->getPosition()));
 	}
 

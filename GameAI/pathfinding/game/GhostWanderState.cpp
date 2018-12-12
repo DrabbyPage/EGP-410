@@ -96,15 +96,13 @@ StateTransition* GhostWanderState::update()
 
 		/*if we are on a INTERSECTION and it has 2+ connections, pick one, and proceed along that direction*/
 
-		if (pGrid->getValueAtIndex(fromIndex) == INTERSECTION_VALUE || pGrid->getValueAtIndex(fromIndex) == SPAWNING_VALUE)
+		if (pGrid->getValueAtIndex(fromIndex) == INTERSECTION_VALUE)
 		{
-			int directionIndex = rand() % adjacentIndices.size() / 2;
-			directionIndex *= 2;
+			int directionIndex = rand() % adjacentIndices.size()/2;
 
 			while (pGrid->getValueAtIndex(adjacentIndices[directionIndex]) == BLOCKING_VALUE || adjacentIndices[directionIndex] == oldIndex)
 			{
 				directionIndex = rand() % adjacentIndices.size() / 2;
-				directionIndex *= 2;
 			}
 
 			Vector2D directionPos = pGrid->getULCornerOfSquare(adjacentIndices[directionIndex]) + Vector2D(16, 16);
@@ -165,33 +163,35 @@ StateTransition* GhostWanderState::update()
 		//reset the index every click
 		pGhostSteer->resetIndex();
 		pGhostSteer->setPath(newPath);
-
+		/*
 		// check at intersection if ghost will chase pacman
 		if (pGrid->getValueAtIndex(fromIndex) == INTERSECTION_VALUE)
 		{
+			
 			Vector2D diff = pGame->getUnitManager()->getPlayerUnit()->getPositionComponent()->getPosition() - GhostPosCenter;
-			float chaseDist = 100;
+			float chaseDist = 150;
 			float dist = diff.getLength();
 			if (dist < chaseDist)
 			{
 				mTransitionToChase = true;
 			}
+			
 		}
 		
 		//means the Ghost is allowed to hurt the Ghost
-		
+		/*
 		if (pGame->getCanDestroyEnemies())
 		{
 			//transition back to flee
 			mTransitionToFlee = true;
 		}
-		
-		
+		*/
+		/*
 		if (pGrid->getValueAtIndex(fromIndex) == SPAWNING_VALUE && timer > 60)
 		{
 			mTransitionToIdle = true;
 		}
-		
+		*/
 		return NULL;
 	}	
 }

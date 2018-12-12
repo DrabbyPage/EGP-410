@@ -101,7 +101,6 @@ StateTransition* GhostFleeState::update()
 			mGhostYDist = (int)pGrid->getULCornerOfSquare(mpPath->peekNode(1)->getId()).getY() - (int)pGrid->getULCornerOfSquare(fromIndex).getY();
 		}
 
-
 		int x1, x2, y1, y2 = 0;
 
 		x1 = mGhostXDist / -32;
@@ -135,6 +134,8 @@ StateTransition* GhostFleeState::update()
 
 		pGhostSteer->resetIndex();
 		pGhostSteer->setPath(mpPath);
+
+
 		//reset the index every click
 
 		if (!pGame->getCanDestroyEnemies())

@@ -1,3 +1,2 @@
-﻿  GhostWanderState.cpp
-d:\github\egp-410\gameai\pathfinding\game\ghostwanderstate.cpp(197): warning C4715: 'GhostWanderState::update': not all control paths return a value
+﻿  UnitManager.cpp
   pathfinding.vcxproj -> D:\GitHub\EGP-410\GameAI\pathfinding\game\Debug\pathfinding.exe

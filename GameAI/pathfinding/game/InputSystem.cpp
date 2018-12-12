@@ -30,7 +30,7 @@ void InputSystem::process()
 
 			if (pGame->getGrid()->getValueAtPixelXY((int)pos.getX(), (int)pos.getY()) == BLOCKING_VALUE)
 			{
-				std::cout << "you clicked on a wall" << std::endl;
+				//std::cout << "you clicked on a wall" << std::endl;
 			}
 			else
 			{

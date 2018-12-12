@@ -30,8 +30,12 @@ Path* AStarPath::findPath(Node* start, Node* end)
 {
 	//make sure to delete the path when you are done!
 #ifdef VISUALIZE_PATH
-	delete mpPath;
-	mVisitedNodes.clear();
+	if (mpPath != NULL)
+	{
+		delete mpPath;
+		mVisitedNodes.clear();
+	}
+
 #endif
 
 	Heuristic* heur = new Heuristic(end);
