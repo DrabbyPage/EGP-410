@@ -13,10 +13,28 @@
 #include "SpriteManager.h"
 #include "UnitManager.h"
 
+#include "GhostChaseState.h"
+#include "GhostEdibleState.h"
+#include "GhostWanderState.h"
+#include "GhostFleeState.h"
 
 Unit::Unit(const Sprite& sprite) :
 	mSprite(sprite),
 	mUnitTag(INVALID_TYPE),
+	mPositionComponentID(INVALID_COMPONENT_ID),
+	mPhysicsComponentID(INVALID_COMPONENT_ID),
+	mSteeringComponentID(INVALID_COMPONENT_ID),
+	mShowTarget(false)
+{
+	mUnitTimer = 0;
+	mMultiplierTimer = 0;
+	mUnitActive = true;
+}
+
+
+Unit::Unit(const Sprite& sprite, UnitType tag) :
+	mSprite(sprite),
+	mUnitTag(tag),
 	mPositionComponentID(INVALID_COMPONENT_ID),
 	mPhysicsComponentID(INVALID_COMPONENT_ID),
 	mSteeringComponentID(INVALID_COMPONENT_ID),
@@ -31,8 +49,10 @@ Unit::Unit(const Sprite& sprite) :
 	else if (mUnitTag == GHOST)
 	{
 		unitHealthFileName = "GhostHealth.txt";
+		//createGhostStates();
 	}
 
+	// if it is a ghost or pacman give the unit a health
 	if (unitHealthFileName.size() > 0)
 	{
 		std::ifstream unitHealthFile;
@@ -43,12 +63,19 @@ Unit::Unit(const Sprite& sprite) :
 	}
 
 	mUnitTimer = 0;
+	mMultiplierTimer = 0;
 	mUnitActive = true;
 }
 
 Unit::~Unit()
 {
+	/*
+	delete mpWanderTransition;
+	delete mpFleeTransition;
+	delete mpChaseTransition;
+	delete mpEdibleTransition;
 	mUnitStateMachine.~StateMachine();
+	*/
 }
 
 void Unit::update(float elapsedTime)
@@ -106,7 +133,7 @@ void Unit::update(float elapsedTime)
 		}
 		else
 		{
-			mUnitStateMachine.update();
+			//mUnitStateMachine.update();
 		}
 	}
 	else if (mUnitTag == PAC_MAN)
@@ -114,14 +141,34 @@ void Unit::update(float elapsedTime)
 		if (!mUnitActive)
 		{
 			// reset the position
-			mpPositionComponent->setPosition(Vector2D(480, 448));
+			mUnitHealth--;
 
-			GameApp* pGame = dynamic_cast<GameApp*>(gpGame);
-			pGame->getUnitManager()->resetAllUnitPos();
+			if (mUnitHealth > 0)
+			{
+				mpPositionComponent->setPosition(Vector2D(512, 544));
 
-			mUnitActive = true;
+				GameApp* pGame = dynamic_cast<GameApp*>(gpGame);
+				pGame->getUnitManager()->resetAllUnitPos();
+
+				mUnitActive = true;
+			}
+			else
+			{
+				// end the game
+			}
 		}
 
+	}
+
+	// update teh speed multiplier  //3.0f is the max amount of time
+	if (mMultiplierTimer < 3.0f && mSpeedMultiplier > 1.0f)
+	{
+		mMultiplierTimer += elapsedTime;
+	}
+	else if (mMultiplierTimer >= 3.0f)
+	{
+		mMultiplierTimer = 0;
+		mSpeedMultiplier = 1.0f;
 	}
 }
 
@@ -188,3 +235,49 @@ void Unit::setSteering(Steering::SteeringType type, Vector2D targetLoc /*= ZERO_
 		pSteeringComponent->setData(SteeringData(type, targetLoc, mID, targetUnitID));
 	}
 }
+
+void Unit::speedUpUnit(float multiplier)
+{
+	mSpeedMultiplier = multiplier;
+}
+
+/*
+void Unit::createGhostStates()
+{
+	GhostWanderState* pWanderState = new GhostWanderState(0);
+	GhostFleeState* pFleeState = new GhostFleeState(1);
+	GhostChaseState* pChaseState = new GhostChaseState(2);
+	GhostEdibleState* pEdibleState = new GhostEdibleState(3);
+
+	mpWanderTransition = new StateTransition(GHOST_WANDER, 0);
+	mpFleeTransition = new StateTransition(GHOST_FLEE, 1);
+	mpChaseTransition = new StateTransition(GHOST_CHASE, 2);
+	mpEdibleTransition = new StateTransition(GHOST_EDIBLE, 3);
+
+	pWanderState->addTransition(mpFleeTransition);
+	pWanderState->addTransition(mpChaseTransition);
+	pWanderState->addTransition(mpEdibleTransition);
+
+	pFleeState->addTransition(mpWanderTransition);
+	pFleeState->addTransition(mpChaseTransition);
+	pFleeState->addTransition(mpEdibleTransition);
+
+	pChaseState->addTransition(mpFleeTransition);
+	pChaseState->addTransition(mpWanderTransition);
+	pChaseState->addTransition(mpEdibleTransition);
+
+	pEdibleState->addTransition(mpFleeTransition);
+	pEdibleState->addTransition(mpChaseTransition);
+	pEdibleState->addTransition(mpWanderTransition);
+
+	mUnitStateMachine.addState(pWanderState);
+	mUnitStateMachine.addState(pFleeState);
+	mUnitStateMachine.addState(pChaseState);
+	mUnitStateMachine.addState(pEdibleState);
+
+	mUnitStateMachine.setInitialStateID(0);
+
+	mUnitStateMachine.getCurrentState();
+
+}
+*/

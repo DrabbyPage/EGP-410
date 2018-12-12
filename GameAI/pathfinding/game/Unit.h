@@ -27,16 +27,23 @@ public:
 	enum UnitType
 	{
 		INVALID_TYPE = -1,
-		PAC_MAN,
-		GHOST,
-		BIG_PIP,
-		SMALL_PIP,
-		ENEMY_POWER_UP
+		PAC_MAN = 0,
+		GHOST = 1,
+		BIG_PIP = 2,
+		SMALL_PIP = 3,
+		ENEMY_POWER_UP = 4
 	};
+
+	Unit::Unit(const Sprite& sprite, UnitType tag);
 
 	void draw() const;
 	float getFacing() const;
 	void update(float elapsedTime);
+	void speedUpUnit(float multiplier);
+	void createGhostStates();
+
+	void hurtUnit(int damage) { mUnitHealth -= damage; };
+	void healUnit(int healVal) { mUnitHealth += healVal; };
 
 	PositionComponent* getPositionComponent() const;
 	PhysicsComponent* getPhysicsComponent() const;
@@ -46,6 +53,7 @@ public:
 	float getMaxRotAcc() const { return mMaxRotAcc; };
 	float getMaxRotVel() const { return mMaxRotVel; };
 	UnitType getTag()const { return mUnitTag; };
+	StateMachine getStateMachine() { return mUnitStateMachine; };
 
 	bool getShowTarget() { return mShowTarget; };
 	bool getUnitActive() { return mUnitActive; };
@@ -68,12 +76,15 @@ private:
 	float mMaxSpeed;
 	float mMaxRotAcc;
 	float mMaxRotVel;
+	float mSpeedMultiplier;
+
 	bool mShowTarget;
 	bool mUnitActive;
 
 	int mUnitHealth;
 
 	float mUnitTimer;
+	float mMultiplierTimer;
 
 	Unit(const Sprite& sprite);
 	virtual ~Unit();
@@ -84,5 +95,10 @@ private:
 	friend class UnitManager;
 
 	StateMachine mUnitStateMachine;
+
+	StateTransition * mpWanderTransition;
+	StateTransition * mpFleeTransition;
+	StateTransition * mpChaseTransition;
+	StateTransition * mpEdibleTransition;
 };
 

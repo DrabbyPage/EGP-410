@@ -60,13 +60,15 @@ class StateMachine:public Trackable
 {
 public:
 	StateMachine():mpCurrentState(NULL),mInitialStateID(-1){};
-	~StateMachine(){};
+	~StateMachine();
 
 	void addState( StateMachineState* pState );
 	void setInitialStateID( const SM_idType& id ){ mInitialStateID = id; };
 
 	void update();//give the current state a chance to run
 	void start();//go to the initial state
+
+	StateMachineState* getCurrentState() { return mpCurrentState; };
 
 protected:
 	void transitionToState( const SM_idType& targetID );//call onExit for old state and onEntrance for the new state

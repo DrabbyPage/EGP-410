@@ -7,6 +7,7 @@
 #include "ComponentManager.h"
 #include "GraphicsSystem.h"
 #include "Grid.h"
+#include "StateMachine.h"
 
 UnitID UnitManager::msNextUnitID = PLAYER_UNIT_ID + 1;
 
@@ -18,7 +19,7 @@ UnitManager::UnitManager(Uint32 maxSize) :
 
 }
 
-Unit* UnitManager::createUnit(const Sprite& sprite, bool shouldWrap, const PositionData& posData /*= ZERO_POSITION_DATA*/, const PhysicsData& physicsData /*= ZERO_PHYSICS_DATA*/, const UnitID& id)
+Unit* UnitManager::createUnit(const Sprite& sprite, Unit::UnitType unitTag, bool shouldWrap, const PositionData& posData /*= ZERO_POSITION_DATA*/, const PhysicsData& physicsData /*= ZERO_PHYSICS_DATA*/, const UnitID& id)
 {
 	GameApp* pGame = dynamic_cast<GameApp*>(gpGame);
 	Unit* pUnit = NULL;
@@ -27,7 +28,7 @@ Unit* UnitManager::createUnit(const Sprite& sprite, bool shouldWrap, const Posit
 	if (ptr != NULL)
 	{
 		//create unit
-		pUnit = new (ptr)Unit(sprite);//placement new
+		pUnit = new (ptr)Unit(sprite, unitTag);//placement new
 
 		UnitID theID = id;
 		if (theID == INVALID_UNIT_ID)
@@ -60,9 +61,9 @@ Unit* UnitManager::createUnit(const Sprite& sprite, bool shouldWrap, const Posit
 	return pUnit;
 }
 
-Unit* UnitManager::createPlayerUnit(const Sprite& sprite, bool shouldWrap /*= true*/, const PositionData& posData /*= ZERO_POSITION_DATA*/, const PhysicsData& physicsData /*= ZERO_PHYSICS_DATA*/)
+Unit* UnitManager::createPlayerUnit(const Sprite& sprite, Unit::UnitType unitTag, bool shouldWrap /*= true*/, const PositionData& posData /*= ZERO_POSITION_DATA*/, const PhysicsData& physicsData /*= ZERO_PHYSICS_DATA*/)
 {
-	return createUnit(sprite, shouldWrap, posData, physicsData, PLAYER_UNIT_ID);
+	return createUnit(sprite,unitTag, shouldWrap, posData, physicsData, PLAYER_UNIT_ID);
 }
 
 Unit* UnitManager::createRandomUnit(const Sprite& sprite)
@@ -77,9 +78,10 @@ Unit* UnitManager::createRandomUnit(const Sprite& sprite)
 		posX = (rand() % pGame->getGrid()->getGridWidth()) * pGame->getGrid()->getSquareSize();
 		posY = (rand() % pGame->getGrid()->getGridHeight()) * pGame->getGrid()->getSquareSize();
 
-	} while (pGame->getGrid()->getValueAtPixelXY((int)posX, (int)posY) == BLOCKING_VALUE);
+	} while (pGame->getGrid()->getValueAtPixelXY((int)posX, (int)posY) == BLOCKING_VALUE 
+			|| ((posX > 384 && posX < 608)&&(posY > 352 && posY < 512)));
 
-	Unit* pUnit = createUnit(sprite, true, PositionData(Vector2D(posX, posY), 0));
+	Unit* pUnit = createUnit(sprite, Unit::SMALL_PIP, true, PositionData(Vector2D(posX, posY), 0));
 
 	if (pUnit != NULL)
 	{
@@ -173,17 +175,21 @@ void UnitManager::checkCollisions()
 
 	if (getPlayerUnit() != nullptr)
 	{
+		// check for collision for the player obj
 		for (unsigned int i = 1; i < mUnitMap.size(); i++)
 		{
 			if (mUnitMap[i] != NULL && mUnitMap[i]->getUnitActive())
 			{
 				if (collisionDistBased(mUnitMap[0], mUnitMap[i]))
 				{
+
 					// if collision is an enemy kill obj
 					if (mUnitMap[i]->getTag() == Unit::GHOST)
 					{
 						std::cout << "collision with an enemy" << std::endl;
 						// fire off the death event
+						mUnitMap[0]->hurtUnit(1);
+						resetAllUnitPos();
 						break;
 					}
 					// if obj is small pip then add score
@@ -205,6 +211,17 @@ void UnitManager::checkCollisions()
 						break;
 					}
 				}
+			}
+		}
+
+		// check for collision with the Ghost power up
+		for (int i = 1; i < GHOST_POWER_UP_ID; i++)
+		{
+			if (collisionDistBased(mUnitMap[GHOST_POWER_UP_ID], mUnitMap[i]))
+			{
+				// there is a collision with the ghost power up and the ghost
+				mUnitMap[i]->speedUpUnit(1.5f);
+				mUnitMap[GHOST_POWER_UP_ID]->setUnitActive(false);
 			}
 		}
 	}

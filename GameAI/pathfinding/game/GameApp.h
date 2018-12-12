@@ -25,6 +25,7 @@ class InputSystem;
 class UnitManager;
 class ComponentManager;
 class PathSmoothing;
+class StateTransition;
 //class AStarPath;
 
 const float LOOP_TARGET_TIME = 33.3f;//how long should each frame of execution take? 30fps = 33.3ms/frame

@@ -33,7 +33,7 @@
 
 const int GRID_SQUARE_SIZE = 32;
 const std::string gFileName = "pathgrid.txt";
-const Uint32 MAX_UNITS = 250;
+const Uint32 MAX_UNITS = 300;
 const Uint32 UNIT_COUNT = 5;
 
 GameApp::GameApp() :
@@ -263,14 +263,12 @@ void GameApp::createSprites()
 
 void GameApp::createUnits()
 {
-
 	// making pacman
 	{
 		Unit* pPacMan = mpUnitManager->createPlayerUnit(*mpSpriteManager->getSprite(PAC_MAN_SPRITE_ID), Unit::PAC_MAN);
 		pPacMan->setSteering(Steering::PAC_MAN, Vector2D(512, 544));
 		Steering* temp = pPacMan->getSteeringComponent()->getSteering();
 		pPacMan->getPositionComponent()->setPosition(Vector2D(512, 544));
-		pPacMan->setTag(Unit::PAC_MAN);
 	}
 
 	// making ghosts
@@ -303,25 +301,25 @@ void GameApp::createUnits()
 
 	// creating big pips
 	{
-		Unit* pBigPipUpLeft = mpUnitManager->createUnit(*mpSpriteManager->getSprite(BIG_PIP_SPRITE_ID));
+		Unit* pBigPipUpLeft = mpUnitManager->createUnit(*mpSpriteManager->getSprite(BIG_PIP_SPRITE_ID), Unit::BIG_PIP);
 		pBigPipUpLeft->getPositionComponent()->setPosition(Vector2D(96, 32));
 		pBigPipUpLeft->setTag(Unit::BIG_PIP);
 
-		Unit* pBigPipUpRight = mpUnitManager->createUnit(*mpSpriteManager->getSprite(BIG_PIP_SPRITE_ID));
+		Unit* pBigPipUpRight = mpUnitManager->createUnit(*mpSpriteManager->getSprite(BIG_PIP_SPRITE_ID), Unit::BIG_PIP);
 		pBigPipUpRight->getPositionComponent()->setPosition(Vector2D(896, 32));
 		pBigPipUpRight->setTag(Unit::BIG_PIP);
 
-		Unit* pBigPipDownLeft = mpUnitManager->createUnit(*mpSpriteManager->getSprite(BIG_PIP_SPRITE_ID));
+		Unit* pBigPipDownLeft = mpUnitManager->createUnit(*mpSpriteManager->getSprite(BIG_PIP_SPRITE_ID), Unit::BIG_PIP);
 		pBigPipDownLeft->getPositionComponent()->setPosition(Vector2D(96, 704));
 		pBigPipDownLeft->setTag(Unit::BIG_PIP);
 
-		Unit* pBigPipDownRight = mpUnitManager->createUnit(*mpSpriteManager->getSprite(BIG_PIP_SPRITE_ID));
+		Unit* pBigPipDownRight = mpUnitManager->createUnit(*mpSpriteManager->getSprite(BIG_PIP_SPRITE_ID), Unit::BIG_PIP);
 		pBigPipDownRight->getPositionComponent()->setPosition(Vector2D(896, 704));
 		pBigPipDownRight->setTag(Unit::BIG_PIP);
 	}
 
 	// creating small pips
-	for (int i = 0; i < 100; i++)
+	for (int i = 0; i < 150; i++)
 	{
 		Unit* pSmallPip = mpUnitManager->createRandomUnit(*mpSpriteManager->getSprite(SMALL_PIP_SPRITE_ID));
 		pSmallPip->setTag(Unit::SMALL_PIP);

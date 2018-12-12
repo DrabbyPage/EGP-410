@@ -106,6 +106,9 @@
     <ClInclude Include="GameApp.h" />
     <ClInclude Include="GameMessage.h" />
     <ClInclude Include="GameMessageManager.h" />
+    <ClInclude Include="GhostChaseState.h" />
+    <ClInclude Include="GhostEdibleState.h" />
+    <ClInclude Include="GhostFleeState.h" />
     <ClInclude Include="Graph.h" />
     <ClInclude Include="GridGraph.h" />
     <ClInclude Include="GridPathfinder.h" />
@@ -124,6 +127,7 @@
     <ClInclude Include="PathSteering.h" />
     <ClInclude Include="PathToMessage.h" />
     <ClInclude Include="PhysicsComponent.h" />
+    <ClInclude Include="GhostWanderState.h" />
     <ClInclude Include="PositionComponent.h" />
     <ClInclude Include="SeekSteering.h" />
     <ClInclude Include="StateMachine.h" />
@@ -158,6 +162,10 @@
     <ClCompile Include="GameApp.cpp" />
     <ClCompile Include="GameMessage.cpp" />
     <ClCompile Include="GameMessageManager.cpp" />
+    <ClCompile Include="GhostChaseState.cpp" />
+    <ClCompile Include="GhostEdibleState.cpp" />
+    <ClCompile Include="GhostFleeState.cpp" />
+    <ClCompile Include="GhostWanderState.cpp" />
     <ClCompile Include="Graph.cpp" />
     <ClCompile Include="GridGraph.cpp" />
     <ClCompile Include="GridPathfinder.cpp" />

@@ -52,3 +52,11 @@ void StateMachine::transitionToState( const SM_idType& targetID )
 		mpCurrentState->onEntrance();
 	}
 }
+
+StateMachine::~StateMachine()
+{
+	for (int i = 0; i < mStates.size(); i++)
+	{
+		delete mStates[i];
+	}
+}

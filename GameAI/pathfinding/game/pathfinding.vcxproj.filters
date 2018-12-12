@@ -58,11 +58,11 @@
     <Filter Include="Source Files\StateMachine">
       <UniqueIdentifier>{dac28df8-dd9d-45be-9361-aa99c6db26fe}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Header Files\StateMachine\Events">
-      <UniqueIdentifier>{c0c997cb-a846-4278-905d-27177bab5d3d}</UniqueIdentifier>
+    <Filter Include="Header Files\StateMachine\States">
+      <UniqueIdentifier>{9ce6b524-6037-456a-b3f3-de96910df377}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Source Files\StateMachine\Events">
-      <UniqueIdentifier>{1ec0534d-f149-4c2d-b459-4e481290998c}</UniqueIdentifier>
+    <Filter Include="Source Files\StateMachine\States">
+      <UniqueIdentifier>{5381e8c8-a6f9-47b7-9117-4dc6d0b5d861}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -219,6 +219,18 @@
     <ClInclude Include="StateMachine.h">
       <Filter>Header Files\StateMachine</Filter>
     </ClInclude>
+    <ClInclude Include="GhostWanderState.h">
+      <Filter>Header Files\StateMachine\States</Filter>
+    </ClInclude>
+    <ClInclude Include="GhostFleeState.h">
+      <Filter>Header Files\StateMachine\States</Filter>
+    </ClInclude>
+    <ClInclude Include="GhostChaseState.h">
+      <Filter>Header Files\StateMachine\States</Filter>
+    </ClInclude>
+    <ClInclude Include="GhostEdibleState.h">
+      <Filter>Header Files\StateMachine\States</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\common\Game.cpp">
@@ -373,6 +385,18 @@
     </ClCompile>
     <ClCompile Include="StateMachine.cpp">
       <Filter>Source Files\StateMachine</Filter>
+    </ClCompile>
+    <ClCompile Include="GhostWanderState.cpp">
+      <Filter>Source Files\StateMachine\States</Filter>
+    </ClCompile>
+    <ClCompile Include="GhostChaseState.cpp">
+      <Filter>Source Files\StateMachine\States</Filter>
+    </ClCompile>
+    <ClCompile Include="GhostFleeState.cpp">
+      <Filter>Source Files\StateMachine\States</Filter>
+    </ClCompile>
+    <ClCompile Include="GhostEdibleState.cpp">
+      <Filter>Source Files\StateMachine\States</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>
