@@ -31,7 +31,7 @@ private:
 	Vector2D mGhostXDir;
 	Vector2D mGhostYDir;
 	int timer;
-	Path* mpPath;
+	Path* mPath;
 
 	int mID, mPathIndex;
 

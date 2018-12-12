@@ -66,6 +66,8 @@ public:
 
 	int getHealth() { return mUnitHealth; };
 
+	void setSprite(Sprite newSprite) { mSprite = newSprite; }
+
 private:
 	UnitType mUnitTag;
 	UnitID mID;

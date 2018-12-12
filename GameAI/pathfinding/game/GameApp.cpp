@@ -181,14 +181,22 @@ void GameApp::processLoop()
 
 		if (canDestroyEnemies)
 		{
-			std::cout <<timer<< "  : enemies can be eaten" << std::endl;
+			for (int i = 1; i < 5; i++)
+			{
+				mpUnitManager->getUnit(i)->setSprite(*mpSpriteManager->getSprite(EDIBLE_GHOST_SPRITE));
+			}
 			timer += TARGET_ELAPSED_MS;
 
 			float maxEatTime = 10.0f;
 
 			if (timer > maxEatTime)
 			{
-				std::cout << "cant eat anymore" << std::endl;
+
+				mpUnitManager->getUnit(1)->setSprite(*mpSpriteManager->getSprite(RED_GHOST_SPRITE));
+				mpUnitManager->getUnit(2)->setSprite(*mpSpriteManager->getSprite(PINK_GHOST_SPRITE));
+				mpUnitManager->getUnit(3)->setSprite(*mpSpriteManager->getSprite(ORANGE_GHOST_SPRITE));
+				mpUnitManager->getUnit(4)->setSprite(*mpSpriteManager->getSprite(GREEN_GHOST_SPRITE));
+
 				timer = 0;
 				canDestroyEnemies = false;
 			}
@@ -275,7 +283,7 @@ void GameApp::createSprites()
 		pGreenGhostSprite = mpSpriteManager->createAndManageSprite(GREEN_GHOST_SPRITE, pGreenGhostBuffer, 0, 0, (float)pGreenGhostBuffer->getWidth(), (float)pGreenGhostBuffer->getHeight());
 	}
 
-	GraphicsBuffer* pEdibleGhostBuffer = mpGraphicsBufferManager->getBuffer(mGreenGhostID);
+	GraphicsBuffer* pEdibleGhostBuffer = mpGraphicsBufferManager->getBuffer(mEdibleGhostID);
 	Sprite* pEdibleGhostSprite = NULL;
 	if (pEdibleGhostBuffer != NULL)
 	{

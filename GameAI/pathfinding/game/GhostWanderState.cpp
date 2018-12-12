@@ -16,7 +16,7 @@ using namespace std;
 
 void GhostWanderState::onEntrance()
 {
-	std::cout << "entering wander state" << std::endl;
+	//std::cout << "entering wander state" << std::endl;
 
 	mGhostXDist = 0;
 	mGhostYDist = 0;
@@ -167,17 +167,15 @@ StateTransition* GhostWanderState::update()
 		// check at intersection if ghost will chase pacman
 		if (pGrid->getValueAtIndex(fromIndex) == INTERSECTION_VALUE)
 		{
-			
 			Vector2D diff = pGame->getUnitManager()->getPlayerUnit()->getPositionComponent()->getPosition() - GhostPosCenter;
-			float chaseDist = 150;
+			float chaseDist = 100;
 			float dist = diff.getLength();
 			if (dist < chaseDist)
 			{
 				mTransitionToChase = true;
 			}
-			
 		}
-		
+		*/
 		//means the Ghost is allowed to hurt the Ghost
 		/*
 		if (pGame->getCanDestroyEnemies())
@@ -186,12 +184,12 @@ StateTransition* GhostWanderState::update()
 			mTransitionToFlee = true;
 		}
 		*/
-		/*
+		
 		if (pGrid->getValueAtIndex(fromIndex) == SPAWNING_VALUE && timer > 60)
 		{
 			mTransitionToIdle = true;
 		}
-		*/
+		
 		return NULL;
 	}	
 }

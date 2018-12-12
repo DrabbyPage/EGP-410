@@ -393,7 +393,7 @@ void resetGhostPath(Unit* unit)
 
 	if (path)
 	{
-		std::cout << "there is a new path" << std::endl;
+		//std::cout << "there is a new path" << std::endl;
 		pathSteering->setPath(path);
 	}
 }
