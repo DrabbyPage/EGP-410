@@ -16,6 +16,8 @@ using namespace std;
 
 void GhostWanderState::onEntrance()
 {
+	std::cout << "entering wander state" << std::endl;
+
 	mGhostXDist = 0;
 	mGhostYDist = 0;
 	mGhostXDir = Vector2D(0, 0);
@@ -94,7 +96,7 @@ StateTransition* GhostWanderState::update()
 
 		/*if we are on a INTERSECTION and it has 2+ connections, pick one, and proceed along that direction*/
 
-		if (pGrid->getValueAtIndex(fromIndex) == INTERSECTION_VALUE)
+		if (pGrid->getValueAtIndex(fromIndex) == INTERSECTION_VALUE || pGrid->getValueAtIndex(fromIndex) == SPAWNING_VALUE)
 		{
 			int directionIndex = rand() % adjacentIndices.size() / 2;
 			directionIndex *= 2;
@@ -143,9 +145,9 @@ StateTransition* GhostWanderState::update()
 		{
 			oldIndex = fromIndex;
 		}
-		
+
 		int toIndex = pGrid->getSquareIndexFromPixelXY((int)GhostPosCenter.getX() + mGhostXDist, (int)GhostPosCenter.getY() + mGhostYDist);
-		
+
 		//If we're going into a wall, stop where you are
 		if (pGrid->getValueAtIndex(toIndex) == BLOCKING_VALUE)
 		{
@@ -164,13 +166,13 @@ StateTransition* GhostWanderState::update()
 		pGhostSteer->resetIndex();
 		pGhostSteer->setPath(newPath);
 
-		//when pacman is within a certain radius of ghost
-		//needs to be at an intersection in order to change to chase
-		
+		// check at intersection if ghost will chase pacman
 		if (pGrid->getValueAtIndex(fromIndex) == INTERSECTION_VALUE)
 		{
-			if (abs(GhostPosCenter.getX() - pGame->getUnitManager()->getPlayerUnit()->getPositionComponent()->getPosition().getX()) < 60
-				&& abs(GhostPosCenter.getY() - pGame->getUnitManager()->getPlayerUnit()->getPositionComponent()->getPosition().getY()) < 60)
+			Vector2D diff = pGame->getUnitManager()->getPlayerUnit()->getPositionComponent()->getPosition() - GhostPosCenter;
+			float chaseDist = 100;
+			float dist = diff.getLength();
+			if (dist < chaseDist)
 			{
 				mTransitionToChase = true;
 			}
@@ -183,10 +185,13 @@ StateTransition* GhostWanderState::update()
 			//transition back to flee
 			mTransitionToFlee = true;
 		}
+		
+		
 		if (pGrid->getValueAtIndex(fromIndex) == SPAWNING_VALUE && timer > 60)
 		{
 			mTransitionToIdle = true;
 		}
+		
 		return NULL;
 	}	
 }

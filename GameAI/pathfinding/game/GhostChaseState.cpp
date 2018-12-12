@@ -24,7 +24,6 @@ void GhostChaseState::onEntrance()
 	timer = 0;
 	mGhostDir = make_pair(Vector2D(0, 0), Vector2D(0, 0));
 
-	//cout << "\nEntering GhostChaseState id:" << mID << endl;
 	mTransitionToWander = false;
 	mTransitionToIdle = false;
 	mTransitionToFlee = false;
@@ -32,7 +31,7 @@ void GhostChaseState::onEntrance()
 
 void GhostChaseState::onExit()
 {
-	//cout << "\nexitting GhostChaseState id:" << mID << endl;
+	cout << "\nexitting GhostChaseState id:" << mID << endl;
 	mTransitionToWander = false;
 	mTransitionToIdle = false;
 	mTransitionToFlee = false;

@@ -11,6 +11,7 @@
 
 void GhostIdleState::onEntrance()
 {
+	std::cout << "entering idle state" << std::endl;
 	mGhostXDist = 0;
 	mGhostYDist = -32;
 	mGhostXDir = Vector2D(0, 0);
@@ -22,7 +23,7 @@ void GhostIdleState::onEntrance()
 
 void GhostIdleState::onExit()
 {
-
+	std::cout << "exiting idle state" << std::endl;
 }
 
 StateTransition * GhostIdleState::update()
@@ -35,7 +36,7 @@ StateTransition * GhostIdleState::update()
 	GridGraph* pGridGraph = pGame->getGridGraph();
 	Grid* pGrid = pGame->getGrid();
 	//get the from and to index from the grid
-	Vector2D GhostPosCenter = (pGame->getUnitManager()->getUnit(i)->getPositionComponent()->getPosition() + Vector2D(16, 16));
+	Vector2D GhostPosCenter = (pGame->getUnitManager()->getUnit(i)->getPositionComponent()->getPosition());
 
 	int fromIndex = pGrid->getSquareIndexFromPixelXY((int)GhostPosCenter.getX(), (int)GhostPosCenter.getY());
 	int toIndex = pGrid->getSquareIndexFromPixelXY((int)GhostPosCenter.getX(), (int)GhostPosCenter.getY());
@@ -47,12 +48,9 @@ StateTransition * GhostIdleState::update()
 		mTransitionToFlee = true;
 	}
 
-	//IF PLAYER IS OUTSIDE OF RADIUS
-	//when pacman is within a certain radius of ghost
 	//if on spawn point
 	if (timer > 5 && pGrid->getValueAtIndex(fromIndex) == SPAWNING_VALUE)
 	{
-		timer = 0;
 		mTransitionToWander = true;
 	}
 
